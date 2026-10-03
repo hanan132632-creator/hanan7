@@ -1,4 +1,5 @@
 import React from 'react';
+import { HERO_VILLA_IMAGE } from '../data/mockData';
 import { 
   ShieldCheck, 
   Zap, 
@@ -125,8 +126,8 @@ export const Hero: React.FC<HeroProps> = ({
             <div className="relative rounded-3xl overflow-hidden p-1.5 bg-gradient-to-br from-[#D4AF37] via-[#059669] to-[#18181B] shadow-2xl gold-border-glow">
               <div className="relative rounded-[22px] overflow-hidden bg-[#18181B]">
                 <img
-                  src="/src/assets/images/hero_luxury_villa_1791003841235.jpg"
-                  alt="عقارات النخبة القصر الملكي"
+                  src={HERO_VILLA_IMAGE}
+                  alt="عقارات النخبة قصر الزمرد الملكي"
                   referrerPolicy="no-referrer"
                   className="w-full h-[360px] object-cover hover:scale-105 transition-transform duration-700"
                 />

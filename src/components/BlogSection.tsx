@@ -111,26 +111,108 @@ export const BlogSection: React.FC = () => {
             </div>
 
             <div className="p-6 sm:p-8 space-y-6 max-h-[75vh] overflow-y-auto">
-              <h1 className="text-2xl font-black text-slate-900 font-serif-arabic leading-snug">
-                {selectedPost.title}
-              </h1>
-
-              <div className="flex items-center gap-4 text-xs text-slate-500 border-y border-slate-200 py-3">
-                <span className="font-bold text-slate-800">{selectedPost.author}</span>
-                <span>·</span>
-                <span>{selectedPost.date}</span>
-                <span>·</span>
-                <span>{selectedPost.readTime}</span>
+              <div className="space-y-3">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#059669]/10 border border-[#059669]/30 text-[#064E3B] text-xs font-bold">
+                  <Sparkles className="w-3.5 h-3.5 text-[#059669]" />
+                  <span>محتوى تحليلي موثوق بمعايير E-E-A-T</span>
+                </div>
+                
+                <h1 className="text-xl sm:text-2xl font-black text-slate-900 font-serif-arabic leading-snug">
+                  {selectedPost.title}
+                </h1>
               </div>
 
-              {/* In-Article AdSense Banner */}
-              <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-center text-xs text-emerald-800">
-                إعلان متوافق مع AdSense: احصل على حاسبة التمويل العقاري المجانية من عقارات النخبة
+              {/* Author & Credibility Meta Box */}
+              <div className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-2xl bg-white border border-[#D4AF37]/30 shadow-sm text-xs">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#18181B] to-[#064E3B] text-[#D4AF37] flex items-center justify-center font-bold text-sm border border-[#D4AF37]/40 shadow-inner">
+                    <User className="w-5 h-5 text-[#FAD961]" />
+                  </div>
+                  <div>
+                    <span className="font-black text-slate-900 block">{selectedPost.author}</span>
+                    <span className="text-[11px] text-slate-500">خبير ومستشار معتمد في منصة عقارات النخبة</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4 text-slate-500 font-medium">
+                  <span>{selectedPost.date}</span>
+                  <span>·</span>
+                  <span className="text-amber-700 font-bold flex items-center gap-1">
+                    <Clock className="w-3.5 h-3.5" />
+                    {selectedPost.readTime}
+                  </span>
+                </div>
               </div>
 
-              <div className="text-xs sm:text-sm text-slate-800 leading-relaxed space-y-4 whitespace-pre-line font-medium">
-                {selectedPost.content}
+              {/* Featured Image inside Article */}
+              <div className="rounded-2xl overflow-hidden aspect-[16/8] bg-[#18181B] border border-[#D4AF37]/30 shadow-md">
+                <img
+                  src={selectedPost.imageUrl}
+                  alt={selectedPost.title}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover"
+                />
               </div>
+
+              {/* In-Article AdSense Native Card */}
+              <div className="p-4 bg-gradient-to-r from-emerald-50 via-[#FAF8F5] to-emerald-50 border border-emerald-200/80 rounded-2xl text-center text-xs text-emerald-900 shadow-sm">
+                <span className="text-[10px] uppercase font-bold text-[#059669] block mb-0.5">
+                  إعلان موصى به متوافق مع Google AdSense
+                </span>
+                <span className="font-bold">
+                  هل تبحث عن تقييم عقارك أو حجز استشارة ملكية خاصة؟ استخدم حاسبة التمويل أو تواصل مع مستشار النخبة فوراً.
+                </span>
+              </div>
+
+              {/* Structured Article Body */}
+              <div className="text-xs sm:text-sm text-slate-800 leading-relaxed space-y-4 font-medium">
+                {selectedPost.content.split('\n\n').map((paragraph, pIdx) => {
+                  if (paragraph.startsWith('### ')) {
+                    return (
+                      <h3 key={pIdx} className="text-base sm:text-lg font-black text-[#064E3B] font-serif-arabic pt-4 pb-1 border-b border-[#D4AF37]/30 flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-[#059669]" />
+                        {paragraph.replace('### ', '')}
+                      </h3>
+                    );
+                  }
+                  if (paragraph.startsWith('---')) {
+                    return <hr key={pIdx} className="border-[#D4AF37]/30 my-4" />;
+                  }
+                  if (paragraph.includes('* ') || paragraph.includes('- ')) {
+                    const lines = paragraph.split('\n');
+                    return (
+                      <ul key={pIdx} className="space-y-2 p-3 rounded-2xl bg-white border border-slate-200">
+                        {lines.map((line, lIdx) => (
+                          <li key={lIdx} className="flex items-start gap-2 text-slate-700">
+                            <span className="text-[#059669] font-black text-base leading-none mt-0.5">•</span>
+                            <span>{line.replace(/^[\*\-]\s+/, '')}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    );
+                  }
+                  return (
+                    <p key={pIdx} className="leading-relaxed text-slate-700">
+                      {paragraph}
+                    </p>
+                  );
+                })}
+              </div>
+
+              {/* Author Footer Bio */}
+              <div className="p-4 rounded-2xl bg-[#18181B] text-white border border-[#D4AF37]/40 flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] text-[#FAD961] block font-bold">كاتب المقال المعتمد:</span>
+                  <span className="text-sm font-bold font-serif-arabic">{selectedPost.author}</span>
+                </div>
+                <button
+                  onClick={() => setSelectedPost(null)}
+                  className="px-4 py-2 rounded-xl bg-[#059669] text-white text-xs font-bold hover:brightness-110"
+                >
+                  إغلاق المقال
+                </button>
+              </div>
+
             </div>
 
           </div>
