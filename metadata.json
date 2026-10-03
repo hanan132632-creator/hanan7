@@ -1,0 +1,8 @@
+{
+  "name": "عقارات النخبة ومتجر حنان",
+  "description": "منصة عقارات النخبة ومتجر حنان للمنتجات الرقمية - الفخامة الملكية بين العقارات والمخططات المعمارية 2026 وقوالب كانفا وألعاب الجمعات.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
