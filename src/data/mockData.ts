@@ -1,10 +1,15 @@
 import { ProductItem, BlogPost } from '../types';
+import heroVillaImg from '../assets/images/hero_luxury_villa_1791003841235.jpg';
+import luxuryPenthouseImg from '../assets/images/luxury_penthouse_1791003853037.jpg';
+import gatheringGamesImg from '../assets/images/gathering_games_asset_1791003864897.jpg';
+import blueprintsImg from '../assets/images/architectural_blueprints_1791003876626.jpg';
+import canvaTemplatesImg from '../assets/images/canva_templates_bundle_1791003886695.jpg';
 
-export const HERO_VILLA_IMAGE = '/src/assets/images/hero_luxury_villa_1791003841235.jpg';
-export const LUXURY_PENTHOUSE_IMAGE = '/src/assets/images/luxury_penthouse_1791003853037.jpg';
-export const GATHERING_GAMES_IMAGE = '/src/assets/images/gathering_games_asset_1791003864897.jpg';
-export const BLUEPRINTS_IMAGE = '/src/assets/images/architectural_blueprints_1791003876626.jpg';
-export const CANVA_TEMPLATES_IMAGE = '/src/assets/images/canva_templates_bundle_1791003886695.jpg';
+export const HERO_VILLA_IMAGE = heroVillaImg;
+export const LUXURY_PENTHOUSE_IMAGE = luxuryPenthouseImg;
+export const GATHERING_GAMES_IMAGE = gatheringGamesImg;
+export const BLUEPRINTS_IMAGE = blueprintsImg;
+export const CANVA_TEMPLATES_IMAGE = canvaTemplatesImg;
 
 export const MOCK_PRODUCTS: ProductItem[] = [
   {
