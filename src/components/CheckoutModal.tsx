@@ -31,6 +31,23 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     return acc + p * item.quantity;
   }, 0);
 
+  const [downloadingId, setDownloadingId] = useState<string | null>(null);
+
+  const handleDownload = (item: CartItem) => {
+    setDownloadingId(item.product.id);
+    const content = `عقارات النخبة ومتجر حنان الملكي\nفاتورة رقم: ${orderNumber}\nالمنتج: ${item.product.title}\nالرابط المعتمد: https://royal-elite.hanan.store/download/${item.product.id}\nتاريخ الشراء: ${new Date().toLocaleDateString('ar-SA')}\nنشكركم لاختياركم عقارات النخبة ومتجر حنان.`;
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${item.product.title.replace(/\s+/g, '_')}_License.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    setTimeout(() => setDownloadingId(null), 1500);
+  };
+
   const handleSubmitOrder = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.fullName || !formData.phone || !formData.email) return;
@@ -185,11 +202,12 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   <div key={item.product.id} className="flex items-center justify-between text-xs p-2 rounded-lg bg-[#FAF8F5]">
                     <span className="font-bold text-slate-800 line-clamp-1">{item.product.title}</span>
                     <button
-                      onClick={() => alert(`جاري تنزيل ملفات ${item.product.title} المعتمدة...`)}
-                      className="px-3 py-1 rounded-lg bg-[#059669] text-white font-bold text-[10px] flex items-center gap-1 hover:brightness-110"
+                      onClick={() => handleDownload(item)}
+                      disabled={downloadingId === item.product.id}
+                      className="px-3 py-1 rounded-lg bg-[#059669] text-white font-bold text-[10px] flex items-center gap-1 hover:brightness-110 transition-all disabled:opacity-50"
                     >
                       <Download className="w-3 h-3" />
-                      <span>تنزيل فوري</span>
+                      <span>{downloadingId === item.product.id ? 'تم التنزيل ✓' : 'تنزيل فوري'}</span>
                     </button>
                   </div>
                 ))}

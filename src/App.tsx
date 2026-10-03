@@ -38,6 +38,14 @@ export default function App() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isPropertySubmitOpen, setIsPropertySubmitOpen] = useState(false);
   const [legalTabModal, setLegalTabModal] = useState<LegalTabType | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const showNotification = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => {
+      setToastMessage((curr) => (curr === msg ? null : curr));
+    }, 4500);
+  };
 
   // Filter products
   const filteredProducts = useMemo(() => {
@@ -266,7 +274,7 @@ export default function App() {
           onClose={() => setIsMortgageCalcOpen(false)}
           onRequestConsultation={(title, monthlyPay) => {
             setIsMortgageCalcOpen(false);
-            alert(`تم تسجيل طلب الاستشارة للتمويل العقاري لعقار (${title}) بقسط شهري مقدر (${monthlyPay}). سيقوم مستشار النخبة بالتواصل معك فوراً.`);
+            showNotification(`تم تسجيل طلب الاستشارة للتمويل العقاري لعقار (${title}) بقسط شهري مقدر (${monthlyPay}). سيقوم مستشار النخبة بالتواصل معك فوراً.`);
           }}
         />
       )}
@@ -334,6 +342,24 @@ export default function App() {
           initialTab={legalTabModal}
           onClose={() => setLegalTabModal(null)}
         />
+      )}
+
+      {/* Toast Notification Banner */}
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 left-6 sm:left-auto sm:max-w-md z-50 bg-[#18181B] text-white p-4 rounded-2xl border-2 border-[#D4AF37] shadow-2xl flex items-start gap-3 animate-fade-in">
+          <div className="p-2 rounded-xl bg-[#059669] text-white shrink-0 mt-0.5">
+            <Crown className="w-5 h-5 text-[#FAD961]" />
+          </div>
+          <div className="flex-1 text-xs sm:text-sm font-medium leading-relaxed">
+            {toastMessage}
+          </div>
+          <button
+            onClick={() => setToastMessage(null)}
+            className="text-slate-400 hover:text-white p-1"
+          >
+            ✕
+          </button>
+        </div>
       )}
 
     </div>
