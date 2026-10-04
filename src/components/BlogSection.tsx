@@ -79,14 +79,41 @@ export const BlogSection: React.FC = () => {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/30 text-[#064E3B] text-xs font-bold mb-2">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#064E3B] text-xs font-bold mb-2">
               <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
               <span>مدونة النخبة والامتثال الأدسنس 2026</span>
+              <span className="text-[#D4AF37]">•</span>
+              <span className="flex items-center gap-1 text-[11px] font-black text-[#047857]">
+                <BookOpen className="w-3.5 h-3.5 text-[#059669]" />
+                <span>{MOCK_BLOG_POSTS.length} مقالات مرجعية</span>
+              </span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 font-serif-arabic">
-              مقالات العقارات والتحول الرقمي
-            </h2>
-            <p className="text-xs text-slate-500 mt-1">
+
+            <div className="flex items-center gap-3.5 flex-wrap">
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 font-serif-arabic">
+                مقالات العقارات والتحول الرقمي
+              </h2>
+
+              {/* Number of Articles in Luxury Icon Badge */}
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-gradient-to-r from-[#18181B] via-[#27272A] to-[#064E3B] border border-[#D4AF37]/60 text-white shadow-lg shadow-black/10">
+                <div className="relative flex items-center justify-center w-7 h-7 rounded-xl bg-gradient-to-br from-[#059669] to-[#047857] border border-[#FAD961]/40 text-white shadow-inner">
+                  <BookOpen className="w-4 h-4 text-[#FAD961]" />
+                  <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-rose-600 text-white text-[10px] font-black flex items-center justify-center border-2 border-[#18181B] shadow">
+                    {MOCK_BLOG_POSTS.length}
+                  </span>
+                </div>
+                <div className="flex flex-col text-right">
+                  <span className="text-xs font-black text-[#FAD961] leading-tight">
+                    {MOCK_BLOG_POSTS.length} مقالات منشورة
+                  </span>
+                  <span className="text-[9px] text-slate-300 leading-tight">
+                    محتوى بشري موثوق E-E-A-T
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-500 mt-1.5">
               تحليلات استثمارية معتمدة ورؤى معمارية مخصصة للراغبين في اقتناء العقارات والمنتجات الرقمية.
             </p>
           </div>
@@ -103,7 +130,7 @@ export const BlogSection: React.FC = () => {
         </div>
 
         {/* Blog Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {MOCK_BLOG_POSTS.map((post) => {
             const currentViews = viewsMap[post.id] || 0;
             const currentLikes = likesMap[post.id] || 0;

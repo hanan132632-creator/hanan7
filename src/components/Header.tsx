@@ -9,9 +9,11 @@ import {
   Globe, 
   Menu, 
   X,
-  Crown
+  Crown,
+  BookOpen
 } from 'lucide-react';
 import { Currency } from '../types';
+import { MOCK_BLOG_POSTS } from '../data/mockData';
 
 interface HeaderProps {
   searchQuery: string;
@@ -104,9 +106,13 @@ export const Header: React.FC<HeaderProps> = ({
                 if (onScrollToBlog) onScrollToBlog();
                 else onOpenLegalTab('domain_verify');
               }}
-              className="hover:text-[#FAD961] transition-colors whitespace-nowrap font-extrabold flex items-center gap-1"
+              className="hover:text-[#FAD961] transition-colors whitespace-nowrap font-extrabold flex items-center gap-1.5"
             >
+              <BookOpen className="w-3.5 h-3.5 text-[#FAD961]" />
               <span>المدونة</span>
+              <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 text-[10px] font-black rounded-full bg-[#18181B] text-[#FAD961] border border-[#FAD961]/50 shadow-sm">
+                {MOCK_BLOG_POSTS.length}
+              </span>
             </button>
 
             <span className="text-white/40">|</span>
@@ -311,6 +317,13 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           <div className="flex justify-around pt-2">
+            <button
+              onClick={() => { setMobileMenuOpen(false); if (onScrollToBlog) onScrollToBlog(); }}
+              className="flex items-center gap-1 text-xs text-slate-300 hover:text-white"
+            >
+              <BookOpen className="w-4 h-4 text-[#FAD961]" />
+              <span>المدونة ({MOCK_BLOG_POSTS.length})</span>
+            </button>
             <button
               onClick={() => { setMobileMenuOpen(false); onOpenFavorites(); }}
               className="flex items-center gap-1 text-xs text-slate-300"
