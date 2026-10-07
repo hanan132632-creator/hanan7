@@ -10,7 +10,8 @@ import {
   Menu, 
   X,
   Crown,
-  BookOpen
+  BookOpen,
+  Compass
 } from 'lucide-react';
 import { Currency } from '../types';
 import { MOCK_BLOG_POSTS } from '../data/mockData';
@@ -112,6 +113,20 @@ export const Header: React.FC<HeaderProps> = ({
               <span>المدونة</span>
               <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 text-[10px] font-black rounded-full bg-[#18181B] text-[#FAD961] border border-[#FAD961]/50 shadow-sm">
                 {MOCK_BLOG_POSTS.length}
+              </span>
+            </button>
+
+            <span className="text-white/40">|</span>
+
+            <button
+              onClick={() => onOpenLegalTab('sitemap')}
+              className="hover:text-[#FAD961] transition-colors whitespace-nowrap font-extrabold flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-white/5 border border-white/10 hover:border-[#D4AF37]/50"
+              title="عرض خريطة الموقع الكاملة وفهرس الروابط"
+            >
+              <Compass className="w-3.5 h-3.5 text-[#FAD961]" />
+              <span>خريطة الموقع</span>
+              <span className="w-4 h-4 rounded-full bg-[#D4AF37] text-slate-900 text-[10px] font-black flex items-center justify-center">
+                37
               </span>
             </button>
 
@@ -316,24 +331,31 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           </div>
 
-          <div className="flex justify-around pt-2">
+          <div className="grid grid-cols-4 gap-1 pt-2 border-t border-white/10 text-center">
             <button
               onClick={() => { setMobileMenuOpen(false); if (onScrollToBlog) onScrollToBlog(); }}
-              className="flex items-center gap-1 text-xs text-slate-300 hover:text-white"
+              className="flex flex-col items-center gap-1 text-[11px] text-slate-300 hover:text-white"
             >
               <BookOpen className="w-4 h-4 text-[#FAD961]" />
               <span>المدونة ({MOCK_BLOG_POSTS.length})</span>
             </button>
             <button
+              onClick={() => { setMobileMenuOpen(false); onOpenLegalTab('sitemap'); }}
+              className="flex flex-col items-center gap-1 text-[11px] text-[#FAD961] font-bold"
+            >
+              <Compass className="w-4 h-4 text-[#D4AF37]" />
+              <span>الخريطة (37)</span>
+            </button>
+            <button
               onClick={() => { setMobileMenuOpen(false); onOpenFavorites(); }}
-              className="flex items-center gap-1 text-xs text-slate-300"
+              className="flex flex-col items-center gap-1 text-[11px] text-slate-300"
             >
               <Heart className="w-4 h-4 text-[#D4AF37]" />
               <span>المفضلة ({favoritesCount})</span>
             </button>
             <button
               onClick={() => { setMobileMenuOpen(false); onOpenLegalTab('contact'); }}
-              className="flex items-center gap-1 text-xs text-slate-300"
+              className="flex flex-col items-center gap-1 text-[11px] text-slate-300"
             >
               <Building2 className="w-4 h-4 text-emerald-400" />
               <span>اتصل بنا</span>

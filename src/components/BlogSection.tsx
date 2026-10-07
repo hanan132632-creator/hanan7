@@ -49,6 +49,59 @@ export const BlogSection: React.FC = () => {
     });
   };
 
+  // Listen to hash, URL query params, and custom events to directly open articles from sitemap links or Google Search
+  useEffect(() => {
+    const checkUrlAndOpen = () => {
+      try {
+        const url = new URL(window.location.href);
+        const hash = window.location.hash.replace('#', '');
+        const postParam = url.searchParams.get('post') || url.searchParams.get('article');
+        let targetId = postParam;
+
+        if (!targetId && hash && hash.startsWith('post-')) {
+          targetId = hash;
+        }
+        if (!targetId && (url.pathname.startsWith('/blog/') || url.pathname.startsWith('/post/'))) {
+          const parts = url.pathname.split('/');
+          targetId = parts[parts.length - 1];
+        }
+
+        if (targetId) {
+          const found = MOCK_BLOG_POSTS.find((p) => p.id === targetId);
+          if (found) {
+            handleOpenArticle(found);
+            setTimeout(() => {
+              const el = document.getElementById(targetId as string);
+              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 150);
+          }
+        }
+      } catch (err) {
+        console.error('Blog URL Parse Error:', err);
+      }
+    };
+
+    checkUrlAndOpen();
+    window.addEventListener('hashchange', checkUrlAndOpen);
+    window.addEventListener('popstate', checkUrlAndOpen);
+
+    const handleCustomOpen = (e: Event) => {
+      const customEvent = e as CustomEvent<string>;
+      const targetId = customEvent.detail;
+      const found = MOCK_BLOG_POSTS.find((p) => p.id === targetId);
+      if (found) {
+        handleOpenArticle(found);
+      }
+    };
+    window.addEventListener('open-blog-post', handleCustomOpen);
+
+    return () => {
+      window.removeEventListener('hashchange', checkUrlAndOpen);
+      window.removeEventListener('popstate', checkUrlAndOpen);
+      window.removeEventListener('open-blog-post', handleCustomOpen);
+    };
+  }, []);
+
   // Handle liking / unliking an article
   const handleToggleLike = (postId: string, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
@@ -119,15 +172,6 @@ export const BlogSection: React.FC = () => {
           </div>
         </div>
 
-        {/* AdSense Native Responsive Leaderboard Banner Slot */}
-        <div className="my-6 p-4 rounded-2xl bg-[#FAF8F5] border border-[#D4AF37]/30 text-center text-xs text-slate-400 font-medium shadow-inner flex flex-col items-center justify-center gap-1">
-          <span className="text-[10px] uppercase font-bold text-[#059669] tracking-wider">
-            مساحة إعلانية معتمدة Google AdSense Responsive Slot
-          </span>
-          <div className="w-full max-w-2xl h-14 bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 rounded-xl flex items-center justify-center text-slate-500 text-xs border border-dashed border-slate-300">
-            إعلان موصى به لعشاق العقارات والحلول الرقمية الفاخرة
-          </div>
-        </div>
 
         {/* Blog Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -139,7 +183,8 @@ export const BlogSection: React.FC = () => {
             return (
               <article
                 key={post.id}
-                className="bg-[#FAF8F5] rounded-3xl border border-[#D4AF37]/30 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                id={post.id}
+                className="bg-[#FAF8F5] rounded-3xl border border-[#D4AF37]/30 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between scroll-mt-24"
               >
                 <div className="relative aspect-[16/9] bg-[#18181B] overflow-hidden">
                   <img
@@ -319,16 +364,6 @@ export const BlogSection: React.FC = () => {
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover"
                 />
-              </div>
-
-              {/* In-Article AdSense Native Card */}
-              <div className="p-4 bg-gradient-to-r from-emerald-50 via-[#FAF8F5] to-emerald-50 border border-emerald-200/80 rounded-2xl text-center text-xs text-emerald-900 shadow-sm">
-                <span className="text-[10px] uppercase font-bold text-[#059669] block mb-0.5">
-                  إعلان موصى به متوافق مع Google AdSense
-                </span>
-                <span className="font-bold">
-                  هل تبحث عن تقييم عقارك أو حجز استشارة ملكية خاصة؟ استخدم حاسبة التمويل أو تواصل مع مستشار النخبة فوراً.
-                </span>
               </div>
 
               {/* Structured Article Body */}

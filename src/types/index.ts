@@ -64,4 +64,4 @@ export interface BlogPost {
 
 export type Currency = 'SAR' | 'AED' | 'USD';
 
-export type LegalTabType = 'privacy' | 'terms' | 'about' | 'contact' | 'domain_verify';
+export type LegalTabType = 'privacy' | 'terms' | 'about' | 'contact' | 'domain_verify' | 'sitemap';

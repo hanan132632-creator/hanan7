@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { CategoryFilterBar } from './components/CategoryFilterBar';
@@ -148,6 +148,93 @@ export default function App() {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  // Google Search & Direct Sitemap Navigation Router
+  useEffect(() => {
+    const handleRouteFromUrl = () => {
+      try {
+        const url = new URL(window.location.href);
+        const pathname = url.pathname.toLowerCase();
+        const hash = window.location.hash.replace('#', '').toLowerCase();
+        const searchParams = url.searchParams;
+
+        const tabParam = (searchParams.get('tab') || searchParams.get('page'))?.toLowerCase();
+        const postParam = (searchParams.get('post') || searchParams.get('article'))?.toLowerCase();
+        const prodParam = (searchParams.get('product') || searchParams.get('prop'))?.toLowerCase();
+        const sectionParam = searchParams.get('section')?.toLowerCase();
+
+        // 1. Sitemap Entry from Google or direct link
+        if (
+          pathname === '/sitemap' ||
+          pathname === '/sitemap.html' ||
+          hash === 'sitemap' ||
+          tabParam === 'sitemap'
+        ) {
+          setLegalTabModal('sitemap');
+          return;
+        }
+
+        // 2. Legal / Compliance Pages Entry
+        const validTabs: LegalTabType[] = ['about', 'privacy', 'terms', 'contact', 'domain_verify'];
+        for (const tab of validTabs) {
+          if (pathname === `/${tab}` || hash === tab || tabParam === tab) {
+            setLegalTabModal(tab);
+            return;
+          }
+        }
+
+        // 3. Direct Article Entry (e.g. ?post=post-1, #post-1, /blog/post-1)
+        let targetPostId = postParam;
+        if (!targetPostId && hash.startsWith('post-')) {
+          targetPostId = hash;
+        }
+        if (!targetPostId && (pathname.startsWith('/blog/') || pathname.startsWith('/post/'))) {
+          const parts = pathname.split('/');
+          targetPostId = parts[parts.length - 1];
+        }
+
+        if (targetPostId) {
+          window.dispatchEvent(new CustomEvent('open-blog-post', { detail: targetPostId }));
+          setTimeout(() => {
+            const el = document.getElementById(targetPostId as string) || document.getElementById('blog-section');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 250);
+          return;
+        }
+
+        // 4. Direct Product Entry (e.g. ?product=prop-01, #prop-01)
+        let targetProdId = prodParam;
+        if (!targetProdId && (hash.startsWith('prop-') || hash.startsWith('game-') || hash.startsWith('blueprint-') || hash.startsWith('canva-') || hash.startsWith('royal-'))) {
+          targetProdId = hash;
+        }
+        if (targetProdId) {
+          const foundProd = MOCK_PRODUCTS.find((p) => p.id.toLowerCase() === targetProdId);
+          if (foundProd) {
+            setQuickViewProduct(foundProd);
+            return;
+          }
+        }
+
+        // 5. Section Scrolling
+        if (sectionParam === 'catalog' || hash === 'catalog') {
+          setTimeout(scrollToCatalog, 150);
+        } else if (sectionParam === 'blog-section' || hash === 'blog-section') {
+          setTimeout(scrollToBlog, 150);
+        }
+      } catch (e) {
+        console.error('URL Route Error:', e);
+      }
+    };
+
+    handleRouteFromUrl();
+    window.addEventListener('hashchange', handleRouteFromUrl);
+    window.addEventListener('popstate', handleRouteFromUrl);
+
+    return () => {
+      window.removeEventListener('hashchange', handleRouteFromUrl);
+      window.removeEventListener('popstate', handleRouteFromUrl);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-slate-800 font-sans flex flex-col dir-rtl">
@@ -341,6 +428,24 @@ export default function App() {
         <LegalPageModal
           initialTab={legalTabModal}
           onClose={() => setLegalTabModal(null)}
+          onSelectPost={(postId) => {
+            setLegalTabModal(null);
+            window.location.hash = postId;
+            window.dispatchEvent(new CustomEvent('open-blog-post', { detail: postId }));
+            setTimeout(() => {
+              const el = document.getElementById(postId);
+              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+          }}
+          onNavigateToHash={(hash) => {
+            setLegalTabModal(null);
+            window.location.hash = hash;
+            const targetId = hash.replace('#', '');
+            setTimeout(() => {
+              const el = document.getElementById(targetId);
+              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+          }}
         />
       )}
 

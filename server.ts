@@ -3,6 +3,7 @@ import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
 import path from "path";
+import fs from "fs";
 import { fileURLToPath } from "url";
 
 dotenv.config();
@@ -77,6 +78,72 @@ app.post("/api/contact", (req, res) => {
     success: true,
     message: "تم استلام طلبك الملكي بنجاح! سيقوم مستشار النخبة بالتواصل معك في أقرب وقت.",
   });
+});
+
+// Explicit Sitemap.xml Route for Search Engines and AdSense Verification
+app.get("/sitemap.xml", (req, res) => {
+  try {
+    const sitemapPath = path.resolve(__dirname, "public", "sitemap.xml");
+    if (fs.existsSync(sitemapPath)) {
+      const content = fs.readFileSync(sitemapPath, "utf-8");
+      res.setHeader("Content-Type", "application/xml; charset=utf-8");
+      res.setHeader("Cache-Control", "public, max-age=3600");
+      return res.status(200).send(content);
+    }
+    return res.status(404).type("text/plain").send("Sitemap.xml not found");
+  } catch (err) {
+    console.error("Error reading sitemap.xml:", err);
+    return res.status(500).type("text/plain").send("Error reading sitemap.xml");
+  }
+});
+
+// Explicit Sitemap.xsl Route for Browser Visual Rendering of Sitemap.xml
+app.get("/sitemap.xsl", (req, res) => {
+  try {
+    const xslPath = path.resolve(__dirname, "public", "sitemap.xsl");
+    if (fs.existsSync(xslPath)) {
+      const content = fs.readFileSync(xslPath, "utf-8");
+      res.setHeader("Content-Type", "text/xsl; charset=utf-8");
+      res.setHeader("Cache-Control", "public, max-age=3600");
+      return res.status(200).send(content);
+    }
+    return res.status(404).type("text/plain").send("Sitemap.xsl not found");
+  } catch (err) {
+    console.error("Error reading sitemap.xsl:", err);
+    return res.status(500).type("text/plain").send("Error reading sitemap.xsl");
+  }
+});
+
+// Explicit Standalone HTML Sitemap Route
+app.get(["/sitemap.html", "/sitemap-index"], (req, res) => {
+  try {
+    const htmlPath = path.resolve(__dirname, "public", "sitemap.html");
+    if (fs.existsSync(htmlPath)) {
+      const content = fs.readFileSync(htmlPath, "utf-8");
+      res.setHeader("Content-Type", "text/html; charset=utf-8");
+      res.setHeader("Cache-Control", "public, max-age=3600");
+      return res.status(200).send(content);
+    }
+    return res.status(404).type("text/plain").send("Sitemap.html not found");
+  } catch (err) {
+    console.error("Error reading sitemap.html:", err);
+    return res.status(500).type("text/plain").send("Error reading sitemap.html");
+  }
+});
+
+// Explicit Robots.txt Route
+app.get("/robots.txt", (req, res) => {
+  try {
+    const robotsPath = path.resolve(__dirname, "public", "robots.txt");
+    if (fs.existsSync(robotsPath)) {
+      const content = fs.readFileSync(robotsPath, "utf-8");
+      res.setHeader("Content-Type", "text/plain; charset=utf-8");
+      return res.status(200).send(content);
+    }
+    return res.status(404).type("text/plain").send("Robots.txt not found");
+  } catch (err) {
+    return res.status(500).type("text/plain").send("Error reading robots.txt");
+  }
 });
 
 async function startServer() {

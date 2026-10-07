@@ -39,7 +39,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const isRealEstate = product.category === 'real_estate';
 
   return (
-    <div className="group relative rounded-3xl bg-white border border-[#D4AF37]/30 shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col h-full hover:-translate-y-1">
+    <div id={product.id} className="group relative rounded-3xl bg-white border border-[#D4AF37]/30 shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col h-full hover:-translate-y-1 scroll-mt-24">
       
       {/* Top Image Container */}
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#18181B]">
