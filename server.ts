@@ -101,21 +101,19 @@ app.get("/sitemap.xml", (req, res) => {
   try {
     let content = getStaticAsset("sitemap.xml");
     if (content) {
-      const host = req.get("host") || "ais-dev-on77w5qxpaes63voiv5adt-245902106769.europe-west2.run.app";
-      const protocol = req.protocol === "http" && req.get("x-forwarded-proto") ? req.get("x-forwarded-proto") : (req.protocol || "https");
-      const currentOrigin = `${protocol}://${host}`;
-      content = content.replace(/https:\/\/[a-zA-Z0-9.\-_:]+\.europe-west2\.run\.app/g, currentOrigin);
+      // Ensure all URLs strictly point to the public domain https://hanan.pro without any authentication gate
+      content = content.replace(/https:\/\/[a-zA-Z0-9.\-_:]+\.europe-west2\.run\.app/g, "https://hanan.pro");
       res.setHeader("Content-Type", "application/xml; charset=utf-8");
       res.setHeader("Cache-Control", "public, max-age=3600");
       return res.status(200).send(content);
     }
     // Fallback XML if file is not on disk yet
     res.setHeader("Content-Type", "application/xml; charset=utf-8");
-    return res.status(200).send(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${req.protocol}://${req.get('host')}/</loc><priority>1.0</priority></url></urlset>`);
+    return res.status(200).send(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://hanan.pro/</loc><priority>1.0</priority></url></urlset>`);
   } catch (err) {
     console.error("Error reading sitemap.xml:", err);
     res.setHeader("Content-Type", "application/xml; charset=utf-8");
-    return res.status(200).send(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${req.protocol}://${req.get('host')}/</loc><priority>1.0</priority></url></urlset>`);
+    return res.status(200).send(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://hanan.pro/</loc><priority>1.0</priority></url></urlset>`);
   }
 });
 
@@ -140,10 +138,7 @@ app.get(["/sitemap.html", "/sitemap-index", "/sitemap"], (req, res) => {
   try {
     let content = getStaticAsset("sitemap.html");
     if (content) {
-      const host = req.get("host") || "ais-dev-on77w5qxpaes63voiv5adt-245902106769.europe-west2.run.app";
-      const protocol = req.protocol === "http" && req.get("x-forwarded-proto") ? req.get("x-forwarded-proto") : (req.protocol || "https");
-      const currentOrigin = `${protocol}://${host}`;
-      content = content.replace(/https:\/\/[a-zA-Z0-9.\-_:]+\.europe-west2\.run\.app/g, currentOrigin);
+      content = content.replace(/https:\/\/[a-zA-Z0-9.\-_:]+\.europe-west2\.run\.app/g, "https://hanan.pro");
       res.setHeader("Content-Type", "text/html; charset=utf-8");
       res.setHeader("Cache-Control", "public, max-age=3600");
       return res.status(200).send(content);
@@ -160,20 +155,17 @@ app.get(["/sitemap.html", "/sitemap-index", "/sitemap"], (req, res) => {
 app.get("/robots.txt", (req, res) => {
   try {
     let content = getStaticAsset("robots.txt");
-    const host = req.get("host") || "ais-dev-on77w5qxpaes63voiv5adt-245902106769.europe-west2.run.app";
-    const protocol = req.protocol === "http" && req.get("x-forwarded-proto") ? req.get("x-forwarded-proto") : (req.protocol || "https");
-    const currentOrigin = `${protocol}://${host}`;
     if (content) {
-      content = content.replace(/https:\/\/[a-zA-Z0-9.\-_:]+\.europe-west2\.run\.app/g, currentOrigin);
+      content = content.replace(/https:\/\/[a-zA-Z0-9.\-_:]+\.europe-west2\.run\.app/g, "https://hanan.pro");
       res.setHeader("Content-Type", "text/plain; charset=utf-8");
       return res.status(200).send(content);
     }
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
-    return res.status(200).send(`User-agent: *\nAllow: /\nSitemap: ${currentOrigin}/sitemap.xml`);
+    return res.status(200).send(`User-agent: *\nAllow: /\nSitemap: https://hanan.pro/sitemap.xml\n`);
   } catch (err) {
     console.error("Error reading robots.txt:", err);
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
-    return res.status(200).send(`User-agent: *\nAllow: /\nSitemap: ${req.protocol}://${req.get('host')}/sitemap.xml`);
+    return res.status(200).send(`User-agent: *\nAllow: /\nSitemap: https://hanan.pro/sitemap.xml\n`);
   }
 });
 

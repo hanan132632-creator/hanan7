@@ -293,7 +293,7 @@ export const LegalPageModal: React.FC<LegalPageModalProps> = ({
 
           {/* TAB 6: SITEMAP & XML FEED */}
           {activeTab === 'sitemap' && (() => {
-            const origin = typeof window !== 'undefined' ? window.location.origin : 'https://ais-pre-on77w5qxpaes63voiv5adt-245902106769.europe-west2.run.app';
+            const origin = typeof window !== 'undefined' ? window.location.origin : 'https://hanan.pro';
 
             const corePages = [
               { id: 'home', title: 'الصفحة الرئيسية والواجهة الملكية', path: '/', hash: '#', fullUrl: `${origin}/`, desc: 'الواجهة الملكية وحاسبة التمويل وأحدث المعروضات', priority: '1.0', changefreq: 'daily', actionType: 'scroll-home' },

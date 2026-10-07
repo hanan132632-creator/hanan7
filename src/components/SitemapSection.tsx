@@ -35,7 +35,7 @@ export const SitemapSection: React.FC<SitemapSectionProps> = ({
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [allCopied, setAllCopied] = useState(false);
 
-  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://ais-dev-on77w5qxpaes63voiv5adt-245902106769.europe-west2.run.app';
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://hanan.pro';
 
   // 1. Core Pages & Sections (10)
   const corePages = useMemo(() => [

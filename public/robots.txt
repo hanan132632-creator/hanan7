@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ais-dev-on77w5qxpaes63voiv5adt-245902106769.europe-west2.run.app/sitemap.xml
+Sitemap: https://hanan.pro/sitemap.xml
