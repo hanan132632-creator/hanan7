@@ -30,6 +30,7 @@ interface HeaderProps {
   onOpenLegalTab: (tab: any) => void;
   onScrollToBlog?: () => void;
   onScrollToCatalog?: () => void;
+  onScrollToSitemap?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -46,6 +47,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenLegalTab,
   onScrollToBlog,
   onScrollToCatalog,
+  onScrollToSitemap,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -119,9 +121,12 @@ export const Header: React.FC<HeaderProps> = ({
             <span className="text-white/40">|</span>
 
             <button
-              onClick={() => onOpenLegalTab('sitemap')}
-              className="hover:text-[#FAD961] transition-colors whitespace-nowrap font-extrabold flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-white/5 border border-white/10 hover:border-[#D4AF37]/50"
-              title="عرض خريطة الموقع الكاملة وفهرس الروابط"
+              onClick={() => {
+                if (onScrollToSitemap) onScrollToSitemap();
+                else onOpenLegalTab('sitemap');
+              }}
+              className="hover:text-[#FAD961] transition-colors whitespace-nowrap font-extrabold flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 hover:border-[#D4AF37]/50 shadow-sm"
+              title="عرض خريطة الموقع وفهرس الروابط الـ 37 مباشرة"
             >
               <Compass className="w-3.5 h-3.5 text-[#FAD961]" />
               <span>خريطة الموقع</span>
@@ -340,7 +345,11 @@ export const Header: React.FC<HeaderProps> = ({
               <span>المدونة ({MOCK_BLOG_POSTS.length})</span>
             </button>
             <button
-              onClick={() => { setMobileMenuOpen(false); onOpenLegalTab('sitemap'); }}
+              onClick={() => {
+                setMobileMenuOpen(false);
+                if (onScrollToSitemap) onScrollToSitemap();
+                else onOpenLegalTab('sitemap');
+              }}
               className="flex flex-col items-center gap-1 text-[11px] text-[#FAD961] font-bold"
             >
               <Compass className="w-4 h-4 text-[#D4AF37]" />

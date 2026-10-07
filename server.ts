@@ -80,69 +80,87 @@ app.post("/api/contact", (req, res) => {
   });
 });
 
+// Robust file locator for public / dist assets to prevent any 404
+function getStaticAsset(fileName: string): string | null {
+  const candidates = [
+    path.resolve(__dirname, "public", fileName),
+    path.resolve(__dirname, "dist", fileName),
+    path.resolve(process.cwd(), "public", fileName),
+    path.resolve(process.cwd(), "dist", fileName),
+  ];
+  for (const candidate of candidates) {
+    if (fs.existsSync(candidate)) {
+      return fs.readFileSync(candidate, "utf-8");
+    }
+  }
+  return null;
+}
+
 // Explicit Sitemap.xml Route for Search Engines and AdSense Verification
 app.get("/sitemap.xml", (req, res) => {
   try {
-    const sitemapPath = path.resolve(__dirname, "public", "sitemap.xml");
-    if (fs.existsSync(sitemapPath)) {
-      const content = fs.readFileSync(sitemapPath, "utf-8");
+    const content = getStaticAsset("sitemap.xml");
+    if (content) {
       res.setHeader("Content-Type", "application/xml; charset=utf-8");
       res.setHeader("Cache-Control", "public, max-age=3600");
       return res.status(200).send(content);
     }
-    return res.status(404).type("text/plain").send("Sitemap.xml not found");
+    // Fallback XML if file is not on disk yet
+    res.setHeader("Content-Type", "application/xml; charset=utf-8");
+    return res.status(200).send(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${req.protocol}://${req.get('host')}/</loc><priority>1.0</priority></url></urlset>`);
   } catch (err) {
     console.error("Error reading sitemap.xml:", err);
-    return res.status(500).type("text/plain").send("Error reading sitemap.xml");
+    res.setHeader("Content-Type", "application/xml; charset=utf-8");
+    return res.status(200).send(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${req.protocol}://${req.get('host')}/</loc><priority>1.0</priority></url></urlset>`);
   }
 });
 
 // Explicit Sitemap.xsl Route for Browser Visual Rendering of Sitemap.xml
 app.get("/sitemap.xsl", (req, res) => {
   try {
-    const xslPath = path.resolve(__dirname, "public", "sitemap.xsl");
-    if (fs.existsSync(xslPath)) {
-      const content = fs.readFileSync(xslPath, "utf-8");
+    const content = getStaticAsset("sitemap.xsl");
+    if (content) {
       res.setHeader("Content-Type", "text/xsl; charset=utf-8");
       res.setHeader("Cache-Control", "public, max-age=3600");
       return res.status(200).send(content);
     }
-    return res.status(404).type("text/plain").send("Sitemap.xsl not found");
+    return res.status(200).type("text/xsl").send(`<?xml version="1.0" encoding="UTF-8"?><xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><xsl:template match="/"></xsl:template></xsl:stylesheet>`);
   } catch (err) {
     console.error("Error reading sitemap.xsl:", err);
-    return res.status(500).type("text/plain").send("Error reading sitemap.xsl");
+    return res.status(200).type("text/xsl").send(`<?xml version="1.0" encoding="UTF-8"?><xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><xsl:template match="/"></xsl:template></xsl:stylesheet>`);
   }
 });
 
-// Explicit Standalone HTML Sitemap Route
-app.get(["/sitemap.html", "/sitemap-index"], (req, res) => {
+// Explicit Standalone HTML Sitemap Route & Direct /sitemap Alias
+app.get(["/sitemap.html", "/sitemap-index", "/sitemap"], (req, res) => {
   try {
-    const htmlPath = path.resolve(__dirname, "public", "sitemap.html");
-    if (fs.existsSync(htmlPath)) {
-      const content = fs.readFileSync(htmlPath, "utf-8");
+    const content = getStaticAsset("sitemap.html");
+    if (content) {
       res.setHeader("Content-Type", "text/html; charset=utf-8");
       res.setHeader("Cache-Control", "public, max-age=3600");
       return res.status(200).send(content);
     }
-    return res.status(404).type("text/plain").send("Sitemap.html not found");
+    // Redirect to SPA sitemap anchor if HTML file is not found
+    return res.redirect("/#sitemap-section");
   } catch (err) {
     console.error("Error reading sitemap.html:", err);
-    return res.status(500).type("text/plain").send("Error reading sitemap.html");
+    return res.redirect("/#sitemap-section");
   }
 });
 
 // Explicit Robots.txt Route
 app.get("/robots.txt", (req, res) => {
   try {
-    const robotsPath = path.resolve(__dirname, "public", "robots.txt");
-    if (fs.existsSync(robotsPath)) {
-      const content = fs.readFileSync(robotsPath, "utf-8");
+    const content = getStaticAsset("robots.txt");
+    if (content) {
       res.setHeader("Content-Type", "text/plain; charset=utf-8");
       return res.status(200).send(content);
     }
-    return res.status(404).type("text/plain").send("Robots.txt not found");
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    return res.status(200).send(`User-agent: *\nAllow: /\nSitemap: ${req.protocol}://${req.get('host')}/sitemap.xml`);
   } catch (err) {
-    return res.status(500).type("text/plain").send("Error reading robots.txt");
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    return res.status(200).send(`User-agent: *\nAllow: /\nSitemap: ${req.protocol}://${req.get('host')}/sitemap.xml`);
   }
 });
 

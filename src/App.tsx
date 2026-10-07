@@ -11,6 +11,7 @@ import { FavoritesDrawer } from './components/FavoritesDrawer';
 import { CheckoutModal } from './components/CheckoutModal';
 import { PropertySubmitModal } from './components/PropertySubmitModal';
 import { BlogSection } from './components/BlogSection';
+import { SitemapSection } from './components/SitemapSection';
 import { LegalPageModal } from './components/LegalPageModal';
 import { Footer } from './components/Footer';
 
@@ -149,6 +150,36 @@ export default function App() {
     }
   };
 
+  const scrollToSitemap = () => {
+    const element = document.getElementById('sitemap-section');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      setLegalTabModal('sitemap');
+    }
+  };
+
+  // Global listeners for direct in-app links (Quick View & Mortgage Calculator)
+  useEffect(() => {
+    const handleQuickViewEvent = (e: Event) => {
+      const customEvent = e as CustomEvent<string>;
+      const prodId = customEvent.detail;
+      const found = MOCK_PRODUCTS.find((p) => p.id === prodId);
+      if (found) {
+        setQuickViewProduct(found);
+      }
+    };
+    const handleMortgageEvent = () => {
+      setIsMortgageCalcOpen(true);
+    };
+    window.addEventListener('open-quick-view-product', handleQuickViewEvent);
+    window.addEventListener('open-mortgage-calc', handleMortgageEvent);
+    return () => {
+      window.removeEventListener('open-quick-view-product', handleQuickViewEvent);
+      window.removeEventListener('open-mortgage-calc', handleMortgageEvent);
+    };
+  }, []);
+
   // Google Search & Direct Sitemap Navigation Router
   useEffect(() => {
     const handleRouteFromUrl = () => {
@@ -254,6 +285,7 @@ export default function App() {
         onOpenLegalTab={(tab) => setLegalTabModal(tab)}
         onScrollToBlog={scrollToBlog}
         onScrollToCatalog={scrollToCatalog}
+        onScrollToSitemap={scrollToSitemap}
       />
 
       {/* Hero Section */}
@@ -340,10 +372,25 @@ export default function App() {
       {/* Blog & AdSense Compliance Section */}
       <BlogSection />
 
+      {/* Direct Interactive Sitemap Section (37 Links directly under each other) */}
+      <SitemapSection
+        onOpenLegalTab={(tab) => setLegalTabModal(tab)}
+        onSelectPost={(postId) => {
+          window.dispatchEvent(new CustomEvent('open-blog-post', { detail: postId }));
+          setTimeout(() => {
+            const el = document.getElementById('blog-section');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }, 150);
+        }}
+        onSelectProduct={(product) => setQuickViewProduct(product)}
+        onScrollToCatalog={scrollToCatalog}
+      />
+
       {/* Footer */}
       <Footer
         onOpenLegalTab={(tab) => setLegalTabModal(tab)}
         onOpenPropertySubmit={() => setIsPropertySubmitOpen(true)}
+        onScrollToSitemap={scrollToSitemap}
       />
 
       {/* --- MODALS & DRAWERS --- */}

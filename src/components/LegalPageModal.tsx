@@ -296,16 +296,16 @@ export const LegalPageModal: React.FC<LegalPageModalProps> = ({
             const origin = typeof window !== 'undefined' ? window.location.origin : 'https://ais-pre-on77w5qxpaes63voiv5adt-245902106769.europe-west2.run.app';
 
             const corePages = [
-              { id: 'home', title: 'الصفحة الرئيسية والواجهة الملكية', path: '/', hash: '#', fullUrl: `${origin}/`, desc: 'الواجهة الملكية وحاسبة التمويل وأحدث المعروضات', priority: '1.0', changefreq: 'daily' },
-              { id: 'sitemap-html', title: 'فهرس خريطة الموقع المباشر (HTML Sitemap)', path: '/sitemap.html', hash: '', fullUrl: `${origin}/sitemap.html`, desc: 'فهرس متكامل معتمد وقابل للتصفح لكافة محركات البحث', priority: '0.95', changefreq: 'daily' },
-              { id: 'catalog', title: 'كتالوج العقارات والمتجر الشامل', path: '/?section=catalog', hash: '#catalog', fullUrl: `${origin}/?section=catalog`, desc: 'الفلل والقصور والمنتجات الرقمية وألعاب الجمعات', priority: '0.90', changefreq: 'daily' },
-              { id: 'blog-section', title: 'مدونة النخبة العقارية 2026', path: '/?section=blog-section', hash: '#blog-section', fullUrl: `${origin}/?section=blog-section`, desc: 'تحليلات عقارية متقدمة (22 مقالاً موثوقاً EEAT)', priority: '0.95', changefreq: 'daily' },
-              { id: 'about', title: 'من نحن (نبذة عن المنصة الملكية)', path: '/?tab=about', hash: '#about', fullUrl: `${origin}/?tab=about`, desc: 'هوية ورؤية منصة النخبة ومعايير الجودة', priority: '0.80', changefreq: 'monthly' },
-              { id: 'privacy', title: 'سياسة الخصوصية وحماية البيانات', path: '/?tab=privacy', hash: '#privacy', fullUrl: `${origin}/?tab=privacy`, desc: 'حماية البيانات وحقوق الزوار وسياسة الكوكيز', priority: '0.80', changefreq: 'monthly' },
-              { id: 'terms', title: 'الشروط والأحكام والتعاملات', path: '/?tab=terms', hash: '#terms', fullUrl: `${origin}/?tab=terms`, desc: 'قواعد التداول وتراخيص الاستخدام والتحميل', priority: '0.80', changefreq: 'monthly' },
-              { id: 'contact', title: 'اتصل بنا ورعاية العملاء 24/7', path: '/?tab=contact', hash: '#contact', fullUrl: `${origin}/?tab=contact`, desc: 'قنوات التواصل المباشر وطلب المعاينات', priority: '0.80', changefreq: 'monthly' },
-              { id: 'domain_verify', title: 'توثيق ملكية الدومين وأدسنس', path: '/?tab=domain_verify', hash: '#domain_verify', fullUrl: `${origin}/?tab=domain_verify`, desc: 'شهادة التوثيق والامتثال الرسمي لـ Google AdSense', priority: '0.85', changefreq: 'monthly' },
-              { id: 'sitemap', title: 'ملف خريطة الموقع الرسمي XML', path: '/sitemap.xml', hash: '', fullUrl: `${origin}/sitemap.xml`, desc: 'خلاصة الفهرسة الرسمية لمحركات البحث والسيو', priority: '0.90', changefreq: 'daily', isXml: true },
+              { id: 'home', title: 'الصفحة الرئيسية والواجهة الملكية', path: '/', hash: '#', fullUrl: `${origin}/`, desc: 'الواجهة الملكية وحاسبة التمويل وأحدث المعروضات', priority: '1.0', changefreq: 'daily', actionType: 'scroll-home' },
+              { id: 'catalog', title: 'كتالوج العقارات والمتجر الشامل', path: '/?section=catalog', hash: '#catalog', fullUrl: `${origin}/?section=catalog`, desc: 'الفلل والقصور والمنتجات الرقمية وألعاب الجمعات', priority: '0.90', changefreq: 'daily', actionType: 'scroll-catalog' },
+              { id: 'blog-section', title: 'مدونة النخبة العقارية 2026', path: '/?section=blog-section', hash: '#blog-section', fullUrl: `${origin}/?section=blog-section`, desc: 'تحليلات عقارية متقدمة (22 مقالاً موثوقاً EEAT)', priority: '0.95', changefreq: 'daily', actionType: 'scroll-blog' },
+              { id: 'about', title: 'من نحن (نبذة عن المنصة الملكية)', path: '/?tab=about', hash: '#about', fullUrl: `${origin}/?tab=about`, desc: 'هوية ورؤية منصة النخبة ومعايير الجودة', priority: '0.80', changefreq: 'monthly', tabKey: 'about' },
+              { id: 'privacy', title: 'سياسة الخصوصية وحماية البيانات', path: '/?tab=privacy', hash: '#privacy', fullUrl: `${origin}/?tab=privacy`, desc: 'حماية البيانات وحقوق الزوار وسياسة الكوكيز', priority: '0.80', changefreq: 'monthly', tabKey: 'privacy' },
+              { id: 'terms', title: 'الشروط والأحكام والتعاملات', path: '/?tab=terms', hash: '#terms', fullUrl: `${origin}/?tab=terms`, desc: 'قواعد التداول وتراخيص الاستخدام والتحميل', priority: '0.80', changefreq: 'monthly', tabKey: 'terms' },
+              { id: 'contact', title: 'اتصل بنا ورعاية العملاء 24/7', path: '/?tab=contact', hash: '#contact', fullUrl: `${origin}/?tab=contact`, desc: 'قنوات التواصل المباشر وطلب المعاينات', priority: '0.80', changefreq: 'monthly', tabKey: 'contact' },
+              { id: 'domain_verify', title: 'توثيق ملكية الدومين وأدسنس', path: '/?tab=domain_verify', hash: '#domain_verify', fullUrl: `${origin}/?tab=domain_verify`, desc: 'شهادة التوثيق والامتثال الرسمي لـ Google AdSense', priority: '0.85', changefreq: 'monthly', tabKey: 'domain_verify' },
+              { id: 'calculator', title: 'حاسبة التمويل العقاري التقديرية', path: '/?calculator=mortgage', hash: '#calculator', fullUrl: `${origin}/?calculator=mortgage`, desc: 'حساب الأقساط الشهرية لفلل وقصور النخبة', priority: '0.85', changefreq: 'daily', actionType: 'open-calc' },
+              { id: 'sitemap-interactive', title: 'خريطة الموقع التفاعلية الشاملة', path: '/?tab=sitemap', hash: '#sitemap', fullUrl: `${origin}/?tab=sitemap`, desc: 'الفهرس المعتمد لكافة روابط المنصة الـ 37', priority: '0.90', changefreq: 'daily', tabKey: 'sitemap' },
             ];
 
             const blogUrls = MOCK_BLOG_POSTS.map((post, idx) => ({
@@ -375,30 +375,48 @@ ${productUrls.map(pr => `  <url>
 
 </urlset>`;
 
-            const handleNavigate = (hash: string, isXml?: boolean) => {
-              if (isXml) {
-                window.open('/sitemap.xml', '_blank');
+            const handleNavigate = (item: any) => {
+              if (item.tabKey && item.tabKey !== 'sitemap') {
+                setActiveTab(item.tabKey as LegalTabType);
+                return;
+              }
+              if (item.actionType === 'open-calc') {
+                onClose();
+                window.dispatchEvent(new CustomEvent('open-mortgage-calc'));
+                return;
+              }
+              if (item.actionType === 'scroll-home') {
+                onClose();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+              }
+              if (item.actionType === 'scroll-catalog') {
+                onClose();
+                const el = document.getElementById('catalog');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                return;
+              }
+              if (item.actionType === 'scroll-blog') {
+                onClose();
+                const el = document.getElementById('blog-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                return;
+              }
+              if (item.id && item.id.startsWith('post-')) {
+                onClose();
+                window.dispatchEvent(new CustomEvent('open-blog-post', { detail: item.id }));
+                setTimeout(() => {
+                  const el = document.getElementById('blog-section');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }, 150);
+                return;
+              }
+              if (item.id && (item.id.startsWith('prop-') || item.id.startsWith('game-') || item.id.startsWith('blueprint-') || item.id.startsWith('canva-') || item.id.startsWith('royal-'))) {
+                onClose();
+                window.dispatchEvent(new CustomEvent('open-quick-view-product', { detail: item.id }));
                 return;
               }
               onClose();
-              if (hash.startsWith('#post-')) {
-                const postId = hash.replace('#', '');
-                window.location.hash = hash;
-                window.dispatchEvent(new CustomEvent('open-blog-post', { detail: postId }));
-                setTimeout(() => {
-                  const el = document.getElementById(postId);
-                  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 150);
-              } else if (hash === '#' || hash === '') {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              } else {
-                window.location.hash = hash;
-                setTimeout(() => {
-                  const targetId = hash.replace('#', '');
-                  const el = document.getElementById(targetId);
-                  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 100);
-              }
             };
 
             const handleCopyUrl = (url: string, key: string) => {
@@ -471,51 +489,31 @@ ${productUrls.map(pr => `  <url>
 
                     {/* Action Buttons Top Bar */}
                     <div className="flex flex-wrap items-center gap-2 shrink-0">
-                      <a
-                        href="/sitemap.xml"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#059669] to-[#047857] hover:from-[#047857] hover:to-[#065F46] text-white text-xs font-bold transition-all shadow-md shadow-emerald-950/40 border border-emerald-400/30"
-                      >
-                        <ExternalLink className="w-3.5 h-3.5" />
-                        <span>فتح Sitemap.xml الأصلي</span>
-                      </a>
-
-                      <a
-                        href="/sitemap.html"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B89628] hover:from-[#B89628] hover:to-[#997A1E] text-slate-900 text-xs font-bold transition-all shadow-md shadow-amber-950/30 border border-amber-300/40"
-                      >
-                        <ExternalLink className="w-3.5 h-3.5 text-slate-900" />
-                        <span>فهرس HTML المباشر</span>
-                      </a>
-
-                      <button
-                        onClick={handleDownloadXmlFile}
-                        className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#18181B] hover:bg-[#27272A] border border-[#D4AF37]/50 text-[#FAD961] text-xs font-bold transition-all shadow-sm"
-                        title="تنزيل ملف الخريطة بصيغة .xml"
-                      >
-                        <Download className="w-3.5 h-3.5 text-[#D4AF37]" />
-                        <span>تنزيل XML</span>
-                      </button>
-
                       <button
                         onClick={handleCopyAll}
-                        className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#27272A] hover:bg-[#3F3F46] border border-white/20 text-white text-xs font-bold transition-all"
+                        className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B89628] hover:from-[#B89628] hover:to-[#997A1E] text-slate-900 text-xs font-bold transition-all shadow-md shadow-amber-950/30 border border-amber-300/40"
                         title="نسخ جميع روابط الموقع الـ 37 دفعة واحدة"
                       >
                         {allUrlsCopied ? (
                           <>
-                            <Check className="w-3.5 h-3.5 text-emerald-400" />
-                            <span className="text-emerald-400">تم نسخ الـ 37 رابطاً!</span>
+                            <Check className="w-3.5 h-3.5 text-slate-900" />
+                            <span className="text-slate-900 font-bold">تم نسخ الـ 37 رابطاً!</span>
                           </>
                         ) : (
                           <>
-                            <Copy className="w-3.5 h-3.5 text-[#FAD961]" />
-                            <span>نسخ كافة الروابط</span>
+                            <Copy className="w-3.5 h-3.5 text-slate-900" />
+                            <span>نسخ كافة الروابط (37)</span>
                           </>
                         )}
+                      </button>
+
+                      <button
+                        onClick={handleDownloadXmlFile}
+                        className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#059669] hover:bg-[#047857] border border-emerald-400/30 text-white text-xs font-bold transition-all shadow-md shadow-emerald-950/40"
+                        title="تنزيل ملف الخريطة بصيغة .xml على جهازك مباشرة"
+                      >
+                        <Download className="w-3.5 h-3.5 text-white" />
+                        <span>تنزيل sitemap.xml</span>
                       </button>
                     </div>
                   </div>
@@ -669,7 +667,7 @@ ${productUrls.map(pr => `  <url>
                                     href={item.fullUrl}
                                     onClick={(e) => {
                                       e.preventDefault();
-                                      handleNavigate(item.hash, item.isXml);
+                                      handleNavigate(item);
                                     }}
                                     className="text-[11px] font-mono text-[#059669] hover:text-[#047857] hover:underline dir-ltr text-right truncate flex items-center gap-1 font-semibold"
                                     title={item.fullUrl}
@@ -688,7 +686,7 @@ ${productUrls.map(pr => `  <url>
                                     </button>
 
                                     <button
-                                      onClick={() => handleNavigate(item.hash, item.isXml)}
+                                      onClick={() => handleNavigate(item)}
                                       className="px-2.5 py-1 rounded-lg bg-[#064E3B] hover:bg-[#059669] text-white text-[10px] font-bold transition-all flex items-center gap-1"
                                     >
                                       <span>انتقال</span>
@@ -748,7 +746,7 @@ ${productUrls.map(pr => `  <url>
                                     href={post.fullUrl}
                                     onClick={(e) => {
                                       e.preventDefault();
-                                      handleNavigate(post.hash);
+                                      handleNavigate(post);
                                     }}
                                     className="text-[11px] font-mono text-[#059669] hover:text-[#047857] hover:underline dir-ltr text-right truncate flex items-center gap-1 font-semibold"
                                     title={post.fullUrl}
@@ -767,11 +765,11 @@ ${productUrls.map(pr => `  <url>
                                     </button>
 
                                     <button
-                                      onClick={() => handleNavigate(post.hash)}
-                                      className="px-2.5 py-1 rounded-lg bg-[#064E3B] hover:bg-[#059669] text-white text-[10px] font-bold transition-all flex items-center gap-1"
+                                      onClick={() => handleNavigate(post)}
+                                      className="px-2.5 py-1 rounded-lg bg-[#064E3B] hover:bg-[#059669] text-white text-[10px] font-bold transition-all flex items-center gap-1 shadow-sm"
                                       title="انتقال وقراءة المقال مباشرة"
                                     >
-                                      <span>قراءة</span>
+                                      <span>قراءة مباشرة</span>
                                       <ArrowUpRight className="w-3 h-3" />
                                     </button>
                                   </div>
@@ -822,7 +820,7 @@ ${productUrls.map(pr => `  <url>
                                     href={prod.fullUrl}
                                     onClick={(e) => {
                                       e.preventDefault();
-                                      handleNavigate(prod.hash);
+                                      handleNavigate(prod);
                                     }}
                                     className="text-[11px] font-mono text-[#059669] hover:text-[#047857] hover:underline dir-ltr text-right truncate flex items-center gap-1 font-semibold"
                                     title={prod.fullUrl}
@@ -841,11 +839,11 @@ ${productUrls.map(pr => `  <url>
                                     </button>
 
                                     <button
-                                      onClick={() => handleNavigate(prod.hash)}
-                                      className="px-2.5 py-1 rounded-lg bg-[#064E3B] hover:bg-[#059669] text-white text-[10px] font-bold transition-all flex items-center gap-1"
-                                      title="معاينة المنتج"
+                                      onClick={() => handleNavigate(prod)}
+                                      className="px-2.5 py-1 rounded-lg bg-[#064E3B] hover:bg-[#059669] text-white text-[10px] font-bold transition-all flex items-center gap-1 shadow-sm"
+                                      title="معاينة الأصل مباشرة"
                                     >
-                                      <span>معاينة</span>
+                                      <span>عرض الأصل</span>
                                       <ArrowUpRight className="w-3 h-3" />
                                     </button>
                                   </div>

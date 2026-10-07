@@ -5,11 +5,13 @@ import { LegalTabType } from '../types';
 interface FooterProps {
   onOpenLegalTab: (tab: LegalTabType) => void;
   onOpenPropertySubmit: () => void;
+  onScrollToSitemap?: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
   onOpenLegalTab,
   onOpenPropertySubmit,
+  onScrollToSitemap,
 }) => {
   return (
     <footer className="bg-[#18181B] text-slate-300 border-t-2 border-[#D4AF37]/50 pt-16 pb-8">
@@ -90,23 +92,26 @@ export const Footer: React.FC<FooterProps> = ({
                   الشروط وإثبات ملكية الدومين (Google AdSense)
                 </button>
               </li>
-              <li className="pt-2 flex flex-wrap items-center gap-2">
+              <li className="pt-2">
                 <button 
-                  onClick={() => onOpenLegalTab('sitemap')} 
-                  className="px-2.5 py-1 rounded-lg bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#FAD961] hover:text-[#D4AF37] font-bold text-xs transition-colors flex items-center gap-1.5"
+                  onClick={() => {
+                    if (onScrollToSitemap) {
+                      onScrollToSitemap();
+                    } else {
+                      onOpenLegalTab('sitemap');
+                    }
+                  }} 
+                  className="w-full sm:w-auto px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#D4AF37]/20 to-[#059669]/20 border border-[#D4AF37]/50 text-[#FAD961] hover:text-[#D4AF37] font-bold text-xs transition-colors flex items-center justify-between sm:justify-start gap-2 shadow-sm"
+                  title="عرض خريطة الموقع وفهرس الروابط الـ 37 المباشرة"
                 >
-                  <Compass className="w-3.5 h-3.5 text-[#D4AF37]" />
-                  <span>روابط خريطة الموقع (37 رابطاً)</span>
+                  <div className="flex items-center gap-1.5">
+                    <Compass className="w-4 h-4 text-[#D4AF37]" />
+                    <span>خريطة الموقع وفهرس الروابط</span>
+                  </div>
+                  <span className="w-5 h-5 rounded-full bg-[#D4AF37] text-slate-900 text-[10px] font-black flex items-center justify-center">
+                    37
+                  </span>
                 </button>
-                <a 
-                  href="/sitemap.xml" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="px-2 py-1 rounded-lg bg-emerald-950/60 border border-emerald-500/40 text-emerald-400 hover:text-emerald-300 font-mono text-[11px] font-bold flex items-center gap-1"
-                >
-                  <ExternalLink className="w-3 h-3" />
-                  <span>sitemap.xml</span>
-                </a>
               </li>
             </ul>
           </div>
