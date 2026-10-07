@@ -169,6 +169,24 @@ app.get("/robots.txt", (req, res) => {
   }
 });
 
+// Explicit Ads.txt Route for Google AdSense Verification
+app.get("/ads.txt", (req, res) => {
+  try {
+    const content = getStaticAsset("ads.txt");
+    if (content) {
+      res.setHeader("Content-Type", "text/plain; charset=utf-8");
+      res.setHeader("Cache-Control", "public, max-age=3600");
+      return res.status(200).send(content);
+    }
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    return res.status(200).send("google.com, pub-3298241753177072, DIRECT, f08c47fec0942fa0\n");
+  } catch (err) {
+    console.error("Error reading ads.txt:", err);
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    return res.status(200).send("google.com, pub-3298241753177072, DIRECT, f08c47fec0942fa0\n");
+  }
+});
+
 async function startServer() {
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
