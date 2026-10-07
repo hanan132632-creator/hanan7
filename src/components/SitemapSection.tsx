@@ -200,6 +200,11 @@ export const SitemapSection: React.FC<SitemapSectionProps> = ({
     } else if (item.type === 'product' && item.rawProduct) {
       onSelectProduct(item.rawProduct);
     } else if (item.type === 'page') {
+      if (item.id === 'sitemap-section') {
+        const el = document.getElementById('sitemap-section');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
       if (item.tabKey) {
         onOpenLegalTab(item.tabKey);
       } else if (item.id === 'catalog') {
@@ -414,7 +419,10 @@ ${productItems.map(pr => `  <url>
                         </span>
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap items-center gap-2">
-                            <h4 className="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-[#064E3B] transition-colors">
+                            <h4
+                              onClick={() => handleDirectLinkClick(item)}
+                              className="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-[#064E3B] hover:underline cursor-pointer transition-colors"
+                            >
                               {item.title}
                             </h4>
                             <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-[#059669] border border-emerald-200">
@@ -424,9 +432,17 @@ ${productItems.map(pr => `  <url>
                           <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-1">
                             {item.desc}
                           </p>
-                          <span className="text-[11px] font-mono text-[#059669] dir-ltr text-right block font-medium truncate mt-1">
+                          <a
+                            href={item.url}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleDirectLinkClick(item);
+                            }}
+                            className="text-[11px] font-mono text-[#059669] hover:text-[#064E3B] hover:underline dir-ltr text-right block font-medium truncate mt-1 cursor-pointer"
+                            title="اضغط لفتح الرابط مباشرة"
+                          >
                             {item.url}
-                          </span>
+                          </a>
                         </div>
                       </div>
 
@@ -490,7 +506,10 @@ ${productItems.map(pr => `  <url>
                         </span>
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap items-center gap-2">
-                            <h4 className="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-[#064E3B] transition-colors leading-snug">
+                            <h4
+                              onClick={() => handleDirectLinkClick(post)}
+                              className="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-[#064E3B] hover:underline cursor-pointer transition-colors leading-snug"
+                            >
                               {post.title}
                             </h4>
                             <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">
@@ -502,9 +521,17 @@ ${productItems.map(pr => `  <url>
                             <span>•</span>
                             <span>{post.date}</span>
                           </div>
-                          <span className="text-[11px] font-mono text-[#059669] dir-ltr text-right block font-medium truncate mt-1">
+                          <a
+                            href={post.url}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleDirectLinkClick(post);
+                            }}
+                            className="text-[11px] font-mono text-[#059669] hover:text-[#064E3B] hover:underline dir-ltr text-right block font-medium truncate mt-1 cursor-pointer"
+                            title="اضغط لفتح وقراءة المقال مباشرة"
+                          >
                             {post.url}
-                          </span>
+                          </a>
                         </div>
                       </div>
 
@@ -568,16 +595,27 @@ ${productItems.map(pr => `  <url>
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap items-center gap-2">
-                            <h4 className="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-[#064E3B] transition-colors leading-snug">
+                            <h4
+                              onClick={() => handleDirectLinkClick(prod)}
+                              className="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-[#064E3B] hover:underline cursor-pointer transition-colors leading-snug"
+                            >
                               {prod.title}
                             </h4>
                             <span className="text-[10px] text-[#059669] font-bold">
                               {prod.desc}
                             </span>
                           </div>
-                          <span className="text-[11px] font-mono text-[#059669] dir-ltr text-right block font-medium truncate mt-1">
+                          <a
+                            href={prod.url}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleDirectLinkClick(prod);
+                            }}
+                            className="text-[11px] font-mono text-[#059669] hover:text-[#064E3B] hover:underline dir-ltr text-right block font-medium truncate mt-1 cursor-pointer"
+                            title="اضغط لمعاينة الأصل مباشرة"
+                          >
                             {prod.url}
-                          </span>
+                          </a>
                         </div>
                       </div>
 

@@ -199,9 +199,17 @@ export default function App() {
           pathname === '/sitemap' ||
           pathname === '/sitemap.html' ||
           hash === 'sitemap' ||
+          hash === 'sitemap-section' ||
+          sectionParam === 'sitemap-section' ||
           tabParam === 'sitemap'
         ) {
-          setLegalTabModal('sitemap');
+          setTimeout(scrollToSitemap, 150);
+          return;
+        }
+
+        // 2. Calculator Entry
+        if (searchParams.get('calculator') === 'mortgage' || hash === 'calculator') {
+          setIsMortgageCalcOpen(true);
           return;
         }
 
