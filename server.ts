@@ -99,8 +99,12 @@ function getStaticAsset(fileName: string): string | null {
 // Explicit Sitemap.xml Route for Search Engines and AdSense Verification
 app.get("/sitemap.xml", (req, res) => {
   try {
-    const content = getStaticAsset("sitemap.xml");
+    let content = getStaticAsset("sitemap.xml");
     if (content) {
+      const host = req.get("host") || "ais-dev-on77w5qxpaes63voiv5adt-245902106769.europe-west2.run.app";
+      const protocol = req.protocol === "http" && req.get("x-forwarded-proto") ? req.get("x-forwarded-proto") : (req.protocol || "https");
+      const currentOrigin = `${protocol}://${host}`;
+      content = content.replace(/https:\/\/[a-zA-Z0-9.\-_:]+\.europe-west2\.run\.app/g, currentOrigin);
       res.setHeader("Content-Type", "application/xml; charset=utf-8");
       res.setHeader("Cache-Control", "public, max-age=3600");
       return res.status(200).send(content);
@@ -134,8 +138,12 @@ app.get("/sitemap.xsl", (req, res) => {
 // Explicit Standalone HTML Sitemap Route & Direct /sitemap Alias
 app.get(["/sitemap.html", "/sitemap-index", "/sitemap"], (req, res) => {
   try {
-    const content = getStaticAsset("sitemap.html");
+    let content = getStaticAsset("sitemap.html");
     if (content) {
+      const host = req.get("host") || "ais-dev-on77w5qxpaes63voiv5adt-245902106769.europe-west2.run.app";
+      const protocol = req.protocol === "http" && req.get("x-forwarded-proto") ? req.get("x-forwarded-proto") : (req.protocol || "https");
+      const currentOrigin = `${protocol}://${host}`;
+      content = content.replace(/https:\/\/[a-zA-Z0-9.\-_:]+\.europe-west2\.run\.app/g, currentOrigin);
       res.setHeader("Content-Type", "text/html; charset=utf-8");
       res.setHeader("Cache-Control", "public, max-age=3600");
       return res.status(200).send(content);
@@ -151,14 +159,19 @@ app.get(["/sitemap.html", "/sitemap-index", "/sitemap"], (req, res) => {
 // Explicit Robots.txt Route
 app.get("/robots.txt", (req, res) => {
   try {
-    const content = getStaticAsset("robots.txt");
+    let content = getStaticAsset("robots.txt");
+    const host = req.get("host") || "ais-dev-on77w5qxpaes63voiv5adt-245902106769.europe-west2.run.app";
+    const protocol = req.protocol === "http" && req.get("x-forwarded-proto") ? req.get("x-forwarded-proto") : (req.protocol || "https");
+    const currentOrigin = `${protocol}://${host}`;
     if (content) {
+      content = content.replace(/https:\/\/[a-zA-Z0-9.\-_:]+\.europe-west2\.run\.app/g, currentOrigin);
       res.setHeader("Content-Type", "text/plain; charset=utf-8");
       return res.status(200).send(content);
     }
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
-    return res.status(200).send(`User-agent: *\nAllow: /\nSitemap: ${req.protocol}://${req.get('host')}/sitemap.xml`);
+    return res.status(200).send(`User-agent: *\nAllow: /\nSitemap: ${currentOrigin}/sitemap.xml`);
   } catch (err) {
+    console.error("Error reading robots.txt:", err);
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
     return res.status(200).send(`User-agent: *\nAllow: /\nSitemap: ${req.protocol}://${req.get('host')}/sitemap.xml`);
   }
