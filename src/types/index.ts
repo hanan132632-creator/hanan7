@@ -60,6 +60,36 @@ export interface BlogPost {
   date: string;
   readTime: string;
   imageUrl: string;
+  views?: number;
+  likes?: number;
+}
+
+export type VideoDurationMinutes = 1 | 3 | 5 | 10 | 15;
+
+export interface VideoScene {
+  id: number;
+  title: string;
+  timestampStart: string;
+  timestampEnd: string;
+  startSeconds: number;
+  endSeconds: number;
+  narration: string;
+  visualDescription: string;
+  cameraMovement: string;
+  imageUrl?: string;
+}
+
+export interface VideoProject {
+  id: string;
+  title: string;
+  totalDurationMinutes: VideoDurationMinutes;
+  totalSeconds: number;
+  scenes: VideoScene[];
+  style: string;
+  voice: string;
+  music: string;
+  textInput: string;
+  aspectRatio: '16:9' | '9:16';
 }
 
 export type Currency = 'SAR' | 'AED' | 'USD';

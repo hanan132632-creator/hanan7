@@ -77,7 +77,7 @@
     <priority>0.85</priority>
   </url>
 
-  <!-- مقالات المدونة العقارية الـ 22 (EEAT Verified 2026) -->
+  <!-- مقالات المدونة العقارية الـ 24 (EEAT Verified 2026) -->
   <url>
     <loc>https://hanan.pro/?post=post-1</loc>
     <lastmod>2026-10-07</lastmod>
@@ -206,7 +206,19 @@
   </url>
   <url>
     <loc>https://hanan.pro/?post=post-22</loc>
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://hanan.pro/?post=post-23</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://hanan.pro/?post=post-24</loc>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>

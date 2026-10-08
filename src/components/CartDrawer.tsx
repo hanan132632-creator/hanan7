@@ -68,7 +68,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             <div className="text-center py-16 space-y-3 text-slate-500">
               <ShoppingCart className="w-12 h-12 text-slate-300 mx-auto stroke-1" />
               <p className="text-xs font-bold">سلتك فارغة حالياً</p>
-              <p className="text-[11px]">تصفح عقارات النخبة ومتجر حنان وأضف منتجاتك الفاخرة.</p>
+              <p className="text-[11px]">تصفح عقارات النخبة وأضف طلباتك الفاخرة.</p>
             </div>
           ) : (
             cart.map((item) => (

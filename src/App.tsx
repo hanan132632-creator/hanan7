@@ -13,6 +13,7 @@ import { PropertySubmitModal } from './components/PropertySubmitModal';
 import { BlogSection } from './components/BlogSection';
 import { SitemapSection } from './components/SitemapSection';
 import { LegalPageModal } from './components/LegalPageModal';
+import { AiTextToVideoModal } from './components/AiTextToVideoModal';
 import { Footer } from './components/Footer';
 
 import { ProductItem, CategoryType, Currency, CartItem, LegalTabType } from './types';
@@ -38,8 +39,15 @@ export default function App() {
   const [quickViewProduct, setQuickViewProduct] = useState<ProductItem | null>(null);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isPropertySubmitOpen, setIsPropertySubmitOpen] = useState(false);
+  const [isVideoStudioOpen, setIsVideoStudioOpen] = useState(false);
+  const [videoStudioInitialText, setVideoStudioInitialText] = useState('');
   const [legalTabModal, setLegalTabModal] = useState<LegalTabType | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const handleOpenVideoStudio = (text?: string) => {
+    setVideoStudioInitialText(text || '');
+    setIsVideoStudioOpen(true);
+  };
 
   const showNotification = (msg: string) => {
     setToastMessage(msg);
@@ -172,11 +180,19 @@ export default function App() {
     const handleMortgageEvent = () => {
       setIsMortgageCalcOpen(true);
     };
+    const handleVideoStudioCustomEvent = (e: Event) => {
+      const customEvent = e as CustomEvent<string>;
+      handleOpenVideoStudio(customEvent.detail || '');
+    };
+
     window.addEventListener('open-quick-view-product', handleQuickViewEvent);
     window.addEventListener('open-mortgage-calc', handleMortgageEvent);
+    window.addEventListener('open-video-studio', handleVideoStudioCustomEvent);
+
     return () => {
       window.removeEventListener('open-quick-view-product', handleQuickViewEvent);
       window.removeEventListener('open-mortgage-calc', handleMortgageEvent);
+      window.removeEventListener('open-video-studio', handleVideoStudioCustomEvent);
     };
   }, []);
 
@@ -188,6 +204,18 @@ export default function App() {
         const pathname = url.pathname.toLowerCase();
         const hash = window.location.hash.replace('#', '').toLowerCase();
         const searchParams = url.searchParams;
+
+        // Video studio entry via URL
+        if (
+          searchParams.get('tool') === 'video' ||
+          searchParams.get('action') === 'video' ||
+          hash === 'video' ||
+          hash === 'video-studio' ||
+          pathname === '/video'
+        ) {
+          handleOpenVideoStudio('');
+          return;
+        }
 
         const tabParam = (searchParams.get('tab') || searchParams.get('page'))?.toLowerCase();
         const postParam = (searchParams.get('post') || searchParams.get('article'))?.toLowerCase();
@@ -294,6 +322,7 @@ export default function App() {
         onScrollToBlog={scrollToBlog}
         onScrollToCatalog={scrollToCatalog}
         onScrollToSitemap={scrollToSitemap}
+        onOpenVideoStudio={() => handleOpenVideoStudio('')}
       />
 
       {/* Hero Section */}
@@ -378,7 +407,7 @@ export default function App() {
       </main>
 
       {/* Blog & AdSense Compliance Section */}
-      <BlogSection />
+      <BlogSection onOpenVideoStudio={(text) => handleOpenVideoStudio(text)} />
 
       {/* Direct Interactive Sitemap Section (37 Links directly under each other) */}
       <SitemapSection
@@ -476,6 +505,14 @@ export default function App() {
       {/* Property Submit Modal */}
       {isPropertySubmitOpen && (
         <PropertySubmitModal onClose={() => setIsPropertySubmitOpen(false)} />
+      )}
+
+      {/* AI Text to Video Studio 15 Min Modal */}
+      {isVideoStudioOpen && (
+        <AiTextToVideoModal
+          initialText={videoStudioInitialText}
+          onClose={() => setIsVideoStudioOpen(false)}
+        />
       )}
 
       {/* Legal Pages Modal */}

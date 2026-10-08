@@ -35,7 +35,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   const handleDownload = (item: CartItem) => {
     setDownloadingId(item.product.id);
-    const content = `عقارات النخبة ومتجر حنان الملكي\nفاتورة رقم: ${orderNumber}\nالمنتج: ${item.product.title}\nالرابط المعتمد: https://royal-elite.hanan.store/download/${item.product.id}\nتاريخ الشراء: ${new Date().toLocaleDateString('ar-SA')}\nنشكركم لاختياركم عقارات النخبة ومتجر حنان.`;
+    const content = `عقارات النخبة الملكية\nفاتورة رقم: ${orderNumber}\nالمنتج: ${item.product.title}\nالرابط المعتمد: https://royal-elite.hanan.store/download/${item.product.id}\nتاريخ الشراء: ${new Date().toLocaleDateString('ar-SA')}\nنشكركم لاختياركم عقارات النخبة.`;
     const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');

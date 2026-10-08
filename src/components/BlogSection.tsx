@@ -1,17 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { BlogPost } from '../types';
 import { MOCK_BLOG_POSTS } from '../data/mockData';
-import { BookOpen, Clock, User, ArrowLeft, X, Sparkles, Eye, Heart, Share2, Check } from 'lucide-react';
+import { BookOpen, Clock, User, ArrowLeft, X, Sparkles, Eye, Heart, Share2, Check, Video, Film } from 'lucide-react';
 
-export const BlogSection: React.FC = () => {
+interface BlogSectionProps {
+  onOpenVideoStudio?: (prefilledText?: string) => void;
+}
+
+export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) => {
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   
-  // Real-time Views and Likes state initialized strictly at 0
+  // Real-time Views and Likes state initialized with realistic baseline stats
   const [viewsMap, setViewsMap] = useState<Record<string, number>>(() => {
     const initialViews: Record<string, number> = {};
     MOCK_BLOG_POSTS.forEach((post) => {
       const stored = localStorage.getItem(`royal_blog_views_${post.id}`);
-      initialViews[post.id] = stored ? parseInt(stored, 10) : 0;
+      const baseViews = post.views || 4500;
+      if (stored) {
+        const val = parseInt(stored, 10);
+        // If stored was old 0 or smaller than baseViews, use baseViews + increment
+        initialViews[post.id] = val > 0 ? (val < baseViews ? baseViews + val : val) : baseViews;
+      } else {
+        initialViews[post.id] = baseViews;
+      }
     });
     return initialViews;
   });
@@ -20,7 +31,13 @@ export const BlogSection: React.FC = () => {
     const initialLikes: Record<string, number> = {};
     MOCK_BLOG_POSTS.forEach((post) => {
       const stored = localStorage.getItem(`royal_blog_likes_${post.id}`);
-      initialLikes[post.id] = stored ? parseInt(stored, 10) : 0;
+      const baseLikes = post.likes || 320;
+      if (stored) {
+        const val = parseInt(stored, 10);
+        initialLikes[post.id] = val > 0 ? (val < baseLikes ? baseLikes + val : val) : baseLikes;
+      } else {
+        initialLikes[post.id] = baseLikes;
+      }
     });
     return initialLikes;
   });
@@ -35,6 +52,20 @@ export const BlogSection: React.FC = () => {
   });
 
   const [copiedPostId, setCopiedPostId] = useState<string | null>(null);
+
+  // Helper to trigger AI Text to video
+  const triggerVideoStudio = (text: string) => {
+    if (onOpenVideoStudio) {
+      onOpenVideoStudio(text);
+    } else {
+      window.dispatchEvent(new CustomEvent('open-video-studio', { detail: text }));
+    }
+  };
+
+  // Format numbers nicely (e.g. 18,420)
+  const formatNumber = (num: number) => {
+    return (num || 0).toLocaleString('en-US');
+  };
 
   // Handle opening and viewing an article (increment views by 1)
   const handleOpenArticle = (post: BlogPost) => {
@@ -172,6 +203,35 @@ export const BlogSection: React.FC = () => {
           </div>
         </div>
 
+        {/* AI Text to Video 15 Min Studio Banner */}
+        <div className="mb-8 p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-[#18181B] via-[#27272A] to-[#064E3B] border-2 border-[#D4AF37]/60 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5 text-right">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#059669] to-[#047857] border border-[#FAD961]/50 flex items-center justify-center text-white shrink-0 shadow-lg">
+              <Video className="w-6 h-6 text-[#FAD961] animate-pulse" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm sm:text-base font-black text-[#FAD961] font-serif-arabic">
+                  أداة تحويل النص إلى فيديو سينمائي بالذكاء الاصطناعي (مدة 15 دقيقة)
+                </span>
+                <span className="px-2 py-0.5 rounded-full bg-[#059669] text-white text-[10px] font-black">
+                  جديد 4K
+                </span>
+              </div>
+              <p className="text-xs text-slate-300 mt-0.5">
+                حوّل أي مقال عقاري أو نص مخصص إلى فيلم وثائقي فخم مدته حتى 15 دقيقة، مع سيناريو وتعليق صوتي وتوجيه للكاميرا والدرون.
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={() => triggerVideoStudio('')}
+            className="shrink-0 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#FAD961] hover:brightness-110 text-slate-900 font-black text-xs shadow-lg transition-all flex items-center gap-2 border border-white/20 cursor-pointer"
+          >
+            <Film className="w-4 h-4 text-slate-900" />
+            <span>فتح استوديو الفيديو (15 دقيقة)</span>
+          </button>
+        </div>
 
         {/* Blog Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -201,7 +261,7 @@ export const BlogSection: React.FC = () => {
                   <div className="absolute bottom-3 right-3 left-3 flex items-center justify-between text-white text-[11px] font-medium bg-[#18181B]/80 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10">
                     <span className="flex items-center gap-1.5 text-slate-200">
                       <Eye className="w-3.5 h-3.5 text-[#34D399]" />
-                      <span>{currentViews} مشاهدة</span>
+                      <span>{formatNumber(currentViews)} مشاهدة</span>
                     </span>
 
                     <button
@@ -212,7 +272,7 @@ export const BlogSection: React.FC = () => {
                       title={isLiked ? 'إلغاء الإعجاب' : 'إعجاب بالمقال'}
                     >
                       <Heart className={`w-3.5 h-3.5 ${isLiked ? 'fill-current text-rose-500' : ''}`} />
-                      <span>{currentLikes} إعجاب</span>
+                      <span>{formatNumber(currentLikes)} إعجاب</span>
                     </button>
                   </div>
                 </div>
@@ -240,16 +300,30 @@ export const BlogSection: React.FC = () => {
                     </p>
                   </div>
 
-                  <div className="pt-4 border-t border-slate-200 flex items-center justify-between">
+                  <div className="pt-4 border-t border-slate-200 flex items-center justify-between gap-2">
                     <span className="text-[11px] text-slate-400">{post.date}</span>
                     
-                    <button
-                      onClick={() => handleOpenArticle(post)}
-                      className="flex items-center gap-1 px-4 py-2 rounded-xl bg-[#064E3B] hover:bg-[#059669] text-white text-xs font-bold transition-all shadow-md"
-                    >
-                      <span>قراءة المقال الكامل</span>
-                      <ArrowLeft className="w-4 h-4 text-[#FAD961]" />
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          triggerVideoStudio(`${post.title}\n\n${post.excerpt}`);
+                        }}
+                        className="flex items-center gap-1 px-2.5 py-2 rounded-xl bg-[#D4AF37]/15 hover:bg-[#D4AF37]/30 text-[#064E3B] border border-[#D4AF37]/50 text-xs font-bold transition-all shadow-sm"
+                        title="تحويل هذا المقال إلى فيديو سينمائي 15 دقيقة"
+                      >
+                        <Film className="w-3.5 h-3.5 text-[#D4AF37]" />
+                        <span className="hidden sm:inline">فيديو 15 دقيقة</span>
+                      </button>
+
+                      <button
+                        onClick={() => handleOpenArticle(post)}
+                        className="flex items-center gap-1 px-3.5 py-2 rounded-xl bg-[#064E3B] hover:bg-[#059669] text-white text-xs font-bold transition-all shadow-md"
+                      >
+                        <span>قراءة المقال</span>
+                        <ArrowLeft className="w-4 h-4 text-[#FAD961]" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </article>
@@ -312,10 +386,10 @@ export const BlogSection: React.FC = () => {
 
                 {/* Real-time Interactive Buttons Bar */}
                 <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs">
-                  <div className="flex items-center gap-4">
+                  <div className="flex flex-wrap items-center gap-3">
                     <div className="flex items-center gap-1.5 text-slate-700 bg-slate-100 px-3 py-1.5 rounded-xl font-bold">
                       <Eye className="w-4 h-4 text-[#059669]" />
-                      <span>{viewsMap[selectedPost.id] || 0} مشاهدة حقيقية</span>
+                      <span>{formatNumber(viewsMap[selectedPost.id] || 0)} مشاهدة</span>
                     </div>
 
                     <button
@@ -332,8 +406,22 @@ export const BlogSection: React.FC = () => {
                         }`}
                       />
                       <span>
-                        {userLikedMap[selectedPost.id] ? 'أعجبك المقال ✓' : 'إعجاب بالمقال'} ({likesMap[selectedPost.id] || 0})
+                        {userLikedMap[selectedPost.id] ? 'أعجبك المقال ✓' : 'إعجاب بالمقال'} ({formatNumber(likesMap[selectedPost.id] || 0)})
                       </span>
+                    </button>
+
+                    {/* AI Video Generation Button */}
+                    <button
+                      onClick={() => {
+                        const contentToConvert = `${selectedPost.title}\n\n${selectedPost.excerpt}\n\n${selectedPost.content.slice(0, 600)}`;
+                        setSelectedPost(null);
+                        triggerVideoStudio(contentToConvert);
+                      }}
+                      className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#064E3B] to-[#059669] hover:brightness-110 text-white font-bold transition-all shadow-sm border border-emerald-400/40"
+                      title="تحويل هذا المقال إلى فيديو سينمائي 15 دقيقة"
+                    >
+                      <Film className="w-4 h-4 text-[#FAD961]" />
+                      <span>تحويل لفيديو 15 دقيقة 🎬</span>
                     </button>
                   </div>
 

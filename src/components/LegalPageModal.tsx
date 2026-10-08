@@ -151,7 +151,7 @@ export const LegalPageModal: React.FC<LegalPageModalProps> = ({
                 سياسة الخصوصية وحماية البيانات (Privacy Policy)
               </h3>
               <p>
-                نلتزم في «عقارات النخبة ومتجر حنان» بحماية خصوصية كافة الزوار والعملاء وفق أفضل معايير الأمان الدولية وقوانين حماية البيانات الشخصية.
+                نلتزم في «عقارات النخبة» بحماية خصوصية كافة الزوار والعملاء وفق أفضل معايير الأمان الدولية وقوانين حماية البيانات الشخصية.
               </p>
 
               <h4 className="font-bold text-slate-900 text-xs">1. البيانات التي نجمعها:</h4>
@@ -178,12 +178,12 @@ export const LegalPageModal: React.FC<LegalPageModalProps> = ({
                 الشروط والأحكام الاستخدام (Terms of Service)
               </h3>
               <p>
-                باستخدامك لمنصة «عقارات النخبة ومتجر حنان»، فإنك توافق التامة على جميع الشروط والأحكام الموضحة أدناه.
+                باستخدامك لمنصة «عقارات النخبة»، فإنك توافق التامة على جميع الشروط والأحكام الموضحة أدناه.
               </p>
 
               <h4 className="font-bold text-slate-900 text-xs">1. الملكية الفكرية للمنتجات الرقمية:</h4>
               <p className="text-xs text-slate-600">
-                جميع ألعاب الجمعات، قوالب كانفا، ومخططات 2026 محفوطة بحقوق الملكية الفكرية لـ «متجر حنان». يُمنع إعادة بيعها أو توزيعها التجاري بغير ترخيص كتابي.
+                جميع المنتجات والمخططات الهندسية وقوالب العمل محفوظة بحقوق الملكية الفكرية الحصرية للمنصة. يُمنع إعادة بيعها أو توزيعها التجاري بغير ترخيص كتابي.
               </p>
 
               <h4 className="font-bold text-slate-900 text-xs">2. المعاينات والاستشارات العقارية:</h4>
@@ -282,7 +282,7 @@ export const LegalPageModal: React.FC<LegalPageModalProps> = ({
                   <span>شهادة ملكية النطاق الرسمية (Domain Verification Tag)</span>
                 </div>
                 <p className="text-xs text-slate-300">
-                  هذه المنصة مسجلة ومعتمدة رسمياً باسم «عقارات النخبة ومتجر حنان». تتوافق كافة المحتويات والمقالات المعروضة مع شروط وتوجيهات Google AdSense لتسويق الأصول العقارية والمحتوى الرقمي الأصيل.
+                  هذه المنصة مسجلة ومعتمدة رسمياً باسم «عقارات النخبة». تتوافق كافة المحتويات والمقالات المعروضة مع شروط وتوجيهات Google AdSense لتسويق الأصول العقارية والمحتوى الأصيل.
                 </p>
                 <div className="p-3 bg-[#27272A] rounded-xl text-[11px] font-mono text-emerald-400 border border-slate-700">
                   Verification Code: adsense-pub-elite-hanan-2026-verified-domain
@@ -298,14 +298,14 @@ export const LegalPageModal: React.FC<LegalPageModalProps> = ({
             const corePages = [
               { id: 'home', title: 'الصفحة الرئيسية والواجهة الملكية', path: '/', hash: '#', fullUrl: `${origin}/`, desc: 'الواجهة الملكية وحاسبة التمويل وأحدث المعروضات', priority: '1.0', changefreq: 'daily', actionType: 'scroll-home' },
               { id: 'catalog', title: 'كتالوج العقارات والمتجر الشامل', path: '/?section=catalog', hash: '#catalog', fullUrl: `${origin}/?section=catalog`, desc: 'الفلل والقصور والمنتجات الرقمية وألعاب الجمعات', priority: '0.90', changefreq: 'daily', actionType: 'scroll-catalog' },
-              { id: 'blog-section', title: 'مدونة النخبة العقارية 2026', path: '/?section=blog-section', hash: '#blog-section', fullUrl: `${origin}/?section=blog-section`, desc: 'تحليلات عقارية متقدمة (22 مقالاً موثوقاً EEAT)', priority: '0.95', changefreq: 'daily', actionType: 'scroll-blog' },
+              { id: 'blog-section', title: 'مدونة النخبة العقارية 2026', path: '/?section=blog-section', hash: '#blog-section', fullUrl: `${origin}/?section=blog-section`, desc: 'تحليلات عقارية متقدمة (24 مقالاً موثوقاً EEAT)', priority: '0.95', changefreq: 'daily', actionType: 'scroll-blog' },
               { id: 'about', title: 'من نحن (نبذة عن المنصة الملكية)', path: '/?tab=about', hash: '#about', fullUrl: `${origin}/?tab=about`, desc: 'هوية ورؤية منصة النخبة ومعايير الجودة', priority: '0.80', changefreq: 'monthly', tabKey: 'about' },
               { id: 'privacy', title: 'سياسة الخصوصية وحماية البيانات', path: '/?tab=privacy', hash: '#privacy', fullUrl: `${origin}/?tab=privacy`, desc: 'حماية البيانات وحقوق الزوار وسياسة الكوكيز', priority: '0.80', changefreq: 'monthly', tabKey: 'privacy' },
               { id: 'terms', title: 'الشروط والأحكام والتعاملات', path: '/?tab=terms', hash: '#terms', fullUrl: `${origin}/?tab=terms`, desc: 'قواعد التداول وتراخيص الاستخدام والتحميل', priority: '0.80', changefreq: 'monthly', tabKey: 'terms' },
               { id: 'contact', title: 'اتصل بنا ورعاية العملاء 24/7', path: '/?tab=contact', hash: '#contact', fullUrl: `${origin}/?tab=contact`, desc: 'قنوات التواصل المباشر وطلب المعاينات', priority: '0.80', changefreq: 'monthly', tabKey: 'contact' },
               { id: 'domain_verify', title: 'توثيق ملكية الدومين وأدسنس', path: '/?tab=domain_verify', hash: '#domain_verify', fullUrl: `${origin}/?tab=domain_verify`, desc: 'شهادة التوثيق والامتثال الرسمي لـ Google AdSense', priority: '0.85', changefreq: 'monthly', tabKey: 'domain_verify' },
               { id: 'calculator', title: 'حاسبة التمويل العقاري التقديرية', path: '/?calculator=mortgage', hash: '#calculator', fullUrl: `${origin}/?calculator=mortgage`, desc: 'حساب الأقساط الشهرية لفلل وقصور النخبة', priority: '0.85', changefreq: 'daily', actionType: 'open-calc' },
-              { id: 'sitemap-interactive', title: 'خريطة الموقع التفاعلية الشاملة', path: '/?tab=sitemap', hash: '#sitemap', fullUrl: `${origin}/?tab=sitemap`, desc: 'الفهرس المعتمد لكافة روابط المنصة الـ 37', priority: '0.90', changefreq: 'daily', tabKey: 'sitemap' },
+              { id: 'sitemap-interactive', title: 'خريطة الموقع التفاعلية الشاملة', path: '/?tab=sitemap', hash: '#sitemap', fullUrl: `${origin}/?tab=sitemap`, desc: 'الفهرس المعتمد لكافة روابط المنصة الـ 39', priority: '0.90', changefreq: 'daily', tabKey: 'sitemap' },
             ];
 
             const blogUrls = MOCK_BLOG_POSTS.map((post, idx) => ({
@@ -483,7 +483,7 @@ ${productUrls.map(pr => `  <url>
                         </span>
                       </h3>
                       <p className="text-xs text-slate-300 mt-1 max-w-2xl leading-relaxed">
-                        جميع صفحات المنصة ومقالات المدونة الـ 22 ومنتجات المتجر مفهرسة ومربوطة بروابط مباشرة وصريحة متوافقة 100% مع Google Search Console ومعايير Google AdSense.
+                        جميع صفحات المنصة ومقالات المدونة الـ 24 ومنتجات المتجر مفهرسة ومربوطة بروابط مباشرة وصريحة متوافقة 100% مع Google Search Console ومعايير Google AdSense.
                       </p>
                     </div>
 
@@ -492,7 +492,7 @@ ${productUrls.map(pr => `  <url>
                       <button
                         onClick={handleCopyAll}
                         className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B89628] hover:from-[#B89628] hover:to-[#997A1E] text-slate-900 text-xs font-bold transition-all shadow-md shadow-amber-950/30 border border-amber-300/40"
-                        title="نسخ جميع روابط الموقع الـ 37 دفعة واحدة"
+                        title="نسخ جميع روابط الموقع الـ 39 دفعة واحدة"
                       >
                         {allUrlsCopied ? (
                           <>
@@ -701,13 +701,13 @@ ${productUrls.map(pr => `  <url>
                       </div>
                     )}
 
-                    {/* SECTION 2: 22 REAL ESTATE BLOG ARTICLES */}
+                    {/* SECTION 2: 24 REAL ESTATE BLOG ARTICLES */}
                     {filteredBlogUrls.length > 0 && (
                       <div className="space-y-3">
                         <div className="flex items-center justify-between border-b border-slate-200 pb-2">
                           <h4 className="text-sm font-black text-[#064E3B] font-serif-arabic flex items-center gap-2">
                             <BookOpen className="w-4 h-4 text-[#D4AF37]" />
-                            <span>2. روابط مقالات المدونة العقارية الـ 22 المفهرسة ({filteredBlogUrls.length} مقالاً)</span>
+                            <span>2. روابط مقالات المدونة العقارية الـ 24 المفهرسة ({filteredBlogUrls.length} مقالاً)</span>
                           </h4>
                           <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#059669]/15 text-[#047857] border border-[#059669]/30">
                             معتمدة EEAT 2026

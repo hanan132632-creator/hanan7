@@ -11,7 +11,9 @@ import {
   X,
   Crown,
   BookOpen,
-  Compass
+  Compass,
+  Video,
+  Film
 } from 'lucide-react';
 import { Currency } from '../types';
 import { MOCK_BLOG_POSTS } from '../data/mockData';
@@ -31,6 +33,7 @@ interface HeaderProps {
   onScrollToBlog?: () => void;
   onScrollToCatalog?: () => void;
   onScrollToSitemap?: () => void;
+  onOpenVideoStudio?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -48,6 +51,7 @@ export const Header: React.FC<HeaderProps> = ({
   onScrollToBlog,
   onScrollToCatalog,
   onScrollToSitemap,
+  onOpenVideoStudio,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -146,6 +150,22 @@ export const Header: React.FC<HeaderProps> = ({
               <ShoppingCart className="w-3.5 h-3.5 text-[#FAD961]" />
               <span>المتجر</span>
             </button>
+
+            <span className="text-white/40">|</span>
+
+            {/* Top Bar AI Video Studio Button */}
+            <button
+              onClick={() => {
+                if (onOpenVideoStudio) onOpenVideoStudio();
+                else window.dispatchEvent(new CustomEvent('open-video-studio', { detail: '' }));
+              }}
+              className="hover:text-[#FAD961] transition-colors whitespace-nowrap font-black text-[#FAD961] flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-gradient-to-r from-emerald-950/70 to-black border border-emerald-500/40 shadow-sm"
+              title="استوديو تحويل النص إلى فيديو سينمائي بالذكاء الاصطناعي (مدة 15 دقيقة)"
+            >
+              <Video className="w-3.5 h-3.5 text-[#FAD961] animate-pulse" />
+              <span>استوديو الفيديو 15 دقيقة</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            </button>
           </nav>
 
         </div>
@@ -156,7 +176,7 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20 gap-4">
             
-            {/* Brand Logo Zone - Larger Font & Metallic Gold Styling without 'متجر حنان' */}
+            {/* Brand Logo Zone - Larger Font & Metallic Gold Styling */}
             <div className="flex items-center gap-3 shrink-0">
               <a href="#" className="flex items-center gap-3 group">
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#FAD961] via-[#D4AF37] to-[#059669] p-[2.5px] shadow-xl group-hover:scale-105 transition-transform">
@@ -209,6 +229,19 @@ export const Header: React.FC<HeaderProps> = ({
                 </button>
               ))}
             </div>
+
+            {/* AI Video Studio Button */}
+            <button
+              onClick={() => {
+                if (onOpenVideoStudio) onOpenVideoStudio();
+                else window.dispatchEvent(new CustomEvent('open-video-studio', { detail: '' }));
+              }}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-emerald-950/90 via-[#18181B] to-slate-900 text-[#FAD961] text-xs font-bold border border-[#D4AF37]/50 shadow-md hover:brightness-110 transition-all cursor-pointer"
+              title="استوديو تحويل النص إلى فيديو سينمائي 15 دقيقة"
+            >
+              <Video className="w-4 h-4 text-[#FAD961]" />
+              <span>فيديو 15 دقيقة</span>
+            </button>
 
             {/* AI Royal Advisor Button */}
             <button
@@ -328,11 +361,37 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
 
             <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                if (onOpenVideoStudio) onOpenVideoStudio();
+                else window.dispatchEvent(new CustomEvent('open-video-studio', { detail: '' }));
+              }}
+              className="flex items-center justify-center gap-2 p-2.5 rounded-xl bg-gradient-to-r from-emerald-950/80 to-[#18181B] border border-[#D4AF37]/50 text-[#FAD961] text-xs font-bold"
+            >
+              <Video className="w-4 h-4" />
+              <span>فيديو 15 دقيقة (AI)</span>
+            </button>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2">
+            <button
               onClick={() => { setMobileMenuOpen(false); onOpenPropertySubmit(); }}
               className="flex items-center justify-center gap-2 p-2.5 rounded-xl bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#FAD961] text-xs font-bold"
             >
               <PlusCircle className="w-4 h-4" />
               <span>عرض عقارك</span>
+            </button>
+
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                if (onScrollToSitemap) onScrollToSitemap();
+                else onOpenLegalTab('sitemap');
+              }}
+              className="flex items-center justify-center gap-2 p-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs font-bold"
+            >
+              <Compass className="w-4 h-4 text-[#FAD961]" />
+              <span>خريطة الموقع (37)</span>
             </button>
           </div>
 

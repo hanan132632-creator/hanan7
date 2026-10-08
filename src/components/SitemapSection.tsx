@@ -62,7 +62,7 @@ export const SitemapSection: React.FC<SitemapSectionProps> = ({
     {
       id: 'blog-section',
       tabKey: null,
-      title: 'مدونة النخبة العقارية 2026 (22 مقالاً)',
+      title: `مدونة النخبة العقارية 2026 (${MOCK_BLOG_POSTS.length} مقالاً)`,
       url: `${origin}/?section=blog-section`,
       path: '/?section=blog-section',
       desc: 'تحليلات عقارية موثوقة بمعايير EEAT لكبار الخبراء والمستشارين',
@@ -75,7 +75,7 @@ export const SitemapSection: React.FC<SitemapSectionProps> = ({
       title: 'خريطة الموقع وفهرس الروابط التفاعلية',
       url: `${origin}/?tab=sitemap`,
       path: '/?tab=sitemap',
-      desc: 'الفهرس المعتمد لكافة روابط المنصة الـ 37 دون أي أخطاء',
+      desc: 'الفهرس المعتمد لكافة روابط المنصة دون أي أخطاء',
       type: 'page',
       priority: '0.90'
     },
@@ -138,6 +138,16 @@ export const SitemapSection: React.FC<SitemapSectionProps> = ({
       desc: 'حساب الأقساط الشهرية والتمويل البنكي الفوري بنسبة مرابحة تقديرية',
       type: 'page',
       priority: '0.85'
+    },
+    {
+      id: 'video-studio',
+      tabKey: null,
+      title: 'استوديو إنتاج الفيديو بالذكاء الاصطناعي 15 دقيقة (AI Video 4K)',
+      url: `${origin}/?tool=video`,
+      path: '/?tool=video',
+      desc: 'أداة تحويل النصوص والمقالات إلى أفلام وثائقية وجولات عقارية سينمائية 15 دقيقة بدقة 4K',
+      type: 'page',
+      priority: '0.85'
     }
   ], [origin]);
 
@@ -172,6 +182,15 @@ export const SitemapSection: React.FC<SitemapSectionProps> = ({
       priority: '0.80'
     }));
   }, [origin]);
+
+  // Combined full URLs list
+  const allUrls = useMemo(() => {
+    return [
+      ...corePages.map(p => p.url),
+      ...blogItems.map(b => b.url),
+      ...productItems.map(pr => pr.url)
+    ];
+  }, [corePages, blogItems, productItems]);
 
   // Filtered lists
   const q = searchQuery.toLowerCase().trim();
@@ -216,6 +235,8 @@ export const SitemapSection: React.FC<SitemapSectionProps> = ({
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (item.id === 'calculator') {
         window.dispatchEvent(new CustomEvent('open-mortgage-calc'));
+      } else if (item.id === 'video-studio') {
+        window.dispatchEvent(new CustomEvent('open-video-studio', { detail: '' }));
       }
     }
   };
@@ -330,19 +351,19 @@ ${productItems.map(pr => `  <url>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-6 border-t border-white/10">
             <div className="p-3 bg-white/5 rounded-xl border border-white/10 text-center">
               <span className="text-[11px] text-slate-400 block mb-0.5">إجمالي الروابط</span>
-              <span className="text-xl font-black text-[#FAD961] font-mono">37</span>
+              <span className="text-xl font-black text-[#FAD961] font-mono">{allUrls.length}</span>
             </div>
             <div className="p-3 bg-white/5 rounded-xl border border-white/10 text-center">
               <span className="text-[11px] text-slate-400 block mb-0.5">مقالات المدونة الموثقة</span>
-              <span className="text-xl font-black text-emerald-400 font-mono">22</span>
+              <span className="text-xl font-black text-emerald-400 font-mono">{blogItems.length}</span>
             </div>
             <div className="p-3 bg-white/5 rounded-xl border border-white/10 text-center">
               <span className="text-[11px] text-slate-400 block mb-0.5">الصفحات والخدمات</span>
-              <span className="text-xl font-black text-amber-300 font-mono">10</span>
+              <span className="text-xl font-black text-amber-300 font-mono">{corePages.length}</span>
             </div>
             <div className="p-3 bg-white/5 rounded-xl border border-white/10 text-center">
               <span className="text-[11px] text-slate-400 block mb-0.5">الأصول والمنتجات</span>
-              <span className="text-xl font-black text-blue-300 font-mono">5</span>
+              <span className="text-xl font-black text-blue-300 font-mono">{productItems.length}</span>
             </div>
           </div>
         </div>
@@ -371,10 +392,10 @@ ${productItems.map(pr => `  <url>
           {/* Filter Categories */}
           <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0 shrink-0">
             {[
-              { id: 'all', label: `كافة الروابط (37)` },
-              { id: 'posts', label: `المقالات الـ 22` },
-              { id: 'pages', label: `الصفحات الرئيسية (10)` },
-              { id: 'products', label: `الأصول والمنتجات (5)` },
+              { id: 'all', label: `كافة الروابط (${allUrls.length})` },
+              { id: 'posts', label: `المقالات (${blogItems.length})` },
+              { id: 'pages', label: `الصفحات الرئيسية (${corePages.length})` },
+              { id: 'products', label: `الأصول والمنتجات (${productItems.length})` },
             ].map((btn) => (
               <button
                 key={btn.id}
