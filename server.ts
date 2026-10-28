@@ -456,11 +456,11 @@ app.get("/ads.txt", (req, res) => {
       return res.status(200).send(content);
     }
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
-    return res.status(200).send("google.com, pub-9366698048953944, DIRECT, f08c47fec0942fa0\n");
+    return res.status(200).send("google.com, pub-8161307018337815, DIRECT, f08c47fec0942fa0\n");
   } catch (err) {
     console.error("Error reading ads.txt:", err);
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
-    return res.status(200).send("google.com, pub-9366698048953944, DIRECT, f08c47fec0942fa0\n");
+    return res.status(200).send("google.com, pub-8161307018337815, DIRECT, f08c47fec0942fa0\n");
   }
 });
 
