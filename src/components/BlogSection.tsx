@@ -71,6 +71,15 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
   const handleOpenArticle = (post: BlogPost) => {
     setSelectedPost(post);
     
+    // Update browser URL to direct permalink
+    try {
+      if (window.history && window.history.pushState) {
+        window.history.pushState({ postId: post.id }, '', `/post/${post.id}`);
+      }
+    } catch (e) {
+      // Ignore
+    }
+
     // Increment view count
     setViewsMap((prev) => {
       const currentCount = prev[post.id] || 0;
@@ -151,7 +160,8 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
 
   // Handle sharing link
   const handleShare = (post: BlogPost) => {
-    navigator.clipboard.writeText(window.location.href);
+    const directUrl = `${window.location.origin}/post/${post.id}`;
+    navigator.clipboard.writeText(directUrl);
     setCopiedPostId(post.id);
     setTimeout(() => setCopiedPostId(null), 2500);
   };
@@ -350,6 +360,15 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
             </div>
 
             <div className="p-6 sm:p-8 space-y-6 max-h-[75vh] overflow-y-auto">
+              {/* Breadcrumb Trail for Google Crawlers & Users */}
+              <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-slate-500 font-bold flex-wrap">
+                <a href="/" className="hover:text-[#064E3B] transition-colors">الرئيسية</a>
+                <span className="text-slate-300">/</span>
+                <a href="/#blog-section" className="hover:text-[#064E3B] transition-colors">المدونة العقارية</a>
+                <span className="text-slate-300">/</span>
+                <span className="text-[#064E3B] font-black">{selectedPost.category}</span>
+              </nav>
+
               <div className="space-y-3">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#059669]/10 border border-[#059669]/30 text-[#064E3B] text-xs font-bold">
                   <Sparkles className="w-3.5 h-3.5 text-[#059669]" />

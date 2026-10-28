@@ -93,8 +93,8 @@ export const SitemapSection: React.FC<SitemapSectionProps> = ({
       id: 'privacy',
       tabKey: 'privacy' as LegalTabType,
       title: 'سياسة الخصوصية وحماية البيانات',
-      url: `${origin}/?tab=privacy`,
-      path: '/?tab=privacy',
+      url: `${origin}/privacy`,
+      path: '/privacy',
       desc: 'حماية بيانات العملاء وسياسة ملفات تعريف الارتباط الكوكيز',
       type: 'page',
       priority: '0.80'
@@ -103,8 +103,8 @@ export const SitemapSection: React.FC<SitemapSectionProps> = ({
       id: 'terms',
       tabKey: 'terms' as LegalTabType,
       title: 'الشروط والأحكام والاتفاقية القانونية',
-      url: `${origin}/?tab=terms`,
-      path: '/?tab=terms',
+      url: `${origin}/terms`,
+      path: '/terms',
       desc: 'قواعد التداول وتراخيص الاستخدام والتحميل الرقمي',
       type: 'page',
       priority: '0.80'
@@ -113,8 +113,8 @@ export const SitemapSection: React.FC<SitemapSectionProps> = ({
       id: 'contact',
       tabKey: 'contact' as LegalTabType,
       title: 'اتصل بنا ورعاية العملاء 24/7',
-      url: `${origin}/?tab=contact`,
-      path: '/?tab=contact',
+      url: `${origin}/contact`,
+      path: '/contact',
       desc: 'قنوات التواصل المباشر وطلب المعاينات الميدانية',
       type: 'page',
       priority: '0.80'
@@ -123,8 +123,8 @@ export const SitemapSection: React.FC<SitemapSectionProps> = ({
       id: 'domain_verify',
       tabKey: 'domain_verify' as LegalTabType,
       title: 'توثيق ملكية الدومين والامتثال لجوجل أدسنس',
-      url: `${origin}/?tab=domain_verify`,
-      path: '/?tab=domain_verify',
+      url: `${origin}/domain_verify`,
+      path: '/domain_verify',
       desc: 'إثبات ملكية النطاق الرسمي والمطابقة لمعايير Google AdSense',
       type: 'page',
       priority: '0.85'
@@ -133,8 +133,8 @@ export const SitemapSection: React.FC<SitemapSectionProps> = ({
       id: 'calculator',
       tabKey: null,
       title: 'حاسبة التمويل العقاري الذكية للفلل والقصور',
-      url: `${origin}/?calculator=mortgage`,
-      path: '/?calculator=mortgage',
+      url: `${origin}/calculator`,
+      path: '/calculator',
       desc: 'حساب الأقساط الشهرية والتمويل البنكي الفوري بنسبة مرابحة تقديرية',
       type: 'page',
       priority: '0.85'
@@ -143,22 +143,22 @@ export const SitemapSection: React.FC<SitemapSectionProps> = ({
       id: 'video-studio',
       tabKey: null,
       title: 'استوديو إنتاج الفيديو بالذكاء الاصطناعي 15 دقيقة (AI Video 4K)',
-      url: `${origin}/?tool=video`,
-      path: '/?tool=video',
+      url: `${origin}/video`,
+      path: '/video',
       desc: 'أداة تحويل النصوص والمقالات إلى أفلام وثائقية وجولات عقارية سينمائية 15 دقيقة بدقة 4K',
       type: 'page',
       priority: '0.85'
     }
   ], [origin]);
 
-  // 2. Blog Articles (22)
+  // 2. Blog Articles
   const blogItems = useMemo(() => {
     return MOCK_BLOG_POSTS.map((post, idx) => ({
       id: post.id,
       index: idx + 1,
       title: post.title,
-      url: `${origin}/?post=${post.id}`,
-      path: `/?post=${post.id}`,
+      url: `${origin}/post/${post.id}`,
+      path: `/post/${post.id}`,
       desc: post.excerpt,
       category: post.category,
       author: post.author,
@@ -168,13 +168,13 @@ export const SitemapSection: React.FC<SitemapSectionProps> = ({
     }));
   }, [origin]);
 
-  // 3. Products & Assets (5)
+  // 3. Products & Assets
   const productItems = useMemo(() => {
     return MOCK_PRODUCTS.map((prod) => ({
       id: prod.id,
       title: prod.title,
-      url: `${origin}/?product=${prod.id}`,
-      path: `/?product=${prod.id}`,
+      url: `${origin}/product/${prod.id}`,
+      path: `/product/${prod.id}`,
       desc: `${prod.categoryLabel} • ${prod.priceSAR.toLocaleString()} ر.س`,
       imageUrl: prod.imageUrl,
       rawProduct: prod,

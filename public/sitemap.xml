@@ -8,7 +8,7 @@
   <!-- الصفحة الرئيسية -->
   <url>
     <loc>https://hanan.pro/</loc>
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -16,276 +16,260 @@
   <!-- فهرس خريطة الموقع المباشر (HTML Sitemap) -->
   <url>
     <loc>https://hanan.pro/sitemap.html</loc>
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
 
   <!-- خريطة الموقع التفاعلية بالتطبيق -->
   <url>
-    <loc>https://hanan.pro/?tab=sitemap</loc>
-    <lastmod>2026-10-07</lastmod>
+    <loc>https://hanan.pro/sitemap</loc>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.90</priority>
-  </url>
-
-  <!-- قسم المتجر والكتالوج -->
-  <url>
-    <loc>https://hanan.pro/?section=catalog</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.90</priority>
-  </url>
-
-  <!-- قسم المدونة العقارية 2026 -->
-  <url>
-    <loc>https://hanan.pro/?section=blog-section</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.95</priority>
   </url>
 
   <!-- الصفحات الرسمية والامتثال AdSense -->
   <url>
-    <loc>https://hanan.pro/?tab=about</loc>
-    <lastmod>2026-10-07</lastmod>
+    <loc>https://hanan.pro/about</loc>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?tab=privacy</loc>
-    <lastmod>2026-10-07</lastmod>
+    <loc>https://hanan.pro/privacy</loc>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?tab=terms</loc>
-    <lastmod>2026-10-07</lastmod>
+    <loc>https://hanan.pro/terms</loc>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?tab=contact</loc>
-    <lastmod>2026-10-07</lastmod>
+    <loc>https://hanan.pro/contact</loc>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?tab=domain_verify</loc>
-    <lastmod>2026-10-07</lastmod>
+    <loc>https://hanan.pro/domain_verify</loc>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
 
-  <!-- مقالات المدونة العقارية الـ 29 (EEAT Verified 2026) -->
+  <!-- مقالات المدونة العقارية الـ 29 (EEAT Direct Permalinks 2026) -->
   <url>
-    <loc>https://hanan.pro/?post=post-1</loc>
+    <loc>https://hanan.pro/post/post-1</loc>
     <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-2</loc>
+    <loc>https://hanan.pro/post/post-2</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-3</loc>
+    <loc>https://hanan.pro/post/post-3</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-4</loc>
+    <loc>https://hanan.pro/post/post-4</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-5</loc>
+    <loc>https://hanan.pro/post/post-5</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-6</loc>
+    <loc>https://hanan.pro/post/post-6</loc>
     <lastmod>2026-10-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-7</loc>
+    <loc>https://hanan.pro/post/post-7</loc>
     <lastmod>2026-10-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-8</loc>
+    <loc>https://hanan.pro/post/post-8</loc>
     <lastmod>2026-10-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-9</loc>
+    <loc>https://hanan.pro/post/post-9</loc>
     <lastmod>2026-10-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-10</loc>
+    <loc>https://hanan.pro/post/post-10</loc>
     <lastmod>2026-10-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-11</loc>
+    <loc>https://hanan.pro/post/post-11</loc>
     <lastmod>2026-10-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-12</loc>
+    <loc>https://hanan.pro/post/post-12</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-13</loc>
+    <loc>https://hanan.pro/post/post-13</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-14</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://hanan.pro/?post=post-15</loc>
+    <loc>https://hanan.pro/post/post-14</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-16</loc>
+    <loc>https://hanan.pro/post/post-15</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-17</loc>
-    <lastmod>2026-10-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://hanan.pro/?post=post-18</loc>
+    <loc>https://hanan.pro/post/post-16</loc>
     <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-19</loc>
+    <loc>https://hanan.pro/post/post-17</loc>
     <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-20</loc>
-    <lastmod>2026-10-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://hanan.pro/?post=post-21</loc>
+    <loc>https://hanan.pro/post/post-18</loc>
     <lastmod>2026-10-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-22</loc>
+    <loc>https://hanan.pro/post/post-19</loc>
     <lastmod>2026-10-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-23</loc>
+    <loc>https://hanan.pro/post/post-20</loc>
     <lastmod>2026-10-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-24</loc>
+    <loc>https://hanan.pro/post/post-21</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://hanan.pro/post/post-22</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://hanan.pro/post/post-23</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://hanan.pro/post/post-24</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-25</loc>
+    <loc>https://hanan.pro/post/post-25</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-26</loc>
+    <loc>https://hanan.pro/post/post-26</loc>
     <lastmod>2026-10-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-27</loc>
+    <loc>https://hanan.pro/post/post-27</loc>
     <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-28</loc>
+    <loc>https://hanan.pro/post/post-28</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?post=post-29</loc>
+    <loc>https://hanan.pro/post/post-29</loc>
     <lastmod>2026-10-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
 
-  <!-- المنتجات والأصول الرقمية والعقارية -->
+  <!-- المنتجات والأصول الرقمية والعقارية (Direct Permalinks) -->
   <url>
-    <loc>https://hanan.pro/?product=prop-01</loc>
+    <loc>https://hanan.pro/product/prop-01</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?product=prop-02</loc>
+    <loc>https://hanan.pro/product/prop-02</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?product=game-01</loc>
+    <loc>https://hanan.pro/product/game-01</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?product=blueprint-01</loc>
+    <loc>https://hanan.pro/product/blueprint-01</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?product=canva-01</loc>
+    <loc>https://hanan.pro/product/canva-01</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://hanan.pro/?product=royal-01</loc>
+    <loc>https://hanan.pro/product/royal-01</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>

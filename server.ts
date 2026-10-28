@@ -464,18 +464,262 @@ app.get("/ads.txt", (req, res) => {
   }
 });
 
+// Helper to extract metadata from blogData.ts for Search Console and Crawlers
+function getBlogPostsMeta() {
+  try {
+    const candidates = [
+      path.resolve(__dirname, "src/data/blogData.ts"),
+      path.resolve(process.cwd(), "src/data/blogData.ts"),
+    ];
+    let content = "";
+    for (const cand of candidates) {
+      if (fs.existsSync(cand)) {
+        content = fs.readFileSync(cand, "utf8");
+        break;
+      }
+    }
+    if (!content) return [];
+    const posts: Array<{ id: string; title: string; excerpt: string; author: string; date: string; category: string }> = [];
+    const regex = /id:\s*['"](post-\d+)['"][\s\S]*?title:\s*['"]([^'"]*)['"][\s\S]*?excerpt:\s*['"]([^'"]*)['"][\s\S]*?category:\s*['"]([^'"]*)['"][\s\S]*?author:\s*['"]([^'"]*)['"][\s\S]*?date:\s*['"]([^'"]*)['"]/g;
+    let match;
+    while ((match = regex.exec(content)) !== null) {
+      posts.push({
+        id: match[1],
+        title: match[2],
+        excerpt: match[3],
+        category: match[4],
+        author: match[5],
+        date: match[6]
+      });
+    }
+    return posts;
+  } catch (e) {
+    return [];
+  }
+}
+
+// Helper to extract product metadata from mockData.ts
+function getProductsMeta() {
+  try {
+    const candidates = [
+      path.resolve(__dirname, "src/data/mockData.ts"),
+      path.resolve(process.cwd(), "src/data/mockData.ts"),
+    ];
+    let content = "";
+    for (const cand of candidates) {
+      if (fs.existsSync(cand)) {
+        content = fs.readFileSync(cand, "utf8");
+        break;
+      }
+    }
+    if (!content) return [];
+    const products: Array<{ id: string; title: string; subtitle: string }> = [];
+    const regex = /id:\s*['"](prop-\d+|game-\d+|blueprint-\d+|canva-\d+|royal-\d+)['"][\s\S]*?title:\s*['"]([^'"]*)['"][\s\S]*?subtitle:\s*['"]([^'"]*)['"]/g;
+    let match;
+    while ((match = regex.exec(content)) !== null) {
+      products.push({ id: match[1], title: match[2], subtitle: match[3] });
+    }
+    return products;
+  } catch (e) {
+    return [];
+  }
+}
+
+// SSR Dynamic SEO Meta Injector Middleware for Google Search Console & AdSense Compliance
+function renderSeoHtml(req: express.Request, res: express.Response, next: express.NextFunction) {
+  try {
+    const pathname = req.path.toLowerCase();
+    const query = req.query;
+
+    let html = getStaticAsset("index.html");
+    if (!html) {
+      const distIndex = path.resolve(__dirname, "dist", "index.html");
+      if (fs.existsSync(distIndex)) {
+        html = fs.readFileSync(distIndex, "utf8");
+      }
+    }
+    if (!html) return next();
+
+    // Check for Post (e.g. /post/post-3, /blog/post-3, or ?post=post-3)
+    let postId: string | null = null;
+    if (pathname.startsWith("/post/") || pathname.startsWith("/blog/")) {
+      const parts = pathname.split("/").filter(Boolean);
+      postId = parts[parts.length - 1];
+    } else if (query.post) {
+      postId = String(query.post).toLowerCase();
+    } else if (query.article) {
+      postId = String(query.article).toLowerCase();
+    }
+
+    if (postId) {
+      const posts = getBlogPostsMeta();
+      const cleanPostId = postId.startsWith("post-") ? postId : `post-${postId}`;
+      const post = posts.find(p => p.id === cleanPostId || p.id === postId);
+      if (post) {
+        const canonicalUrl = `https://hanan.pro/post/${post.id}`;
+        const pageTitle = `${post.title} | عقارات النخبة`;
+        const pageDesc = post.excerpt;
+
+        const jsonLd = {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": canonicalUrl
+          },
+          "headline": post.title,
+          "description": post.excerpt,
+          "articleSection": post.category,
+          "author": {
+            "@type": "Person",
+            "name": post.author
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "عقارات النخبة",
+            "url": "https://hanan.pro"
+          },
+          "datePublished": post.date
+        };
+
+        html = html
+          .replace(/<title>.*?<\/title>/gi, `<title>${pageTitle}</title>`)
+          .replace(/<meta\s+name="description"\s+content=".*?"\s*\/?>/gi, `<meta name="description" content="${pageDesc}" />`)
+          .replace(/<meta\s+property="og:title"\s+content=".*?"\s*\/?>/gi, `<meta property="og:title" content="${pageTitle}" />`)
+          .replace(/<meta\s+property="og:description"\s+content=".*?"\s*\/?>/gi, `<meta property="og:description" content="${pageDesc}" />`)
+          .replace(/<meta\s+property="og:url"\s+content=".*?"\s*\/?>/gi, `<meta property="og:url" content="${canonicalUrl}" />`);
+
+        const extraHead = `
+    <link rel="canonical" href="${canonicalUrl}" />
+    <script type="application/ld+json">
+    ${JSON.stringify(jsonLd, null, 2)}
+    </script>`;
+        html = html.replace("</head>", `${extraHead}\n</head>`);
+
+        res.setHeader("Content-Type", "text/html; charset=utf-8");
+        res.setHeader("Cache-Control", "public, max-age=3600");
+        return res.status(200).send(html);
+      }
+    }
+
+    // Check for Product (e.g. /product/prop-01 or ?product=prop-01)
+    let productId: string | null = null;
+    if (pathname.startsWith("/product/") || pathname.startsWith("/prop/")) {
+      const parts = pathname.split("/").filter(Boolean);
+      productId = parts[parts.length - 1];
+    } else if (query.product) {
+      productId = String(query.product).toLowerCase();
+    }
+
+    if (productId) {
+      const products = getProductsMeta();
+      const product = products.find(p => p.id === productId);
+      if (product) {
+        const canonicalUrl = `https://hanan.pro/product/${product.id}`;
+        const pageTitle = `${product.title} | عقارات النخبة`;
+        const pageDesc = `${product.subtitle} - تفاصيل المعاينة الفورية والبيع المباشر والتمويل الملكي.`;
+
+        const jsonLd = {
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "name": product.title,
+          "description": product.subtitle,
+          "brand": {
+            "@type": "Brand",
+            "name": "عقارات النخبة"
+          },
+          "url": canonicalUrl
+        };
+
+        html = html
+          .replace(/<title>.*?<\/title>/gi, `<title>${pageTitle}</title>`)
+          .replace(/<meta\s+name="description"\s+content=".*?"\s*\/?>/gi, `<meta name="description" content="${pageDesc}" />`)
+          .replace(/<meta\s+property="og:title"\s+content=".*?"\s*\/?>/gi, `<meta property="og:title" content="${pageTitle}" />`)
+          .replace(/<meta\s+property="og:description"\s+content=".*?"\s*\/?>/gi, `<meta property="og:description" content="${pageDesc}" />`);
+
+        const extraHead = `
+    <link rel="canonical" href="${canonicalUrl}" />
+    <script type="application/ld+json">
+    ${JSON.stringify(jsonLd, null, 2)}
+    </script>`;
+        html = html.replace("</head>", `${extraHead}\n</head>`);
+
+        res.setHeader("Content-Type", "text/html; charset=utf-8");
+        res.setHeader("Cache-Control", "public, max-age=3600");
+        return res.status(200).send(html);
+      }
+    }
+
+    // Check for Legal / Tab Pages
+    const validTabs = ["about", "privacy", "terms", "contact", "domain_verify"];
+    let matchedTab: string | null = null;
+    for (const tab of validTabs) {
+      if (pathname === `/${tab}` || query.tab === tab) {
+        matchedTab = tab;
+        break;
+      }
+    }
+
+    if (matchedTab) {
+      const tabTitles: Record<string, { title: string; desc: string }> = {
+        about: { title: "عن منصة عقارات النخبة والرؤية المستقبلية 2026", desc: "المنصة العقارية الأولى للعقارات الفاخرة والأصول الرقمية والحلول المعمارية المعتمدة." },
+        privacy: { title: "سياسة الخصوصية وحماية البيانات | عقارات النخبة", desc: "التزام كامل بحماية بيانات المستخدمين وسياسة استخدام ملفات تعريف الارتباط الكوكيز." },
+        terms: { title: "الشروط والأحكام لاتفاقية التداول العقاري والمنتجات الرقمية", desc: "الشروط والأحكام المنظمة للخدمات العقارية والمنتجات المعمارية المعتمدة." },
+        contact: { title: "اتصل بنا ورعاية العملاء 24/7 | عقارات النخبة", desc: "تواصل مباشر مع مستشاري عقارات النخبة لطلب المعاينات الميدانية والدعم الفني." },
+        domain_verify: { title: "توثيق ملكية الدومين والامتثال الرسمي لـ Google AdSense", desc: "شهادة إثبات ملكية الدومين والامتثال الرسمي لـ Google AdSense ورخصة العمل." }
+      };
+
+      const metaInfo = tabTitles[matchedTab] || { title: "عقارات النخبة", desc: "منصة عقارات النخبة" };
+      const canonicalUrl = `https://hanan.pro/${matchedTab}`;
+
+      html = html
+        .replace(/<title>.*?<\/title>/gi, `<title>${metaInfo.title}</title>`)
+        .replace(/<meta\s+name="description"\s+content=".*?"\s*\/?>/gi, `<meta name="description" content="${metaInfo.desc}" />`);
+
+      const extraHead = `
+    <link rel="canonical" href="${canonicalUrl}" />`;
+      html = html.replace("</head>", `${extraHead}\n</head>`);
+
+      res.setHeader("Content-Type", "text/html; charset=utf-8");
+      res.setHeader("Cache-Control", "public, max-age=3600");
+      return res.status(200).send(html);
+    }
+
+    // Default canonical link injection for SPA
+    const cleanReqPath = pathname === "/" ? "" : pathname;
+    const defaultCanonical = `https://hanan.pro${cleanReqPath}`;
+    if (!html.includes('rel="canonical"')) {
+      html = html.replace("</head>", `\n    <link rel="canonical" href="${defaultCanonical}" />\n</head>`);
+    }
+
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    return res.status(200).send(html);
+
+  } catch (e) {
+    next();
+  }
+}
+
+// Intercept specific SEO routes
+app.get(["/post/:id", "/blog/:id", "/product/:id", "/prop/:id", "/about", "/privacy", "/terms", "/contact", "/domain_verify"], renderSeoHtml);
+
 async function startServer() {
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",
     });
+    // Use SEO middleware in dev mode for testing URLs
+    app.use((req, res, next) => {
+      if (req.path.startsWith("/post/") || req.path.startsWith("/blog/") || req.path.startsWith("/product/") || req.query.post || req.query.product || req.query.tab) {
+        return renderSeoHtml(req, res, next);
+      }
+      next();
+    });
     app.use(vite.middlewares);
   } else {
     app.use(express.static(path.resolve(__dirname, "dist")));
-    app.get("*", (req, res) => {
-      res.sendFile(path.resolve(__dirname, "dist", "index.html"));
-    });
+    app.get("*", renderSeoHtml);
   }
 
   app.listen(PORT, () => {
