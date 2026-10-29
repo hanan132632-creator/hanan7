@@ -148,6 +148,26 @@ export const SitemapSection: React.FC<SitemapSectionProps> = ({
       desc: 'أداة تحويل النصوص والمقالات إلى أفلام وثائقية وجولات عقارية سينمائية 15 دقيقة بدقة 4K',
       type: 'page',
       priority: '0.85'
+    },
+    {
+      id: 'short-game',
+      tabKey: null,
+      title: 'رابط مباشر: لعبة السهرة الأمريكية 2026 (مجانية 100% بدون شراء)',
+      url: `${origin}/game`,
+      path: '/game',
+      desc: 'الرابط المختصر المباشر لتحميل ولعب لعبة السهرات الأمريكية 2026 مجاناً بالكامل',
+      type: 'page',
+      priority: '0.95'
+    },
+    {
+      id: 'short-usa',
+      tabKey: null,
+      title: 'رابط مباشر: دليل الاستثمار في العقارات الأمريكية 2026 (EEAT)',
+      url: `${origin}/usa`,
+      path: '/usa',
+      desc: 'الرابط المختصر المباشر لقراءة ومشاركة دليل الاستثمار العقاري وصناديق REITs',
+      type: 'page',
+      priority: '0.95'
     }
   ], [origin]);
 

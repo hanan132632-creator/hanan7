@@ -18,7 +18,11 @@ import { Footer } from './components/Footer';
 
 import { ProductItem, CategoryType, Currency, CartItem, LegalTabType } from './types';
 import { MOCK_PRODUCTS } from './data/mockData';
-import { Crown, Sparkles, Filter, Building2, Layers } from 'lucide-react';
+import { downloadFreeAmericanPartyGame } from './utils/freeGameDownload';
+import { 
+  Crown, Sparkles, Filter, Building2, Layers, 
+  Download, BookOpen, Share2, Check, ShieldCheck, Zap, Award, Headphones 
+} from 'lucide-react';
 
 export default function App() {
   // State variables
@@ -54,6 +58,17 @@ export default function App() {
     setTimeout(() => {
       setToastMessage((curr) => (curr === msg ? null : curr));
     }, 4500);
+  };
+
+  const [copiedLinkType, setCopiedLinkType] = useState<'game' | 'usa' | null>(null);
+
+  const handleCopyDirectLink = (url: string, type: 'game' | 'usa') => {
+    navigator.clipboard.writeText(url);
+    setCopiedLinkType(type);
+    showNotification('تم نسخ الرابط المختصر بنجاح! جاهز للمشاركة والنشر.');
+    setTimeout(() => {
+      setCopiedLinkType((curr) => (curr === type ? null : curr));
+    }, 2500);
   };
 
   // Filter products
@@ -222,6 +237,25 @@ export default function App() {
         const prodParam = (searchParams.get('product') || searchParams.get('prop'))?.toLowerCase();
         const sectionParam = searchParams.get('section')?.toLowerCase();
 
+        // Short link for free game 2026: /game or /play
+        if (pathname === '/game' || pathname === '/play' || hash === 'game' || hash === 'play') {
+          const gameProd = MOCK_PRODUCTS.find((p) => p.id === 'game-02');
+          if (gameProd) {
+            setQuickViewProduct(gameProd);
+            return;
+          }
+        }
+
+        // Short link for new article: /usa or /p30
+        if (pathname === '/usa' || pathname === '/p30' || pathname === '/article30' || hash === 'usa' || hash === 'p30') {
+          window.dispatchEvent(new CustomEvent('open-blog-post', { detail: 'post-30' }));
+          setTimeout(() => {
+            const el = document.getElementById('post-30') || document.getElementById('blog-section');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 250);
+          return;
+        }
+
         // 1. Sitemap Entry from Google or direct link
         if (
           pathname === '/sitemap' ||
@@ -241,7 +275,7 @@ export default function App() {
           return;
         }
 
-        // 2. Legal / Compliance Pages Entry
+        // 3. Legal / Compliance Pages Entry
         const validTabs: LegalTabType[] = ['about', 'privacy', 'terms', 'contact', 'domain_verify'];
         for (const tab of validTabs) {
           if (pathname === `/${tab}` || hash === tab || tabParam === tab) {
@@ -250,7 +284,7 @@ export default function App() {
           }
         }
 
-        // 3. Direct Article Entry (e.g. ?post=post-1, #post-1, /blog/post-1)
+        // 4. Direct Article Entry (e.g. ?post=post-1, #post-1, /blog/post-1)
         let targetPostId = postParam;
         if (!targetPostId && hash.startsWith('post-')) {
           targetPostId = hash;
@@ -269,10 +303,14 @@ export default function App() {
           return;
         }
 
-        // 4. Direct Product Entry (e.g. ?product=prop-01, #prop-01)
+        // 5. Direct Product Entry (e.g. ?product=prop-01, #prop-01, /product/prop-01)
         let targetProdId = prodParam;
         if (!targetProdId && (hash.startsWith('prop-') || hash.startsWith('game-') || hash.startsWith('blueprint-') || hash.startsWith('canva-') || hash.startsWith('royal-'))) {
           targetProdId = hash;
+        }
+        if (!targetProdId && (pathname.startsWith('/product/') || pathname.startsWith('/prop/'))) {
+          const parts = pathname.split('/');
+          targetProdId = parts[parts.length - 1];
         }
         if (targetProdId) {
           const foundProd = MOCK_PRODUCTS.find((p) => p.id.toLowerCase() === targetProdId);
@@ -342,6 +380,134 @@ export default function App() {
       {/* Product Catalog Section */}
       <main id="catalog" className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
         
+        {/* Quick Short Links Showcase Bar for Instant Sharing */}
+        <div className="mb-10 p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-[#18181B] via-[#27272A] to-[#064E3B] border-2 border-[#D4AF37]/50 shadow-2xl text-white">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-4 mb-4 border-b border-white/10">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#FAD961] text-xs font-black mb-1">
+                <Sparkles className="w-3.5 h-3.5 text-[#FAD961]" />
+                <span>الروابط المختصرة المباشرة للنشر 2026 (Quick Share Links)</span>
+              </div>
+              <p className="text-xs text-slate-300">
+                روابط مباشرة وسريعة جاهزة للنشر في منصة إكس (Twitter)، واتساب، وسناب شات مع دعم المعاينة الذكية.
+              </p>
+            </div>
+            <span className="text-[11px] font-bold text-emerald-400 bg-emerald-950/60 px-3 py-1.5 rounded-xl border border-emerald-500/30">
+              ✓ تم الفحص وتأكيد الربط التام على النطاق hanan.pro
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Short Link 1: Free Game */}
+            <div className="p-4 rounded-2xl bg-white/5 border border-emerald-400/30 hover:border-emerald-400/60 transition-all flex flex-col justify-between gap-3">
+              <div className="flex items-start justify-between gap-2">
+                <div>
+                  <span className="inline-block px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 text-[10px] font-black border border-emerald-400/30 mb-1">
+                    🎮 مجانية 100% بدون أي شراء
+                  </span>
+                  <h4 className="text-sm font-black text-white font-serif-arabic">
+                    لعبة السهرة الأمريكية 2026 (USA Party Games)
+                  </h4>
+                  <p className="text-[11px] text-slate-300 mt-0.5">
+                    300 بطاقة تحدّي ومسابقات سريعة جاهزة للطباعة والتنزيل الفوري
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between gap-2 bg-black/40 p-2.5 rounded-xl border border-white/10">
+                <div className="truncate font-mono text-xs font-bold text-[#FAD961] select-all">
+                  https://hanan.pro/game
+                </div>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <button
+                    onClick={() => handleCopyDirectLink('https://hanan.pro/game', 'game')}
+                    className="px-3 py-1.5 rounded-lg bg-[#D4AF37] hover:bg-[#FAD961] text-[#18181B] font-black text-xs transition-all flex items-center gap-1 cursor-pointer shadow"
+                    title="نسخ رابط اللعبة المختصر"
+                  >
+                    {copiedLinkType === 'game' ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-emerald-900" />
+                        <span>تم النسخ!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Share2 className="w-3.5 h-3.5" />
+                        <span>نسخ الرابط</span>
+                      </>
+                    )}
+                  </button>
+
+                  <button
+                    onClick={() => downloadFreeAmericanPartyGame()}
+                    className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-all flex items-center gap-1 cursor-pointer"
+                    title="تنزيل اللعبة مجاناً فوراً"
+                  >
+                    <Download className="w-3.5 h-3.5 text-[#FAD961]" />
+                    <span className="hidden sm:inline">تنزيل مجاني</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Short Link 2: USA Real Estate Guide Article */}
+            <div className="p-4 rounded-2xl bg-white/5 border border-[#D4AF37]/30 hover:border-[#D4AF37]/60 transition-all flex flex-col justify-between gap-3">
+              <div className="flex items-start justify-between gap-2">
+                <div>
+                  <span className="inline-block px-2.5 py-0.5 rounded-md bg-[#D4AF37]/20 text-[#FAD961] text-[10px] font-black border border-[#D4AF37]/40 mb-1">
+                    🏛️ مقال EEAT معتمد 2026
+                  </span>
+                  <h4 className="text-sm font-black text-white font-serif-arabic">
+                    دليل الاستثمار في العقارات الأمريكية وصناديق REITs
+                  </h4>
+                  <p className="text-[11px] text-slate-300 mt-0.5">
+                    دراسة العوائد الدولارية، ضرائب FIRPTA، وهيكلة شركات LLC للخليجيين
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between gap-2 bg-black/40 p-2.5 rounded-xl border border-white/10">
+                <div className="truncate font-mono text-xs font-bold text-[#FAD961] select-all">
+                  https://hanan.pro/usa
+                </div>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <button
+                    onClick={() => handleCopyDirectLink('https://hanan.pro/usa', 'usa')}
+                    className="px-3 py-1.5 rounded-lg bg-[#D4AF37] hover:bg-[#FAD961] text-[#18181B] font-black text-xs transition-all flex items-center gap-1 cursor-pointer shadow"
+                    title="نسخ رابط المقال المختصر"
+                  >
+                    {copiedLinkType === 'usa' ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-emerald-900" />
+                        <span>تم النسخ!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Share2 className="w-3.5 h-3.5" />
+                        <span>نسخ الرابط</span>
+                      </>
+                    )}
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      window.dispatchEvent(new CustomEvent('open-blog-post', { detail: 'post-30' }));
+                      setTimeout(() => {
+                        const el = document.getElementById('post-30') || document.getElementById('blog-section');
+                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }, 250);
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-white font-bold text-xs transition-all flex items-center gap-1 cursor-pointer"
+                    title="قراءة المقال الآن"
+                  >
+                    <BookOpen className="w-3.5 h-3.5 text-[#FAD961]" />
+                    <span className="hidden sm:inline">قراءة المقال</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Catalog Title Row */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
@@ -403,6 +569,60 @@ export default function App() {
             ))}
           </div>
         )}
+
+        {/* VIP Store Pillars & Buyer Assurance - Eliminates empty white space and builds customer trust */}
+        <div className="mt-14 pt-10 border-t border-[#D4AF37]/30">
+          <div className="text-center max-w-2xl mx-auto mb-8">
+            <span className="text-xs font-bold uppercase text-[#059669] tracking-wider block mb-1">
+              ضمانات وتسهيلات المتجر المعتمد
+            </span>
+            <h3 className="text-xl sm:text-2xl font-black text-slate-900 font-serif-arabic">
+              لماذا يختار النخبة منصتنا للعقارات والمنتجات الرقمية؟
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2 hover:border-[#D4AF37]/50 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 text-[#064E3B] flex items-center justify-center font-bold">
+                <Zap className="w-5 h-5 text-[#059669]" />
+              </div>
+              <h4 className="text-sm font-bold text-slate-900">تسليم رقمي فوري 100%</h4>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                تنزيل مباشر بمجرد الطلب للمخططات الهندسية DWG وقوالب كانفا وألعاب الجمعات بصيغ PDF عالية الدقة.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2 hover:border-[#D4AF37]/50 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-900 flex items-center justify-center font-bold">
+                <ShieldCheck className="w-5 h-5 text-amber-700" />
+              </div>
+              <h4 className="text-sm font-bold text-slate-900">توثيق عقاري رسمي VIP</h4>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                كافة القصور والفلل معتمدة بصكوك إلكترونية نظامية وجولات افتراضية 3D وتوافق تام مع كود البناء 2026.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2 hover:border-[#D4AF37]/50 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-900 flex items-center justify-center font-bold">
+                <Award className="w-5 h-5 text-indigo-700" />
+              </div>
+              <h4 className="text-sm font-bold text-slate-900">حقائب استثمارية معتمدة</h4>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                نماذج إكسل مالية ذكية لحساب العوائد Cap Rate وتحليلات التدفق النقدي ودراسات الجدوى للأسواق الخليجية والأمريكية.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2 hover:border-[#D4AF37]/50 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-900 flex items-center justify-center font-bold">
+                <Headphones className="w-5 h-5 text-slate-700" />
+              </div>
+              <h4 className="text-sm font-bold text-slate-900">رعاية عملاء خاصة 24/7</h4>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                مستشارون معتمدون لترتيب المعاينات الميدانية الفورية والإجابة على الاستفسارات الفنية والقانونية عبر واتساب.
+              </p>
+            </div>
+          </div>
+        </div>
 
       </main>
 

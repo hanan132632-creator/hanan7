@@ -159,8 +159,9 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
   };
 
   // Handle sharing link
-  const handleShare = (post: BlogPost) => {
-    const directUrl = `${window.location.origin}/post/${post.id}`;
+  const handleShare = (post: BlogPost, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    const directUrl = post.shortUrl || `${window.location.origin}/post/${post.id}`;
     navigator.clipboard.writeText(directUrl);
     setCopiedPostId(post.id);
     setTimeout(() => setCopiedPostId(null), 2500);
@@ -310,10 +311,37 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
                     </p>
                   </div>
 
-                  <div className="pt-4 border-t border-slate-200 flex items-center justify-between gap-2">
-                    <span className="text-[11px] text-slate-400">{post.date}</span>
+                  <div className="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[11px] text-slate-400">{post.date}</span>
+                      {post.shortUrl && (
+                        <span className="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-[10px] font-bold border border-emerald-300">
+                          {post.shortUrl.replace('https://', '')}
+                        </span>
+                      )}
+                    </div>
                     
                     <div className="flex items-center gap-2">
+                      {post.shortUrl && (
+                        <button
+                          onClick={(e) => handleShare(post, e)}
+                          className="flex items-center gap-1 px-2.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-bold transition-all"
+                          title="نسخ الرابط المختصر للمقال"
+                        >
+                          {copiedPostId === post.id ? (
+                            <>
+                              <Check className="w-3.5 h-3.5 text-emerald-600" />
+                              <span className="text-[11px]">تم النسخ!</span>
+                            </>
+                          ) : (
+                            <>
+                              <Share2 className="w-3.5 h-3.5 text-emerald-600" />
+                              <span className="text-[11px]">نسخ الرابط</span>
+                            </>
+                          )}
+                        </button>
+                      )}
+
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -462,6 +490,36 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
                   </button>
                 </div>
               </div>
+
+              {/* Short Link Fast Share Box if available */}
+              {selectedPost.shortUrl && (
+                <div className="p-3.5 bg-emerald-50 border border-emerald-300 rounded-2xl flex flex-wrap sm:flex-nowrap items-center justify-between gap-3 text-xs shadow-sm">
+                  <div className="min-w-0">
+                    <span className="text-[11px] text-emerald-800 block font-bold mb-0.5">
+                      🔗 الرابط المختصر المباشر لنشر هذا المقال:
+                    </span>
+                    <span className="font-mono text-emerald-950 font-bold text-xs select-all bg-white/80 px-2 py-0.5 rounded border border-emerald-200 inline-block">
+                      {selectedPost.shortUrl}
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => handleShare(selectedPost)}
+                    className="shrink-0 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#064E3B] to-[#059669] hover:brightness-110 text-white font-bold text-xs shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
+                  >
+                    {copiedPostId === selectedPost.id ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-[#FAD961]" />
+                        <span>تم النسخ!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Share2 className="w-3.5 h-3.5 text-[#FAD961]" />
+                        <span>نسخ الرابط المختصر</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              )}
 
               {/* Featured Image inside Article */}
               <div className="rounded-2xl overflow-hidden aspect-[16/8] bg-[#18181B] border border-[#D4AF37]/30 shadow-md">

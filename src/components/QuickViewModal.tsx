@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ProductItem, Currency } from '../types';
 import { formatPrice } from '../utils/formatters';
+import { downloadFreeAmericanPartyGame } from '../utils/freeGameDownload';
 import { 
   X, 
   ShoppingCart, 
@@ -32,9 +33,18 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
   onDirectBuy,
   onOpenMortgageCalculator,
 }) => {
+  const [copiedShortLink, setCopiedShortLink] = useState(false);
+
   if (!product) return null;
 
   const isRealEstate = product.category === 'real_estate';
+  const isFreeProduct = product.isFree || product.priceSAR === 0;
+
+  const handleCopyShortLink = (url: string) => {
+    navigator.clipboard.writeText(url);
+    setCopiedShortLink(true);
+    setTimeout(() => setCopiedShortLink(false), 2500);
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
@@ -141,63 +151,114 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
 
             {/* Pricing and Action Buttons */}
             <div className="space-y-4 pt-4 border-t border-slate-200">
-              <div className="flex items-baseline justify-between">
-                <span className="text-xs font-bold text-slate-500">السعر النهائي المعروض:</span>
-                <div className="text-left">
-                  <span className="text-2xl font-black text-[#064E3B] font-serif-arabic">
-                    {formatPrice(product.discountPriceSAR || product.priceSAR, currency)}
-                  </span>
-                  {product.discountPriceSAR && (
-                    <span className="text-xs text-slate-400 line-through mr-2">
-                      {formatPrice(product.priceSAR, currency)}
+              {isFreeProduct ? (
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 rounded-xl bg-emerald-50 border border-emerald-200">
+                    <span className="text-xs font-bold text-slate-600">السعر:</span>
+                    <span className="text-lg font-black text-[#064E3B] font-serif-arabic flex items-center gap-1">
+                      <Sparkles className="w-4 h-4 text-[#059669]" />
+                      <span>مجاناً 100% (هدية المنصة للجمعات)</span>
                     </span>
-                  )}
+                  </div>
+
+                  {/* Short Link Share Box */}
+                  <div className="p-3 bg-slate-100 border border-slate-200 rounded-xl flex items-center justify-between gap-2 text-xs">
+                    <div className="truncate">
+                      <span className="text-[10px] text-slate-400 block font-bold">رابط اللعبة المختصر للنشر السريع:</span>
+                      <span className="font-mono text-emerald-800 font-bold text-xs select-all">
+                        {product.shortUrl || `${window.location.origin}/game`}
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => handleCopyShortLink(product.shortUrl || `${window.location.origin}/game`)}
+                      className="shrink-0 px-3 py-1.5 rounded-lg bg-[#D4AF37]/20 border border-[#D4AF37]/50 text-[#064E3B] font-bold text-xs hover:bg-[#D4AF37]/30 transition-all flex items-center gap-1 cursor-pointer"
+                    >
+                      {copiedShortLink ? (
+                        <>
+                          <Check className="w-3.5 h-3.5 text-emerald-600" />
+                          <span>تم النسخ!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Share2 className="w-3.5 h-3.5 text-[#B8860B]" />
+                          <span>نسخ الرابط</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  {/* Direct Free Download Button */}
+                  <button
+                    onClick={() => {
+                      downloadFreeAmericanPartyGame();
+                    }}
+                    className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-[#059669] to-[#047857] hover:brightness-110 text-white font-black text-sm shadow-xl transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <Download className="w-5 h-5 text-[#FAD961] animate-pulse" />
+                    <span>تنزيل اللعبة مجاناً الآن فوراً (PDF وبطاقات جاهزة)</span>
+                  </button>
                 </div>
-              </div>
+              ) : (
+                <>
+                  <div className="flex items-baseline justify-between">
+                    <span className="text-xs font-bold text-slate-500">السعر النهائي المعروض:</span>
+                    <div className="text-left">
+                      <span className="text-2xl font-black text-[#064E3B] font-serif-arabic">
+                        {formatPrice(product.discountPriceSAR || product.priceSAR, currency)}
+                      </span>
+                      {product.discountPriceSAR && (
+                        <span className="text-xs text-slate-400 line-through mr-2">
+                          {formatPrice(product.priceSAR, currency)}
+                        </span>
+                      )}
+                    </div>
+                  </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  onClick={() => {
-                    onAddToCart(product);
-                    onClose();
-                  }}
-                  className="py-3 px-4 rounded-xl bg-[#D4AF37]/20 hover:bg-[#D4AF37]/30 text-[#064E3B] border border-[#D4AF37]/50 font-bold text-xs transition-all flex items-center justify-center gap-2"
-                >
-                  <ShoppingCart className="w-4 h-4 text-[#B8860B]" />
-                  <span>إضافة للسلة</span>
-                </button>
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      onClick={() => {
+                        onAddToCart(product);
+                        onClose();
+                      }}
+                      className="py-3 px-4 rounded-xl bg-[#D4AF37]/20 hover:bg-[#D4AF37]/30 text-[#064E3B] border border-[#D4AF37]/50 font-bold text-xs transition-all flex items-center justify-center gap-2"
+                    >
+                      <ShoppingCart className="w-4 h-4 text-[#B8860B]" />
+                      <span>إضافة للسلة</span>
+                    </button>
 
-                <button
-                  onClick={() => {
-                    onDirectBuy(product);
-                    onClose();
-                  }}
-                  className="py-3 px-4 rounded-xl bg-gradient-to-r from-[#059669] to-[#047857] hover:brightness-110 text-white font-bold text-xs shadow-lg transition-all flex items-center justify-center gap-2"
-                >
-                  {isRealEstate ? (
-                    <>
-                      <Building2 className="w-4 h-4 text-[#FAD961]" />
-                      <span>حجز وعقد ملكي</span>
-                    </>
-                  ) : (
-                    <>
-                      <Download className="w-4 h-4 text-[#FAD961]" />
-                      <span>شراء وتنزيل مباشر</span>
-                    </>
+                    <button
+                      onClick={() => {
+                        onDirectBuy(product);
+                        onClose();
+                      }}
+                      className="py-3 px-4 rounded-xl bg-gradient-to-r from-[#059669] to-[#047857] hover:brightness-110 text-white font-bold text-xs shadow-lg transition-all flex items-center justify-center gap-2"
+                    >
+                      {isRealEstate ? (
+                        <>
+                          <Building2 className="w-4 h-4 text-[#FAD961]" />
+                          <span>حجز وعقد ملكي</span>
+                        </>
+                      ) : (
+                        <>
+                          <Download className="w-4 h-4 text-[#FAD961]" />
+                          <span>شراء وتنزيل مباشر</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  {isRealEstate && onOpenMortgageCalculator && (
+                    <button
+                      onClick={() => {
+                        onClose();
+                        onOpenMortgageCalculator(product);
+                      }}
+                      className="w-full py-2.5 rounded-xl bg-[#18181B] text-[#D4AF37] hover:bg-[#27272A] border border-[#D4AF37]/40 text-xs font-bold transition-all flex items-center justify-center gap-2"
+                    >
+                      <span>فتح حاسبة التمويل لهذا العقار</span>
+                    </button>
                   )}
-                </button>
-              </div>
-
-              {isRealEstate && onOpenMortgageCalculator && (
-                <button
-                  onClick={() => {
-                    onClose();
-                    onOpenMortgageCalculator(product);
-                  }}
-                  className="w-full py-2.5 rounded-xl bg-[#18181B] text-[#D4AF37] hover:bg-[#27272A] border border-[#D4AF37]/40 text-xs font-bold transition-all flex items-center justify-center gap-2"
-                >
-                  <span>فتح حاسبة التمويل لهذا العقار</span>
-                </button>
+                </>
               )}
             </div>
 

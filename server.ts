@@ -479,17 +479,19 @@ function getBlogPostsMeta() {
       }
     }
     if (!content) return [];
-    const posts: Array<{ id: string; title: string; excerpt: string; author: string; date: string; category: string }> = [];
+    const posts: Array<{ id: string; title: string; excerpt: string; author: string; date: string; category: string; shortUrl?: string }> = [];
     const regex = /id:\s*['"](post-\d+)['"][\s\S]*?title:\s*['"]([^'"]*)['"][\s\S]*?excerpt:\s*['"]([^'"]*)['"][\s\S]*?category:\s*['"]([^'"]*)['"][\s\S]*?author:\s*['"]([^'"]*)['"][\s\S]*?date:\s*['"]([^'"]*)['"]/g;
     let match;
     while ((match = regex.exec(content)) !== null) {
+      const pId = match[1];
       posts.push({
-        id: match[1],
+        id: pId,
         title: match[2],
         excerpt: match[3],
         category: match[4],
         author: match[5],
-        date: match[6]
+        date: match[6],
+        shortUrl: pId === 'post-30' ? 'https://hanan.pro/usa' : undefined
       });
     }
     return posts;
@@ -513,11 +515,17 @@ function getProductsMeta() {
       }
     }
     if (!content) return [];
-    const products: Array<{ id: string; title: string; subtitle: string }> = [];
+    const products: Array<{ id: string; title: string; subtitle: string; shortUrl?: string }> = [];
     const regex = /id:\s*['"](prop-\d+|game-\d+|blueprint-\d+|canva-\d+|royal-\d+)['"][\s\S]*?title:\s*['"]([^'"]*)['"][\s\S]*?subtitle:\s*['"]([^'"]*)['"]/g;
     let match;
     while ((match = regex.exec(content)) !== null) {
-      products.push({ id: match[1], title: match[2], subtitle: match[3] });
+      const prId = match[1];
+      products.push({
+        id: prId,
+        title: match[2],
+        subtitle: match[3],
+        shortUrl: prId === 'game-02' ? 'https://hanan.pro/game' : undefined
+      });
     }
     return products;
   } catch (e) {
@@ -540,9 +548,11 @@ function renderSeoHtml(req: express.Request, res: express.Response, next: expres
     }
     if (!html) return next();
 
-    // Check for Post (e.g. /post/post-3, /blog/post-3, or ?post=post-3)
+    // Check for Post (e.g. /post/post-3, /blog/post-3, /usa, or ?post=post-3)
     let postId: string | null = null;
-    if (pathname.startsWith("/post/") || pathname.startsWith("/blog/")) {
+    if (pathname === "/usa" || pathname === "/p30" || pathname === "/article30") {
+      postId = "post-30";
+    } else if (pathname.startsWith("/post/") || pathname.startsWith("/blog/")) {
       const parts = pathname.split("/").filter(Boolean);
       postId = parts[parts.length - 1];
     } else if (query.post) {
@@ -556,7 +566,7 @@ function renderSeoHtml(req: express.Request, res: express.Response, next: expres
       const cleanPostId = postId.startsWith("post-") ? postId : `post-${postId}`;
       const post = posts.find(p => p.id === cleanPostId || p.id === postId);
       if (post) {
-        const canonicalUrl = `https://hanan.pro/post/${post.id}`;
+        const canonicalUrl = post.shortUrl || `https://hanan.pro/post/${post.id}`;
         const pageTitle = `${post.title} | عقارات النخبة`;
         const pageDesc = post.excerpt;
 
@@ -587,8 +597,7 @@ function renderSeoHtml(req: express.Request, res: express.Response, next: expres
           .replace(/<meta\s+name="description"\s+content=".*?"\s*\/?>/gi, `<meta name="description" content="${pageDesc}" />`)
           .replace(/<meta\s+property="og:title"\s+content=".*?"\s*\/?>/gi, `<meta property="og:title" content="${pageTitle}" />`)
           .replace(/<meta\s+property="og:description"\s+content=".*?"\s*\/?>/gi, `<meta property="og:description" content="${pageDesc}" />`)
-          .replace(/<meta\s+property="og:url"\s+content=".*?"\s*\/?>/gi, `<meta property="og:url" content="${canonicalUrl}" />`);
-
+        html = html.replace(/<link\s+rel="canonical"\s+href=".*?"\s*\/?>/gi, "");
         const extraHead = `
     <link rel="canonical" href="${canonicalUrl}" />
     <script type="application/ld+json">
@@ -602,9 +611,11 @@ function renderSeoHtml(req: express.Request, res: express.Response, next: expres
       }
     }
 
-    // Check for Product (e.g. /product/prop-01 or ?product=prop-01)
+    // Check for Product (e.g. /product/prop-01, /game, /play, or ?product=prop-01)
     let productId: string | null = null;
-    if (pathname.startsWith("/product/") || pathname.startsWith("/prop/")) {
+    if (pathname === "/game" || pathname === "/play") {
+      productId = "game-02";
+    } else if (pathname.startsWith("/product/") || pathname.startsWith("/prop/")) {
       const parts = pathname.split("/").filter(Boolean);
       productId = parts[parts.length - 1];
     } else if (query.product) {
@@ -615,7 +626,7 @@ function renderSeoHtml(req: express.Request, res: express.Response, next: expres
       const products = getProductsMeta();
       const product = products.find(p => p.id === productId);
       if (product) {
-        const canonicalUrl = `https://hanan.pro/product/${product.id}`;
+        const canonicalUrl = product.shortUrl || `https://hanan.pro/product/${product.id}`;
         const pageTitle = `${product.title} | عقارات النخبة`;
         const pageDesc = `${product.subtitle} - تفاصيل المعاينة الفورية والبيع المباشر والتمويل الملكي.`;
 
@@ -635,8 +646,7 @@ function renderSeoHtml(req: express.Request, res: express.Response, next: expres
           .replace(/<title>.*?<\/title>/gi, `<title>${pageTitle}</title>`)
           .replace(/<meta\s+name="description"\s+content=".*?"\s*\/?>/gi, `<meta name="description" content="${pageDesc}" />`)
           .replace(/<meta\s+property="og:title"\s+content=".*?"\s*\/?>/gi, `<meta property="og:title" content="${pageTitle}" />`)
-          .replace(/<meta\s+property="og:description"\s+content=".*?"\s*\/?>/gi, `<meta property="og:description" content="${pageDesc}" />`);
-
+        html = html.replace(/<link\s+rel="canonical"\s+href=".*?"\s*\/?>/gi, "");
         const extraHead = `
     <link rel="canonical" href="${canonicalUrl}" />
     <script type="application/ld+json">
@@ -701,7 +711,11 @@ function renderSeoHtml(req: express.Request, res: express.Response, next: expres
 }
 
 // Intercept specific SEO routes
-app.get(["/post/:id", "/blog/:id", "/product/:id", "/prop/:id", "/about", "/privacy", "/terms", "/contact", "/domain_verify"], renderSeoHtml);
+app.get([
+  "/post/:id", "/blog/:id", "/product/:id", "/prop/:id",
+  "/game", "/play", "/usa", "/p30",
+  "/about", "/privacy", "/terms", "/contact", "/domain_verify"
+], renderSeoHtml);
 
 async function startServer() {
   if (process.env.NODE_ENV !== "production") {
@@ -711,7 +725,13 @@ async function startServer() {
     });
     // Use SEO middleware in dev mode for testing URLs
     app.use((req, res, next) => {
-      if (req.path.startsWith("/post/") || req.path.startsWith("/blog/") || req.path.startsWith("/product/") || req.query.post || req.query.product || req.query.tab) {
+      if (
+        req.path === "/game" || req.path === "/play" ||
+        req.path === "/usa" || req.path === "/p30" ||
+        req.path.startsWith("/post/") || req.path.startsWith("/blog/") ||
+        req.path.startsWith("/product/") || req.path.startsWith("/prop/") ||
+        req.query.post || req.query.product || req.query.tab
+      ) {
         return renderSeoHtml(req, res, next);
       }
       next();

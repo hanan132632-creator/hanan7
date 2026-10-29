@@ -43,6 +43,8 @@ export interface ProductItem {
   features: string[];
   propertyDetails?: PropertyDetails;
   digitalDetails?: DigitalDetails;
+  isFree?: boolean;
+  shortUrl?: string;
 }
 
 export interface CartItem {
@@ -62,6 +64,7 @@ export interface BlogPost {
   imageUrl: string;
   views?: number;
   likes?: number;
+  shortUrl?: string;
 }
 
 export type VideoDurationMinutes = 1 | 3 | 5 | 10 | 15;

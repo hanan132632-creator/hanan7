@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ProductItem, Currency } from '../types';
 import { formatPrice } from '../utils/formatters';
+import { downloadFreeAmericanPartyGame } from '../utils/freeGameDownload';
 import { 
   Eye, 
   ShoppingCart, 
@@ -12,7 +13,9 @@ import {
   Sparkles,
   BedDouble,
   Maximize2,
-  FileCheck
+  FileCheck,
+  Share2,
+  Check
 } from 'lucide-react';
 
 interface ProductCardProps {
@@ -37,6 +40,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   onDirectBuy,
 }) => {
   const isRealEstate = product.category === 'real_estate';
+  const isFreeProduct = product.isFree || product.priceSAR === 0;
+  const [copiedLink, setCopiedLink] = useState(false);
+
+  const handleCopyShortLink = (url: string) => {
+    navigator.clipboard.writeText(url);
+    setCopiedLink(true);
+    setTimeout(() => setCopiedLink(false), 2500);
+  };
+
+  const handleFreeDownload = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    downloadFreeAmericanPartyGame();
+  };
 
   return (
     <div id={product.id} className="group relative rounded-3xl bg-white border border-[#D4AF37]/30 shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col h-full hover:-translate-y-1 scroll-mt-24">
@@ -134,19 +150,28 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Pricing Block */}
         <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
-          <div>
-            <span className="text-[10px] text-slate-400 block font-medium">السعر الملكي:</span>
-            <div className="flex items-baseline gap-2">
-              <span className="text-lg font-black text-[#064E3B] font-serif-arabic">
-                {formatPrice(product.discountPriceSAR || product.priceSAR, currency)}
+          {isFreeProduct ? (
+            <div className="flex items-center gap-2">
+              <span className="px-3 py-1 rounded-xl bg-emerald-100 text-[#064E3B] text-xs font-black border border-emerald-300 flex items-center gap-1 shadow-sm">
+                <Sparkles className="w-3.5 h-3.5 text-[#059669]" />
+                <span>مجاناً 100% (بدون شراء)</span>
               </span>
-              {product.discountPriceSAR && (
-                <span className="text-xs text-slate-400 line-through">
-                  {formatPrice(product.priceSAR, currency)}
-                </span>
-              )}
             </div>
-          </div>
+          ) : (
+            <div>
+              <span className="text-[10px] text-slate-400 block font-medium">السعر الملكي:</span>
+              <div className="flex items-baseline gap-2">
+                <span className="text-lg font-black text-[#064E3B] font-serif-arabic">
+                  {formatPrice(product.discountPriceSAR || product.priceSAR, currency)}
+                </span>
+                {product.discountPriceSAR && (
+                  <span className="text-xs text-slate-400 line-through">
+                    {formatPrice(product.priceSAR, currency)}
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Real Estate Mortgage Trigger */}
           {isRealEstate && onCalculateMortgage && (
@@ -162,41 +187,80 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </div>
 
         {/* Interactive Action Buttons */}
-        <div className="grid grid-cols-3 gap-2 pt-1">
-          <button
-            onClick={() => onQuickView(product)}
-            className="flex items-center justify-center gap-1 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-colors"
-          >
-            <Eye className="w-3.5 h-3.5 text-slate-600" />
-            <span>معاينة</span>
-          </button>
+        {isFreeProduct ? (
+          <div className="grid grid-cols-3 gap-2 pt-1">
+            <button
+              onClick={() => onQuickView(product)}
+              className="flex items-center justify-center gap-1 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-colors cursor-pointer"
+            >
+              <Eye className="w-3.5 h-3.5 text-slate-600" />
+              <span>معاينة</span>
+            </button>
 
-          <button
-            onClick={() => onAddToCart(product)}
-            className="flex items-center justify-center gap-1 py-2 rounded-xl bg-[#D4AF37]/20 hover:bg-[#D4AF37]/30 text-[#064E3B] border border-[#D4AF37]/40 text-xs font-bold transition-colors"
-            title="إضافة للسلة"
-          >
-            <ShoppingCart className="w-3.5 h-3.5 text-[#B8860B]" />
-            <span>السلة</span>
-          </button>
+            <button
+              onClick={() => handleCopyShortLink(product.shortUrl || `${window.location.origin}/game`)}
+              className="flex items-center justify-center gap-1 py-2 rounded-xl bg-[#D4AF37]/20 hover:bg-[#D4AF37]/30 text-[#064E3B] border border-[#D4AF37]/40 text-xs font-bold transition-colors cursor-pointer"
+              title="نسخ الرابط المختصر للعبة"
+            >
+              {copiedLink ? (
+                <>
+                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>تم النسخ!</span>
+                </>
+              ) : (
+                <>
+                  <Share2 className="w-3.5 h-3.5 text-[#B8860B]" />
+                  <span>رابط اللعبة</span>
+                </>
+              )}
+            </button>
 
-          <button
-            onClick={() => onDirectBuy(product)}
-            className="flex items-center justify-center gap-1 py-2 rounded-xl bg-gradient-to-r from-[#059669] to-[#047857] hover:brightness-110 text-white text-xs font-bold shadow-md transition-all"
-          >
-            {isRealEstate ? (
-              <>
-                <Building2 className="w-3.5 h-3.5 text-[#FAD961]" />
-                <span>حجز</span>
-              </>
-            ) : (
-              <>
-                <Download className="w-3.5 h-3.5 text-[#FAD961]" />
-                <span>شراء</span>
-              </>
-            )}
-          </button>
-        </div>
+            <button
+              onClick={handleFreeDownload}
+              className="flex items-center justify-center gap-1 py-2 rounded-xl bg-gradient-to-r from-[#059669] to-[#047857] hover:brightness-110 text-white text-xs font-black shadow-md transition-all cursor-pointer"
+              title="تنزيل اللعبة مجاناً فوراً"
+            >
+              <Download className="w-3.5 h-3.5 text-[#FAD961] animate-pulse" />
+              <span>تنزيل مجاني</span>
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-3 gap-2 pt-1">
+            <button
+              onClick={() => onQuickView(product)}
+              className="flex items-center justify-center gap-1 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-colors"
+            >
+              <Eye className="w-3.5 h-3.5 text-slate-600" />
+              <span>معاينة</span>
+            </button>
+
+            <button
+              onClick={() => onAddToCart(product)}
+              className="flex items-center justify-center gap-1 py-2 rounded-xl bg-[#D4AF37]/20 hover:bg-[#D4AF37]/30 text-[#064E3B] border border-[#D4AF37]/40 text-xs font-bold transition-colors"
+              title="إضافة للسلة"
+            >
+              <ShoppingCart className="w-3.5 h-3.5 text-[#B8860B]" />
+              <span>السلة</span>
+            </button>
+
+            <button
+              onClick={() => onDirectBuy(product)}
+              className="flex items-center justify-center gap-1 py-2 rounded-xl bg-gradient-to-r from-[#059669] to-[#047857] hover:brightness-110 text-white text-xs font-bold shadow-md transition-all"
+            >
+              {isRealEstate ? (
+                <>
+                  <Building2 className="w-3.5 h-3.5 text-[#FAD961]" />
+                  <span>حجز</span>
+                </>
+              ) : (
+                <>
+                  <Download className="w-3.5 h-3.5 text-[#FAD961]" />
+                  <span>شراء</span>
+                </>
+              )}
+            </button>
+          </div>
+        )}
 
       </div>
     </div>

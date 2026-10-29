@@ -61,7 +61,7 @@
     <priority>0.85</priority>
   </url>
 
-  <!-- مقالات المدونة العقارية الـ 29 (EEAT Direct Permalinks 2026) -->
+  <!-- مقالات المدونة العقارية الـ 30 (EEAT Direct Permalinks 2026) -->
   <url>
     <loc>https://hanan.pro/post/post-1</loc>
     <lastmod>2026-10-01</lastmod>
@@ -236,41 +236,109 @@
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
+  <url>
+    <loc>https://hanan.pro/post/post-30</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- الروابط المختصرة المباشرة (Short URLs) -->
+  <url>
+    <loc>https://hanan.pro/game</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://hanan.pro/usa</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
 
   <!-- المنتجات والأصول الرقمية والعقارية (Direct Permalinks) -->
   <url>
     <loc>https://hanan.pro/product/prop-01</loc>
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://hanan.pro/product/prop-02</loc>
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://hanan.pro/product/prop-03</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://hanan.pro/product/prop-04</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://hanan.pro/product/prop-05</loc>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://hanan.pro/product/game-01</loc>
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://hanan.pro/product/game-02</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://hanan.pro/product/game-03</loc>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://hanan.pro/product/blueprint-01</loc>
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://hanan.pro/product/blueprint-02</loc>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://hanan.pro/product/canva-01</loc>
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://hanan.pro/product/canva-02</loc>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://hanan.pro/product/royal-01</loc>
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://hanan.pro/product/royal-02</loc>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
