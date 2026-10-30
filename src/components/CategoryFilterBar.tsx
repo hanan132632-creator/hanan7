@@ -16,7 +16,6 @@ export const CategoryFilterBar: React.FC<CategoryFilterBarProps> = ({
   const categories: { id: CategoryType; label: string; icon: React.ReactNode }[] = [
     { id: 'all', label: 'الكل', icon: <Layers className="w-4 h-4" /> },
     { id: 'real_estate', label: 'عقارات النخبة', icon: <Building2 className="w-4 h-4" /> },
-    { id: 'gathering_games', label: 'ألعاب الجمعات', icon: <Gamepad2 className="w-4 h-4" /> },
     { id: 'blueprints_2026', label: 'مخططات 2026', icon: <Compass className="w-4 h-4" /> },
     { id: 'canva_templates', label: 'قوالب كانفا', icon: <LayoutTemplate className="w-4 h-4" /> },
     { id: 'royal_collection', label: 'التشكيلة الملكية', icon: <Crown className="w-4 h-4" /> },

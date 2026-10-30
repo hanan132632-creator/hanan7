@@ -87,33 +87,6 @@ export const MOCK_PRODUCTS: ProductItem[] = [
     }
   },
   {
-    id: 'game-01',
-    title: 'مجموعة ألعاب الجمعات الذهبية - حزمة السهرة الملكية',
-    subtitle: '12 لعبة ورقية وتفاعلية ذكية لليالي العائلية والجمعات',
-    category: 'gathering_games',
-    categoryLabel: 'ألعاب الجمعات',
-    priceSAR: 149,
-    discountPriceSAR: 99,
-    rating: 4.92,
-    reviewsCount: 142,
-    badgeText: 'تنزيل فوري PDF & Print',
-    isVipExclusive: false,
-    imageUrl: GATHERING_GAMES_IMAGE,
-    description: 'المطبوعة الأكثر مبيعاً في متجر المنتجات الرقمية! حزمة متكاملة تضم 12 لعبة تفاعلية مبتكرة للجمعات والمناسبات (تحديات، ألغاز ملكية، أسئلة الصراحة الفاخرة، وألعاب الضحك والألغاز الشعبية بأسلوب عصري). جاهزة للطباعة الفورية أو اللعب عبر الجوال مباشرة.',
-    features: [
-      'تنزيل مباشر بمجرد إتمام الدفع (PDF عالي الدقة)',
-      'تتضمن بطاقات تفاعلية مصممة بالذهب والزمرد',
-      'مناسبة لجميع الأعمار وتستوعب حتى 20 لاعب',
-      'تحديثات مجانية دائمية للأسئلة والألغاز'
-    ],
-    digitalDetails: {
-      fileFormat: 'PDF High Resolution & Interactive Web App',
-      fileSize: '45 MB',
-      instantDownload: true,
-      playersCount: '2 - 20 لاعبين'
-    }
-  },
-  {
     id: 'blueprint-01',
     title: 'المخطط الهندسي المعماري الملكي 2026 - فيلا مودرن',
     subtitle: 'مخططات هندسية كاملة ومجسم 3D جاهز للترخيص والتنفيذ',
@@ -192,35 +165,6 @@ export const MOCK_PRODUCTS: ProductItem[] = [
       fileFormat: 'جلسة حية + روابط التنزيل الشاملة',
       fileSize: 'حزمة كاملة',
       instantDownload: true
-    }
-  },
-  {
-    id: 'game-02',
-    title: 'لعبة السهرة الملكية بأسلوب أمريكي 2026 (USA Party Games - مجانية 100%)',
-    subtitle: 'أشهر تحديات البارتي جيمز والمواقف السريعة 2026 - تنزيل ولعب فوري مجاناً بالكامل بدون شراء',
-    category: 'gathering_games',
-    categoryLabel: 'ألعاب الجمعات (مجانية)',
-    priceSAR: 0,
-    discountPriceSAR: 0,
-    rating: 4.99,
-    reviewsCount: 248,
-    badgeText: 'تنزيل مجاني 100% Free',
-    isVipExclusive: false,
-    isFree: true,
-    shortUrl: 'https://hanan.pro/game',
-    imageUrl: GATHERING_GAMES_IMAGE,
-    description: 'هدية مجانية 100% لزوار المنصة! اللعبة الأكثر حماساً وضحكاً لجمعات وتجمعات 2026 المصممة بأسلوب Party Games الأمريكية الشهيرة (تحديات الـ 60 ثانية، ألغاز المواقف السريعة، وأسئلة الكروت الذكية المترجمة للعربية بلمسة فاخرة). متاحة للتنزيل الفوري بصيغة PDF واللعب المباشر بدون أي دفع أو شراء.',
-    features: [
-      'مجانية بالكامل 100% - تنزيل مباشر وفوري بدون أي رسوم أو تسجيل بطاقة',
-      'أكثر من 300 كارت تحدّي وأسئلة ذكاء بأسلوب المسابقات الأمريكية التفاعلية',
-      'تدعم اللعب الجماعي حتى 30 لاعباً وقسمة الفرق الذكية تلقائياً',
-      'ملف PDF جاهز للطباعة فوراً أو الفتح واللعب المباشر عبر الجوال والشاشات'
-    ],
-    digitalDetails: {
-      fileFormat: 'PDF High Res Print Ready + Web Interactive App',
-      fileSize: '58 MB (تنزيل مجاني فوري)',
-      instantDownload: true,
-      playersCount: '2 - 30 لاعباً'
     }
   },
   {
@@ -399,33 +343,6 @@ export const MOCK_PRODUCTS: ProductItem[] = [
       fileSize: '32 MB',
       instantDownload: true,
       compatibleApps: ['Microsoft Excel', 'Google Sheets', 'Numbers']
-    }
-  },
-  {
-    id: 'game-03',
-    title: 'لعبة تحدي الهوامير والمستثمر العقاري 2026 (Real Estate Tycoon Card Edition)',
-    subtitle: 'لعبة ورقية وتفاعلية ذكية للمنافسة في المزادات العقارية والشراء والمفاوضات العائلية',
-    category: 'gathering_games',
-    categoryLabel: 'ألعاب الجمعات',
-    priceSAR: 120,
-    discountPriceSAR: 79,
-    rating: 4.94,
-    reviewsCount: 94,
-    badgeText: 'لعبة حماسية وتحديات',
-    isVipExclusive: false,
-    imageUrl: ROYAL_COURTYARD_IMAGE,
-    description: 'أقوى ألعاب الجمعات العائلية والشبابية لعام 2026! تنافس مع أصدقائك في مزادات بيع الأراضي والقصور وجمع العوائد الإيجارية والتفاوض الذكي، مع بطاقات مفاجآت وأزمات سوقية غير متوقعة تصنع أجواءً من الحماس والضحك.',
-    features: [
-      '150 بطاقة تفاعلية جاهزة للطباعة فوراً بتصاميم ورقية ممتازة',
-      'قواعد لعب مبسطة وممتعة تناسب جميع الأعمار من 10 سنوات فما فوق',
-      'تستوعب من 2 إلى 8 لاعبين أو فرق متعددة مع بطاقات صكوك ملكية رمزية',
-      'تنزيل مباشر فور إتمام الدفع مع دليل شرح القوانين بالفيديو'
-    ],
-    digitalDetails: {
-      fileFormat: 'High-Res Print-Ready PDF + Interactive Digital Scoreboard',
-      fileSize: '42 MB',
-      instantDownload: true,
-      playersCount: '2 - 8 لاعبين أو فرق'
     }
   }
 ];

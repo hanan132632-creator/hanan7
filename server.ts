@@ -611,11 +611,9 @@ function renderSeoHtml(req: express.Request, res: express.Response, next: expres
       }
     }
 
-    // Check for Product (e.g. /product/prop-01, /game, /play, or ?product=prop-01)
+    // Check for Product (e.g. /product/prop-01 or ?product=prop-01)
     let productId: string | null = null;
-    if (pathname === "/game" || pathname === "/play") {
-      productId = "game-02";
-    } else if (pathname.startsWith("/product/") || pathname.startsWith("/prop/")) {
+    if (pathname.startsWith("/product/") || pathname.startsWith("/prop/")) {
       const parts = pathname.split("/").filter(Boolean);
       productId = parts[parts.length - 1];
     } else if (query.product) {
@@ -713,7 +711,7 @@ function renderSeoHtml(req: express.Request, res: express.Response, next: expres
 // Intercept specific SEO routes
 app.get([
   "/post/:id", "/blog/:id", "/product/:id", "/prop/:id",
-  "/game", "/play", "/usa", "/p30",
+  "/usa", "/p30",
   "/about", "/privacy", "/terms", "/contact", "/domain_verify"
 ], renderSeoHtml);
 
@@ -726,7 +724,6 @@ async function startServer() {
     // Use SEO middleware in dev mode for testing URLs
     app.use((req, res, next) => {
       if (
-        req.path === "/game" || req.path === "/play" ||
         req.path === "/usa" || req.path === "/p30" ||
         req.path.startsWith("/post/") || req.path.startsWith("/blog/") ||
         req.path.startsWith("/product/") || req.path.startsWith("/prop/") ||

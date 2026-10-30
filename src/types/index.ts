@@ -1,7 +1,6 @@
 export type CategoryType = 
   | 'all' 
   | 'real_estate' 
-  | 'gathering_games' 
   | 'blueprints_2026' 
   | 'canva_templates' 
   | 'royal_collection';

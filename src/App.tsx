@@ -18,7 +18,6 @@ import { Footer } from './components/Footer';
 
 import { ProductItem, CategoryType, Currency, CartItem, LegalTabType } from './types';
 import { MOCK_PRODUCTS } from './data/mockData';
-import { downloadFreeAmericanPartyGame } from './utils/freeGameDownload';
 import { 
   Crown, Sparkles, Filter, Building2, Layers, 
   Download, BookOpen, Share2, Check, ShieldCheck, Zap, Award, Headphones 
@@ -89,7 +88,6 @@ export default function App() {
     const counts: Record<CategoryType, number> = {
       all: MOCK_PRODUCTS.length,
       real_estate: 0,
-      gathering_games: 0,
       blueprints_2026: 0,
       canva_templates: 0,
       royal_collection: 0,
@@ -236,15 +234,6 @@ export default function App() {
         const postParam = (searchParams.get('post') || searchParams.get('article'))?.toLowerCase();
         const prodParam = (searchParams.get('product') || searchParams.get('prop'))?.toLowerCase();
         const sectionParam = searchParams.get('section')?.toLowerCase();
-
-        // Short link for free game 2026: /game or /play
-        if (pathname === '/game' || pathname === '/play' || hash === 'game' || hash === 'play') {
-          const gameProd = MOCK_PRODUCTS.find((p) => p.id === 'game-02');
-          if (gameProd) {
-            setQuickViewProduct(gameProd);
-            return;
-          }
-        }
 
         // Short link for new article: /usa or /p30
         if (pathname === '/usa' || pathname === '/p30' || pathname === '/article30' || hash === 'usa' || hash === 'p30') {
@@ -397,75 +386,22 @@ export default function App() {
             </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Short Link 1: Free Game */}
-            <div className="p-4 rounded-2xl bg-white/5 border border-emerald-400/30 hover:border-emerald-400/60 transition-all flex flex-col justify-between gap-3">
-              <div className="flex items-start justify-between gap-2">
-                <div>
-                  <span className="inline-block px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 text-[10px] font-black border border-emerald-400/30 mb-1">
-                    🎮 مجانية 100% بدون أي شراء
-                  </span>
-                  <h4 className="text-sm font-black text-white font-serif-arabic">
-                    لعبة السهرة الأمريكية 2026 (USA Party Games)
-                  </h4>
-                  <p className="text-[11px] text-slate-300 mt-0.5">
-                    300 بطاقة تحدّي ومسابقات سريعة جاهزة للطباعة والتنزيل الفوري
-                  </p>
-                </div>
+          <div className="grid grid-cols-1 gap-4">
+            {/* Short Link: USA Real Estate Guide Article */}
+            <div className="p-4 rounded-2xl bg-white/5 border border-[#D4AF37]/30 hover:border-[#D4AF37]/60 transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <span className="inline-block px-2.5 py-0.5 rounded-md bg-[#D4AF37]/20 text-[#FAD961] text-[10px] font-black border border-[#D4AF37]/40 mb-1">
+                  🏛️ مقال EEAT معتمد 2026
+                </span>
+                <h4 className="text-sm font-black text-white font-serif-arabic">
+                  دليل الاستثمار في العقارات الأمريكية وصناديق REITs
+                </h4>
+                <p className="text-[11px] text-slate-300">
+                  دراسة العوائد الدولارية، ضرائب FIRPTA، وهيكلة شركات LLC للخليجيين
+                </p>
               </div>
 
-              <div className="flex items-center justify-between gap-2 bg-black/40 p-2.5 rounded-xl border border-white/10">
-                <div className="truncate font-mono text-xs font-bold text-[#FAD961] select-all">
-                  https://hanan.pro/game
-                </div>
-                <div className="flex items-center gap-1.5 shrink-0">
-                  <button
-                    onClick={() => handleCopyDirectLink('https://hanan.pro/game', 'game')}
-                    className="px-3 py-1.5 rounded-lg bg-[#D4AF37] hover:bg-[#FAD961] text-[#18181B] font-black text-xs transition-all flex items-center gap-1 cursor-pointer shadow"
-                    title="نسخ رابط اللعبة المختصر"
-                  >
-                    {copiedLinkType === 'game' ? (
-                      <>
-                        <Check className="w-3.5 h-3.5 text-emerald-900" />
-                        <span>تم النسخ!</span>
-                      </>
-                    ) : (
-                      <>
-                        <Share2 className="w-3.5 h-3.5" />
-                        <span>نسخ الرابط</span>
-                      </>
-                    )}
-                  </button>
-
-                  <button
-                    onClick={() => downloadFreeAmericanPartyGame()}
-                    className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-all flex items-center gap-1 cursor-pointer"
-                    title="تنزيل اللعبة مجاناً فوراً"
-                  >
-                    <Download className="w-3.5 h-3.5 text-[#FAD961]" />
-                    <span className="hidden sm:inline">تنزيل مجاني</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Short Link 2: USA Real Estate Guide Article */}
-            <div className="p-4 rounded-2xl bg-white/5 border border-[#D4AF37]/30 hover:border-[#D4AF37]/60 transition-all flex flex-col justify-between gap-3">
-              <div className="flex items-start justify-between gap-2">
-                <div>
-                  <span className="inline-block px-2.5 py-0.5 rounded-md bg-[#D4AF37]/20 text-[#FAD961] text-[10px] font-black border border-[#D4AF37]/40 mb-1">
-                    🏛️ مقال EEAT معتمد 2026
-                  </span>
-                  <h4 className="text-sm font-black text-white font-serif-arabic">
-                    دليل الاستثمار في العقارات الأمريكية وصناديق REITs
-                  </h4>
-                  <p className="text-[11px] text-slate-300 mt-0.5">
-                    دراسة العوائد الدولارية، ضرائب FIRPTA، وهيكلة شركات LLC للخليجيين
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between gap-2 bg-black/40 p-2.5 rounded-xl border border-white/10">
+              <div className="flex items-center justify-between sm:justify-end gap-3 bg-black/40 p-2.5 rounded-xl border border-white/10 w-full sm:w-auto shrink-0">
                 <div className="truncate font-mono text-xs font-bold text-[#FAD961] select-all">
                   https://hanan.pro/usa
                 </div>
