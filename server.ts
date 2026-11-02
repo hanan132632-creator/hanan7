@@ -582,7 +582,13 @@ function renderSeoHtml(req: express.Request, res: express.Response, next: expres
           "articleSection": post.category,
           "author": {
             "@type": "Person",
-            "name": post.author
+            "name": post.author,
+            "jobTitle": "مستشار عقاري وهندسي معتمد E-E-A-T 2026",
+            "worksFor": {
+              "@type": "Organization",
+              "name": "عقارات النخبة",
+              "url": "https://hanan.pro"
+            }
           },
           "publisher": {
             "@type": "Organization",
@@ -658,6 +664,47 @@ function renderSeoHtml(req: express.Request, res: express.Response, next: expres
       }
     }
 
+    // Check for Author Profile (e.g. /author, /author/hanan-al-ali, or ?author=...)
+    let authorId: string | null = null;
+    if (pathname.startsWith("/author") || query.author) {
+      const parts = pathname.split("/").filter(Boolean);
+      authorId = parts.length > 1 ? parts[1] : (query.author ? String(query.author) : "editorial-board");
+      
+      const canonicalUrl = `https://hanan.pro/author${authorId !== 'editorial-board' ? `/${authorId}` : ''}`;
+      const pageTitle = `ملف الكتّاب المعتمدين والتراخيص الرسمية E-E-A-T | عقارات النخبة`;
+      const pageDesc = `توثيق بيانات وتراخيص كتّاب واستشاريي منصة عقارات النخبة المعتمدين برخص فال العقارية والجهات الهندسية الرسمية لعام 2026. محتوى بشري 100%.`;
+
+      const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "فريق ومستشارو عقارات النخبة المعتمدين",
+        "jobTitle": "مستشارون ومهندسون عقاريون مرخصون",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "عقارات النخبة",
+          "url": "https://hanan.pro"
+        },
+        "url": canonicalUrl,
+        "description": pageDesc
+      };
+
+      html = html
+        .replace(/<title>.*?<\/title>/gi, `<title>${pageTitle}</title>`)
+        .replace(/<meta\s+name="description"\s+content=".*?"\s*\/?>/gi, `<meta name="description" content="${pageDesc}" />`)
+        .replace(/<meta\s+property="og:title"\s+content=".*?"\s*\/?>/gi, `<meta property="og:title" content="${pageTitle}" />`);
+      html = html.replace(/<link\s+rel="canonical"\s+href=".*?"\s*\/?>/gi, "");
+      const extraHead = `
+    <link rel="canonical" href="${canonicalUrl}" />
+    <script type="application/ld+json">
+    ${JSON.stringify(jsonLd, null, 2)}
+    </script>`;
+      html = html.replace("</head>", `${extraHead}\n</head>`);
+
+      res.setHeader("Content-Type", "text/html; charset=utf-8");
+      res.setHeader("Cache-Control", "public, max-age=3600");
+      return res.status(200).send(html);
+    }
+
     // Check for Legal / Tab Pages
     const validTabs = ["about", "privacy", "terms", "contact", "domain_verify"];
     let matchedTab: string | null = null;
@@ -711,6 +758,7 @@ function renderSeoHtml(req: express.Request, res: express.Response, next: expres
 // Intercept specific SEO routes
 app.get([
   "/post/:id", "/blog/:id", "/product/:id", "/prop/:id",
+  "/author/:id", "/author",
   "/usa", "/p30",
   "/about", "/privacy", "/terms", "/contact", "/domain_verify"
 ], renderSeoHtml);
@@ -727,7 +775,8 @@ async function startServer() {
         req.path === "/usa" || req.path === "/p30" ||
         req.path.startsWith("/post/") || req.path.startsWith("/blog/") ||
         req.path.startsWith("/product/") || req.path.startsWith("/prop/") ||
-        req.query.post || req.query.product || req.query.tab
+        req.path.startsWith("/author") ||
+        req.query.post || req.query.product || req.query.tab || req.query.author
       ) {
         return renderSeoHtml(req, res, next);
       }

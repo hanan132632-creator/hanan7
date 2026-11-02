@@ -51,6 +51,35 @@ export interface CartItem {
   quantity: number;
 }
 
+export interface ArticleSource {
+  title: string;
+  authority: string;
+  referenceNumber: string;
+  year: string;
+  type: string;
+  verificationUrl?: string;
+}
+
+export interface AuthorProfile {
+  id: string;
+  name: string;
+  role: string;
+  title: string;
+  avatarUrl?: string;
+  licenseNumber: string;
+  licenseAuthority: string;
+  experienceYears: string;
+  education: string;
+  specializations: string[];
+  bio: string;
+  workplace: string;
+  verificationBadge: string;
+  email: string;
+  officeLocation: string;
+  verifiedStatus: boolean;
+  publishedArticlesCount: number;
+}
+
 export interface BlogPost {
   id: string;
   title: string;
@@ -58,12 +87,14 @@ export interface BlogPost {
   content: string;
   category: string;
   author: string;
+  authorProfile?: AuthorProfile;
   date: string;
   readTime: string;
   imageUrl: string;
   views?: number;
   likes?: number;
   shortUrl?: string;
+  sources?: ArticleSource[];
 }
 
 export type VideoDurationMinutes = 1 | 3 | 5 | 10 | 15;
