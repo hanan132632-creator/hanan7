@@ -235,7 +235,15 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
                       className="flex items-center gap-1.5 text-slate-200 hover:text-[#FAD961] transition-colors cursor-pointer text-right"
                       title="عرض ترخيص وبيانات الكاتب المعتمد"
                     >
-                      <ShieldCheck className="w-3.5 h-3.5 text-[#34D399] shrink-0" />
+                      {authorData.avatarUrl ? (
+                        <img
+                          src={authorData.avatarUrl}
+                          alt={authorData.name}
+                          className="w-5 h-5 rounded-full object-cover border border-[#D4AF37] shrink-0 shadow-xs"
+                        />
+                      ) : (
+                        <ShieldCheck className="w-3.5 h-3.5 text-[#34D399] shrink-0" />
+                      )}
                       <span className="font-bold truncate max-w-[160px]">{post.author}</span>
                     </button>
 
@@ -254,9 +262,17 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
                           e.stopPropagation();
                           setActiveAuthorModal(authorData);
                         }}
-                        className="flex items-center gap-1 text-[#059669] hover:underline font-bold cursor-pointer"
+                        className="flex items-center gap-1.5 text-[#059669] hover:underline font-bold cursor-pointer"
                       >
-                        <User className="w-3.5 h-3.5" />
+                        {authorData.avatarUrl ? (
+                          <img
+                            src={authorData.avatarUrl}
+                            alt={authorData.name}
+                            className="w-4 h-4 rounded-full object-cover border border-[#D4AF37] shrink-0"
+                          />
+                        ) : (
+                          <User className="w-3.5 h-3.5" />
+                        )}
                         <span>{post.author}</span>
                       </button>
                       
@@ -381,9 +397,19 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
                 <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#D4AF37]/40 shadow-sm space-y-3">
                   <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
                     <div className="flex items-center gap-3">
-                      <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#18181B] to-[#064E3B] text-[#D4AF37] flex items-center justify-center font-bold text-base border border-[#D4AF37]/40 shadow-inner">
-                        {authorProfile.name.charAt(2) || 'ع'}
-                      </div>
+                      {authorProfile.avatarUrl ? (
+                        <img
+                          src={authorProfile.avatarUrl}
+                          alt={authorProfile.name}
+                          className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl object-cover border-2 border-[#D4AF37] shadow-md shrink-0 cursor-pointer hover:scale-105 transition-transform"
+                          onClick={() => setActiveAuthorModal(authorProfile)}
+                          title="عرض الملف المهني وتراخيص الكاتب"
+                        />
+                      ) : (
+                        <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#18181B] to-[#064E3B] text-[#D4AF37] flex items-center justify-center font-bold text-base border border-[#D4AF37]/40 shadow-inner">
+                          {authorProfile.name.charAt(2) || 'ع'}
+                        </div>
+                      )}
                       <div>
                         <div className="flex items-center gap-2">
                           <span className="font-black text-slate-900 text-sm block">{selectedPost.author}</span>
@@ -535,9 +561,19 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
                 <div className="p-5 rounded-2xl bg-white border-2 border-[#D4AF37]/40 shadow-sm space-y-3">
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#18181B] via-[#27272A] to-[#064E3B] text-[#D4AF37] flex items-center justify-center font-bold text-lg border border-[#D4AF37]">
-                        {authorProfile.name.charAt(2) || 'ع'}
-                      </div>
+                      {authorProfile.avatarUrl ? (
+                        <img
+                          src={authorProfile.avatarUrl}
+                          alt={authorProfile.name}
+                          className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl object-cover border-2 border-[#D4AF37] shadow-lg shrink-0 cursor-pointer hover:scale-105 transition-transform"
+                          onClick={() => setActiveAuthorModal(authorProfile)}
+                          title="عرض التراخيص الرسمية للكاتب"
+                        />
+                      ) : (
+                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#18181B] via-[#27272A] to-[#064E3B] text-[#D4AF37] flex items-center justify-center font-bold text-lg border border-[#D4AF37]">
+                          {authorProfile.name.charAt(2) || 'ع'}
+                        </div>
+                      )}
                       <div>
                         <div className="flex items-center gap-2">
                           <h4 className="text-sm font-black text-slate-900 font-serif-arabic">{authorProfile.name}</h4>
@@ -648,9 +684,17 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
                 {/* Clean Bottom Footer Bar */}
                 <div className="p-5 rounded-2xl bg-[#18181B] text-white border border-[#D4AF37]/40 flex flex-col sm:flex-row items-center justify-between gap-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#059669] to-[#047857] flex items-center justify-center text-white border border-[#FAD961]/40">
-                      <ShieldCheck className="w-5 h-5 text-[#FAD961]" />
-                    </div>
+                    {authorProfile.avatarUrl ? (
+                      <img
+                        src={authorProfile.avatarUrl}
+                        alt={authorProfile.name}
+                        className="w-10 h-10 rounded-xl object-cover border border-[#FAD961]/50 shadow shrink-0"
+                      />
+                    ) : (
+                      <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#059669] to-[#047857] flex items-center justify-center text-white border border-[#FAD961]/40">
+                        <ShieldCheck className="w-5 h-5 text-[#FAD961]" />
+                      </div>
+                    )}
                     <div className="text-xs text-slate-300">
                       <span className="block font-bold text-white">{selectedPost.author}</span>
                       <span className="text-[10px] text-emerald-300 font-mono">{authorProfile.licenseNumber}</span>

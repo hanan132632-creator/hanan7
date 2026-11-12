@@ -1,4 +1,6 @@
 import { AuthorProfile, ArticleSource } from '../types';
+import authorHananImg from '../assets/images/author_hanan_portrait_1794499732255.jpg';
+import authorFahadImg from '../assets/images/author_fahad_portrait_1794499717311.jpg';
 
 export const VERIFIED_AUTHORS: AuthorProfile[] = [
   {
@@ -6,6 +8,7 @@ export const VERIFIED_AUTHORS: AuthorProfile[] = [
     name: 'م. حنان العلي',
     role: 'كبير مستشاري الاستثمار العقاري والتحليل المالي',
     title: 'مستشارة استثمار عقاري معتمدة ورئيسة التحرير الاقتصادي',
+    avatarUrl: authorHananImg,
     licenseNumber: 'رخصة فال العقارية (REGA): 1200034891',
     licenseAuthority: 'الهيئة العامة للعقار - المملكة العربية السعودية',
     experienceYears: '16+ سنة في أسواق العقارات الخليجية والتحليل المالي',
@@ -22,7 +25,7 @@ export const VERIFIED_AUTHORS: AuthorProfile[] = [
     email: 'h.alali@hanan.pro',
     officeLocation: 'الرياض - طريق الملك فهد، برج النخبة المالي',
     verifiedStatus: true,
-    publishedArticlesCount: 4
+    publishedArticlesCount: 5
   },
   {
     id: 'sami-al-khalifa',
@@ -121,6 +124,7 @@ export const VERIFIED_AUTHORS: AuthorProfile[] = [
     name: 'م. فهد الشمري',
     role: 'كبير المقيمين العقاريين المعتمدين',
     title: 'زميل الهيئة السعودية للمقيمين المعتمدين (تقييم) وعضو الملكية العقارية RICS',
+    avatarUrl: authorFahadImg,
     licenseNumber: 'ترخيص مقيم عقاري معتمد (تقييم): 1100028741 / زمالة RICS الدولية: 65912',
     licenseAuthority: 'الهيئة السعودية للمقيمين المعتمدين (تقييم) والجمعية الملكية للمساحين القانونيين (RICS - لندن)',
     experienceYears: '18+ سنة في التقييم العقاري والتثمين المالي للقصور',
@@ -137,7 +141,7 @@ export const VERIFIED_AUTHORS: AuthorProfile[] = [
     email: 'f.alshammari@hanan.pro',
     officeLocation: 'الرياض - حي حطين، مجمع الصفوة المالي',
     verifiedStatus: true,
-    publishedArticlesCount: 2
+    publishedArticlesCount: 3
   },
   {
     id: 'majed-al-ghamdi',
@@ -406,6 +410,43 @@ export function getArticleSpecificSources(articleId: string, category: string): 
         year: '2026',
         type: 'تنظيمات ورسوم بلدية حكومية',
         verificationUrl: 'https://idlelands.momrah.gov.sa'
+      }
+    );
+  }
+
+  if (articleId === 'post-33' || category.includes('الفحص الفني') || category.includes('التدقيق')) {
+    baseSources.push(
+      {
+        title: 'وثيقة التأمين الإلزامي على العيوب الخفية للمباني السكنية لمدة 10 سنوات (قرار مجلس الوزراء رقم 509)',
+        authority: 'البنك المركزي السعودي (ساما) وهيئة التأمين',
+        referenceNumber: 'قرار مجلس الوزراء رقم 509 والوثيقة النموذجية للتأمين العشري IDI',
+        year: '2026',
+        type: 'تنظيم وتأمين حكومي إلزامي لحماية الملاك',
+        verificationUrl: 'https://ia.gov.sa'
+      },
+      {
+        title: 'كود التفتيش الإنشائي والمعماري SBC 201 وكود التمديدات الصحية SBC 701',
+        authority: 'اللجنة الوطنية لكود البناء السعودي ومنصة بلدي',
+        referenceNumber: 'معايير الفحص الميداني والمطابقة الإنشائية المعتمدة 2026',
+        year: '2026',
+        type: 'معايير فحص وتفتيش هندسي معتمدة',
+        verificationUrl: 'https://sbc.gov.sa'
+      },
+      {
+        title: 'معايير الفحص والتقييم العقاري الدولي IVS 104 الصادرة عن مجلس معايير التقييم الدولية',
+        authority: 'الهيئة السعودية للمقيمين المعتمدين (تقييم) والجمعية الملكية للمساحين RICS',
+        referenceNumber: 'ترخيص مهنة التقييم العقاري رقم 1100028741 وزمالة RICS-UK-65912',
+        year: '2026',
+        type: 'معايير تدقيق ومسح عقاري دولية',
+        verificationUrl: 'https://taqeem.gov.sa'
+      },
+      {
+        title: 'سجل شهادات سلامة المبنى ومطابقة رخص الإشغال بالبورصة العقارية',
+        authority: 'وزارة العدل ووزارة البلديات والإسكان',
+        referenceNumber: 'سجل إتمام البناء والإشغال الموحد رقم 719043/2026',
+        year: '2026',
+        type: 'سجل توثيق سلامة منشآت حكومي رسمي',
+        verificationUrl: 'https://srem.moj.gov.sa'
       }
     );
   }

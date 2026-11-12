@@ -82,11 +82,20 @@ export const AuthorProfileModal: React.FC<AuthorProfileModalProps> = ({
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
               
               <div className="flex items-center gap-4">
-                <div className="relative">
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-[#18181B] via-[#27272A] to-[#064E3B] text-[#D4AF37] flex items-center justify-center font-bold text-xl sm:text-2xl border-2 border-[#D4AF37] shadow-lg">
-                    {author.name.charAt(2) || 'ع'}
-                  </div>
-                  <div className="absolute -bottom-1 -right-1 p-1 bg-emerald-600 rounded-full border-2 border-white shadow text-white" title="كاتب بشري موثق">
+                <div className="relative shrink-0">
+                  {author.avatarUrl ? (
+                    <img
+                      src={author.avatarUrl}
+                      alt={author.name}
+                      referrerPolicy="no-referrer"
+                      className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-[#D4AF37] shadow-xl"
+                    />
+                  ) : (
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-[#18181B] via-[#27272A] to-[#064E3B] text-[#D4AF37] flex items-center justify-center font-bold text-xl sm:text-2xl border-2 border-[#D4AF37] shadow-lg">
+                      {author.name.charAt(2) || 'ع'}
+                    </div>
+                  )}
+                  <div className="absolute -bottom-1 -right-1 p-1 bg-emerald-600 rounded-full border-2 border-white shadow text-white" title="كاتب بشري موثق E-E-A-T 2026">
                     <CheckCircle2 className="w-4 h-4 text-white" />
                   </div>
                 </div>

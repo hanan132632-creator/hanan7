@@ -1,6 +1,7 @@
 import React from 'react';
 import { Crown, ShieldCheck, Mail, Phone, MapPin, ExternalLink, Heart, Compass } from 'lucide-react';
 import { LegalTabType } from '../types';
+import { MOCK_BLOG_POSTS } from '../data/mockData';
 
 interface FooterProps {
   onOpenLegalTab: (tab: LegalTabType) => void;
@@ -102,14 +103,14 @@ export const Footer: React.FC<FooterProps> = ({
                     }
                   }} 
                   className="w-full sm:w-auto px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#D4AF37]/20 to-[#059669]/20 border border-[#D4AF37]/50 text-[#FAD961] hover:text-[#D4AF37] font-bold text-xs transition-colors flex items-center justify-between sm:justify-start gap-2 shadow-sm"
-                  title="عرض خريطة الموقع وفهرس الروابط الـ 37 المباشرة"
+                  title="عرض خريطة الموقع وفهرس الروابط المباشرة"
                 >
                   <div className="flex items-center gap-1.5">
                     <Compass className="w-4 h-4 text-[#D4AF37]" />
                     <span>خريطة الموقع وفهرس الروابط</span>
                   </div>
-                  <span className="w-5 h-5 rounded-full bg-[#D4AF37] text-slate-900 text-[10px] font-black flex items-center justify-center">
-                    37
+                  <span className="px-1.5 min-w-[20px] h-5 rounded-full bg-[#D4AF37] text-slate-900 text-[10px] font-black flex items-center justify-center">
+                    {MOCK_BLOG_POSTS.length + 6}
                   </span>
                 </button>
               </li>

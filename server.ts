@@ -491,7 +491,7 @@ function getBlogPostsMeta() {
         category: match[4],
         author: match[5],
         date: match[6],
-        shortUrl: pId === 'post-30' ? 'https://hanan.pro/usa' : undefined
+        shortUrl: pId === 'post-30' ? 'https://hanan.pro/usa' : pId === 'post-32' ? 'https://hanan.pro/p32' : pId === 'post-33' ? 'https://hanan.pro/p33' : undefined
       });
     }
     return posts;
@@ -548,12 +548,14 @@ function renderSeoHtml(req: express.Request, res: express.Response, next: expres
     }
     if (!html) return next();
 
-    // Check for Post (e.g. /post/post-3, /blog/post-3, /usa, /p32, or ?post=post-3)
+    // Check for Post (e.g. /post/post-3, /blog/post-3, /usa, /p32, /p33, or ?post=post-3)
     let postId: string | null = null;
     if (pathname === "/usa" || pathname === "/p30" || pathname === "/article30") {
       postId = "post-30";
     } else if (pathname === "/p32" || pathname === "/article32") {
       postId = "post-32";
+    } else if (pathname === "/p33" || pathname === "/article33") {
+      postId = "post-33";
     } else if (pathname.startsWith("/post/") || pathname.startsWith("/blog/")) {
       const parts = pathname.split("/").filter(Boolean);
       postId = parts[parts.length - 1];
@@ -761,7 +763,7 @@ function renderSeoHtml(req: express.Request, res: express.Response, next: expres
 app.get([
   "/post/:id", "/blog/:id", "/product/:id", "/prop/:id",
   "/author/:id", "/author",
-  "/usa", "/p30", "/p32",
+  "/usa", "/p30", "/p32", "/p33",
   "/about", "/privacy", "/terms", "/contact", "/domain_verify"
 ], renderSeoHtml);
 
@@ -774,7 +776,7 @@ async function startServer() {
     // Use SEO middleware in dev mode for testing URLs
     app.use((req, res, next) => {
       if (
-        req.path === "/usa" || req.path === "/p30" || req.path === "/p32" ||
+        req.path === "/usa" || req.path === "/p30" || req.path === "/p32" || req.path === "/p33" ||
         req.path.startsWith("/post/") || req.path.startsWith("/blog/") ||
         req.path.startsWith("/product/") || req.path.startsWith("/prop/") ||
         req.path.startsWith("/author") ||
