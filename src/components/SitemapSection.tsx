@@ -53,9 +53,9 @@ export const SitemapSection: React.FC<SitemapSectionProps> = ({
       id: 'catalog',
       tabKey: null,
       title: 'كتالوج العقارات والمتجر الملكي الشامل',
-      url: `${origin}/?section=catalog`,
-      path: '/?section=catalog',
-      desc: 'الفلل والقصور والمنتجات الرقمية وألعاب الجمعات ومخططات 2026',
+      url: `${origin}/catalog`,
+      path: '/catalog',
+      desc: 'الفلل والقصور والمنتجات الرقمية ومخططات 2026',
       type: 'page',
       priority: '0.95'
     },
@@ -63,19 +63,29 @@ export const SitemapSection: React.FC<SitemapSectionProps> = ({
       id: 'blog-section',
       tabKey: null,
       title: `مدونة النخبة العقارية 2026 (${MOCK_BLOG_POSTS.length} مقالاً)`,
-      url: `${origin}/?section=blog-section`,
-      path: '/?section=blog-section',
+      url: `${origin}/blog`,
+      path: '/blog',
       desc: 'تحليلات عقارية موثوقة بمعايير EEAT لكبار الخبراء والمستشارين',
       type: 'page',
       priority: '0.95'
     },
     {
+      id: 'author',
+      tabKey: null,
+      title: 'ملف الكتّاب المعتمدين والتراخيص الرسمية (E-E-A-T)',
+      url: `${origin}/author`,
+      path: '/author',
+      desc: 'سجل رخص فال وتقييم وتراخيص مستشاري وكتّاب منصة عقارات النخبة لعام 2026',
+      type: 'page',
+      priority: '0.90'
+    },
+    {
       id: 'sitemap-section',
       tabKey: 'sitemap' as LegalTabType,
-      title: 'خريطة الموقع وفهرس الروابط التفاعلية',
-      url: `${origin}/?tab=sitemap`,
-      path: '/?tab=sitemap',
-      desc: 'الفهرس المعتمد لكافة روابط المنصة دون أي أخطاء',
+      title: 'خريطة الموقع وفهرس الروابط المباشرة',
+      url: `${origin}/sitemap`,
+      path: '/sitemap',
+      desc: 'الفهرس المعتمد لكافة روابط المنصة المباشرة',
       type: 'page',
       priority: '0.90'
     },
@@ -83,11 +93,11 @@ export const SitemapSection: React.FC<SitemapSectionProps> = ({
       id: 'about',
       tabKey: 'about' as LegalTabType,
       title: 'من نحن (نبذة عن منصة عقارات النخبة)',
-      url: `${origin}/?tab=about`,
-      path: '/?tab=about',
+      url: `${origin}/about`,
+      path: '/about',
       desc: 'رؤية المنصة الملكية ومعايير الوساطة والاستشارات الفاخرة',
       type: 'page',
-      priority: '0.80'
+      priority: '0.85'
     },
     {
       id: 'privacy',

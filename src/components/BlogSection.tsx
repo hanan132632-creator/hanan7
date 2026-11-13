@@ -41,16 +41,58 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
     }
   };
 
-  // Handle opening and viewing an article directly
-  const handleOpenArticle = (post: BlogPost) => {
-    setSelectedPost(post);
-    
-    // Update browser URL to direct permalink for SEO & Google Search Console
+  const updateSeoMeta = (post: BlogPost | null) => {
     try {
-      if (window.history && window.history.pushState) {
-        window.history.pushState({ postId: post.id }, '', `/post/${post.id}`);
+      const canonicalEl = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+      const descEl = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+      if (post) {
+        const canonicalUrl = `https://hanan.pro/post/${post.id}`;
+        document.title = `${post.title} | عقارات النخبة`;
+        if (canonicalEl) canonicalEl.setAttribute('href', canonicalUrl);
+        if (descEl) descEl.setAttribute('content', post.excerpt);
+      } else {
+        document.title = 'عقارات النخبة | عقارات فاخرة وفلل وقصور للبيع بالرياض ودبي 2026';
+        if (canonicalEl) canonicalEl.setAttribute('href', 'https://hanan.pro/');
+        if (descEl) {
+          descEl.setAttribute(
+            'content',
+            'منصة عقارات النخبة الأولى للعقارات الفاخرة بالرياض ودبي، فلل وقصور بحي حطين والملقا، استشارات استثمارية EEAT، مخططات 2026، وقوالب كانفا بحاسبة تمويل ذكية.'
+          );
+        }
       }
-    } catch (e) {
+    } catch {
+      // Ignore DOM errors
+    }
+  };
+
+  // Handle opening and viewing an article directly
+  const handleOpenArticle = (post: BlogPost, updateHistory = true) => {
+    setSelectedPost(post);
+    updateSeoMeta(post);
+
+    // Update browser URL to direct permalink for SEO & Google Search Console
+    if (updateHistory) {
+      try {
+        const targetPath = post.shortUrl
+          ? new URL(post.shortUrl).pathname
+          : `/post/${post.id}`;
+        if (window.history && window.history.pushState && window.location.pathname !== targetPath) {
+          window.history.pushState({ postId: post.id }, '', targetPath);
+        }
+      } catch (e) {
+        // Ignore
+      }
+    }
+  };
+
+  const handleCloseArticle = () => {
+    setSelectedPost(null);
+    updateSeoMeta(null);
+    try {
+      if (window.history && window.history.pushState && window.location.pathname !== '/') {
+        window.history.pushState({}, '', '/');
+      }
+    } catch {
       // Ignore
     }
   };
@@ -60,22 +102,31 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
     const checkUrlAndOpen = () => {
       try {
         const url = new URL(window.location.href);
+        const pathname = url.pathname.toLowerCase();
         const hash = window.location.hash.replace('#', '');
         const postParam = url.searchParams.get('post') || url.searchParams.get('article');
         let targetId = postParam;
 
+        if (!targetId && (pathname === '/usa' || pathname === '/p30' || pathname === '/article30')) {
+          targetId = 'post-30';
+        } else if (!targetId && (pathname === '/p32' || pathname === '/article32')) {
+          targetId = 'post-32';
+        } else if (!targetId && (pathname === '/p33' || pathname === '/article33')) {
+          targetId = 'post-33';
+        }
+
         if (!targetId && hash && hash.startsWith('post-')) {
           targetId = hash;
         }
-        if (!targetId && (url.pathname.startsWith('/blog/') || url.pathname.startsWith('/post/'))) {
-          const parts = url.pathname.split('/');
+        if (!targetId && (pathname.startsWith('/blog/') || pathname.startsWith('/post/'))) {
+          const parts = pathname.split('/');
           targetId = parts[parts.length - 1];
         }
 
         if (targetId) {
           const found = MOCK_BLOG_POSTS.find((p) => p.id === targetId);
           if (found) {
-            handleOpenArticle(found);
+            handleOpenArticle(found, false);
             setTimeout(() => {
               const el = document.getElementById(targetId as string);
               if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -83,10 +134,17 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
           }
         }
 
-        // Author profile URL parameter (?author=...)
+        // Author profile URL parameter (?author=... or /author/:id)
         const authorParam = url.searchParams.get('author');
         if (authorParam) {
           const prof = getAuthorProfile(authorParam);
+          if (prof) {
+            setActiveAuthorModal(prof);
+          }
+        } else if (pathname.startsWith('/author')) {
+          const parts = pathname.split('/').filter(Boolean);
+          const slug = parts.length > 1 ? parts[1] : 'hanan-al-ali';
+          const prof = getAuthorProfile(slug);
           if (prof) {
             setActiveAuthorModal(prof);
           }
@@ -108,12 +166,21 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
         handleOpenArticle(found);
       }
     };
+    const handleCustomAuthorOpen = (e: Event) => {
+      const customEvent = e as CustomEvent<string>;
+      const prof = getAuthorProfile(customEvent.detail || 'hanan-al-ali');
+      if (prof) {
+        setActiveAuthorModal(prof);
+      }
+    };
     window.addEventListener('open-blog-post', handleCustomOpen);
+    window.addEventListener('open-author-profile', handleCustomAuthorOpen);
 
     return () => {
       window.removeEventListener('hashchange', checkUrlAndOpen);
       window.removeEventListener('popstate', checkUrlAndOpen);
       window.removeEventListener('open-blog-post', handleCustomOpen);
+      window.removeEventListener('open-author-profile', handleCustomAuthorOpen);
     };
   }, []);
 
@@ -364,7 +431,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
               <div className="bg-[#18181B] text-white p-5 border-b border-[#D4AF37]/40 flex items-center justify-between">
                 <span className="text-xs font-bold text-[#FAD961]">{selectedPost.category}</span>
                 <button
-                  onClick={() => setSelectedPost(null)}
+                  onClick={handleCloseArticle}
                   className="p-2 rounded-full bg-[#27272A] hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer"
                   aria-label="إغلاق المقال"
                 >
@@ -709,7 +776,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
                       الملف المهني للكاتب
                     </button>
                     <button
-                      onClick={() => setSelectedPost(null)}
+                      onClick={handleCloseArticle}
                       className="px-6 py-2 rounded-xl bg-[#059669] hover:bg-[#047857] text-white text-xs font-bold transition-all shadow-md cursor-pointer"
                     >
                       إغلاق المقال

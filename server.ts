@@ -570,7 +570,7 @@ function renderSeoHtml(req: express.Request, res: express.Response, next: expres
       const cleanPostId = postId.startsWith("post-") ? postId : `post-${postId}`;
       const post = posts.find(p => p.id === cleanPostId || p.id === postId);
       if (post) {
-        const canonicalUrl = post.shortUrl || `https://hanan.pro/post/${post.id}`;
+        const canonicalUrl = `https://hanan.pro/post/${post.id}`;
         const pageTitle = `${post.title} | عقارات النخبة`;
         const pageDesc = post.excerpt;
 

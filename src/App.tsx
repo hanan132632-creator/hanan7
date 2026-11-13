@@ -235,13 +235,37 @@ export default function App() {
         const prodParam = (searchParams.get('product') || searchParams.get('prop'))?.toLowerCase();
         const sectionParam = searchParams.get('section')?.toLowerCase();
 
-        // Short link for new article: /usa or /p30
+        // Short link for featured articles: /usa, /p30, /p32, /p33
         if (pathname === '/usa' || pathname === '/p30' || pathname === '/article30' || hash === 'usa' || hash === 'p30') {
           window.dispatchEvent(new CustomEvent('open-blog-post', { detail: 'post-30' }));
           setTimeout(() => {
             const el = document.getElementById('post-30') || document.getElementById('blog-section');
             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
           }, 250);
+          return;
+        }
+        if (pathname === '/p32' || pathname === '/article32' || hash === 'p32') {
+          window.dispatchEvent(new CustomEvent('open-blog-post', { detail: 'post-32' }));
+          setTimeout(() => {
+            const el = document.getElementById('post-32') || document.getElementById('blog-section');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 250);
+          return;
+        }
+        if (pathname === '/p33' || pathname === '/article33' || hash === 'p33') {
+          window.dispatchEvent(new CustomEvent('open-blog-post', { detail: 'post-33' }));
+          setTimeout(() => {
+            const el = document.getElementById('post-33') || document.getElementById('blog-section');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 250);
+          return;
+        }
+
+        // Author Directory / Profile route (/author or /author/:id)
+        if (pathname.startsWith('/author')) {
+          const parts = pathname.split('/').filter(Boolean);
+          const authorSlug = parts.length > 1 ? parts[1] : 'hanan-al-ali';
+          window.dispatchEvent(new CustomEvent('open-author-profile', { detail: authorSlug }));
           return;
         }
 
@@ -309,10 +333,14 @@ export default function App() {
           }
         }
 
-        // 5. Section Scrolling
-        if (sectionParam === 'catalog' || hash === 'catalog') {
+        // 6. Direct Sections & Calculator Routes
+        if (pathname === '/calculator' || searchParams.get('calculator') === 'mortgage' || hash === 'calculator') {
+          setIsMortgageCalcOpen(true);
+          return;
+        }
+        if (pathname === '/catalog' || sectionParam === 'catalog' || hash === 'catalog') {
           setTimeout(scrollToCatalog, 150);
-        } else if (sectionParam === 'blog-section' || hash === 'blog-section') {
+        } else if (pathname === '/blog' || sectionParam === 'blog-section' || hash === 'blog-section') {
           setTimeout(scrollToBlog, 150);
         }
       } catch (e) {

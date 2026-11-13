@@ -297,24 +297,24 @@ export const LegalPageModal: React.FC<LegalPageModalProps> = ({
 
             const corePages = [
               { id: 'home', title: 'الصفحة الرئيسية والواجهة الملكية', path: '/', hash: '#', fullUrl: `${origin}/`, desc: 'الواجهة الملكية وحاسبة التمويل وأحدث المعروضات', priority: '1.0', changefreq: 'daily', actionType: 'scroll-home' },
-              { id: 'catalog', title: 'كتالوج العقارات والمتجر الشامل', path: '/?section=catalog', hash: '#catalog', fullUrl: `${origin}/?section=catalog`, desc: 'الفلل والقصور والمنتجات الرقمية وألعاب الجمعات', priority: '0.90', changefreq: 'daily', actionType: 'scroll-catalog' },
-              { id: 'blog-section', title: 'مدونة النخبة العقارية 2026', path: '/?section=blog-section', hash: '#blog-section', fullUrl: `${origin}/?section=blog-section`, desc: 'تحليلات عقارية متقدمة (24 مقالاً موثوقاً EEAT)', priority: '0.95', changefreq: 'daily', actionType: 'scroll-blog' },
-              { id: 'about', title: 'من نحن (نبذة عن المنصة الملكية)', path: '/?tab=about', hash: '#about', fullUrl: `${origin}/?tab=about`, desc: 'هوية ورؤية منصة النخبة ومعايير الجودة', priority: '0.80', changefreq: 'monthly', tabKey: 'about' },
-              { id: 'privacy', title: 'سياسة الخصوصية وحماية البيانات', path: '/?tab=privacy', hash: '#privacy', fullUrl: `${origin}/?tab=privacy`, desc: 'حماية البيانات وحقوق الزوار وسياسة الكوكيز', priority: '0.80', changefreq: 'monthly', tabKey: 'privacy' },
-              { id: 'terms', title: 'الشروط والأحكام والتعاملات', path: '/?tab=terms', hash: '#terms', fullUrl: `${origin}/?tab=terms`, desc: 'قواعد التداول وتراخيص الاستخدام والتحميل', priority: '0.80', changefreq: 'monthly', tabKey: 'terms' },
-              { id: 'contact', title: 'اتصل بنا ورعاية العملاء 24/7', path: '/?tab=contact', hash: '#contact', fullUrl: `${origin}/?tab=contact`, desc: 'قنوات التواصل المباشر وطلب المعاينات', priority: '0.80', changefreq: 'monthly', tabKey: 'contact' },
-              { id: 'domain_verify', title: 'توثيق ملكية الدومين وأدسنس', path: '/?tab=domain_verify', hash: '#domain_verify', fullUrl: `${origin}/?tab=domain_verify`, desc: 'شهادة التوثيق والامتثال الرسمي لـ Google AdSense', priority: '0.85', changefreq: 'monthly', tabKey: 'domain_verify' },
-              { id: 'calculator', title: 'حاسبة التمويل العقاري التقديرية', path: '/?calculator=mortgage', hash: '#calculator', fullUrl: `${origin}/?calculator=mortgage`, desc: 'حساب الأقساط الشهرية لفلل وقصور النخبة', priority: '0.85', changefreq: 'daily', actionType: 'open-calc' },
-              { id: 'sitemap-interactive', title: 'خريطة الموقع التفاعلية الشاملة', path: '/?tab=sitemap', hash: '#sitemap', fullUrl: `${origin}/?tab=sitemap`, desc: 'الفهرس المعتمد لكافة روابط المنصة الـ 39', priority: '0.90', changefreq: 'daily', tabKey: 'sitemap' },
+              { id: 'catalog', title: 'كتالوج العقارات والمتجر الشامل', path: '/catalog', hash: '#catalog', fullUrl: `${origin}/catalog`, desc: 'الفلل والقصور والمنتجات الرقمية ومخططات 2026', priority: '0.90', changefreq: 'daily', actionType: 'scroll-catalog' },
+              { id: 'blog-section', title: `مدونة النخبة العقارية 2026 (${MOCK_BLOG_POSTS.length} مقالاً)`, path: '/blog', hash: '#blog-section', fullUrl: `${origin}/blog`, desc: `تحليلات عقارية متقدمة (${MOCK_BLOG_POSTS.length} مقالاً موثوقاً EEAT)`, priority: '0.95', changefreq: 'daily', actionType: 'scroll-blog' },
+              { id: 'author', title: 'ملف الكتّاب المعتمدين والتراخيص E-E-A-T', path: '/author', hash: '#author', fullUrl: `${origin}/author`, desc: 'تراخيص وسجل كتّاب ومستشاري المنصة لعام 2026', priority: '0.90', changefreq: 'weekly', actionType: 'scroll-blog' },
+              { id: 'about', title: 'من نحن (نبذة عن المنصة الملكية)', path: '/about', hash: '#about', fullUrl: `${origin}/about`, desc: 'هوية ورؤية منصة النخبة ومعايير الجودة', priority: '0.85', changefreq: 'monthly', tabKey: 'about' },
+              { id: 'privacy', title: 'سياسة الخصوصية وحماية البيانات', path: '/privacy', hash: '#privacy', fullUrl: `${origin}/privacy`, desc: 'حماية البيانات وحقوق الزوار وسياسة الكوكيز', priority: '0.80', changefreq: 'monthly', tabKey: 'privacy' },
+              { id: 'terms', title: 'الشروط والأحكام والتعاملات', path: '/terms', hash: '#terms', fullUrl: `${origin}/terms`, desc: 'قواعد التداول وتراخيص الاستخدام والتحميل', priority: '0.80', changefreq: 'monthly', tabKey: 'terms' },
+              { id: 'contact', title: 'اتصل بنا ورعاية العملاء 24/7', path: '/contact', hash: '#contact', fullUrl: `${origin}/contact`, desc: 'قنوات التواصل المباشر وطلب المعاينات', priority: '0.80', changefreq: 'monthly', tabKey: 'contact' },
+              { id: 'domain_verify', title: 'توثيق ملكية الدومين وأدسنس', path: '/domain_verify', hash: '#domain_verify', fullUrl: `${origin}/domain_verify`, desc: 'شهادة التوثيق والامتثال الرسمي لـ Google AdSense', priority: '0.85', changefreq: 'monthly', tabKey: 'domain_verify' },
+              { id: 'calculator', title: 'حاسبة التمويل العقاري التقديرية', path: '/calculator', hash: '#calculator', fullUrl: `${origin}/calculator`, desc: 'حساب الأقساط الشهرية لفلل وقصور النخبة', priority: '0.85', changefreq: 'daily', actionType: 'open-calc' },
             ];
 
             const blogUrls = MOCK_BLOG_POSTS.map((post, idx) => ({
               id: post.id,
               index: idx + 1,
               title: post.title,
-              path: `/?post=${post.id}`,
+              path: `/post/${post.id}`,
               hash: `#${post.id}`,
-              fullUrl: `${origin}/?post=${post.id}`,
+              fullUrl: `${origin}/post/${post.id}`,
               desc: post.category,
               author: post.author,
               date: post.date,
@@ -325,9 +325,9 @@ export const LegalPageModal: React.FC<LegalPageModalProps> = ({
             const productUrls = MOCK_PRODUCTS.map((prod) => ({
               id: prod.id,
               title: prod.title,
-              path: `/?product=${prod.id}`,
+              path: `/product/${prod.id}`,
               hash: `#${prod.id}`,
-              fullUrl: `${origin}/?product=${prod.id}`,
+              fullUrl: `${origin}/product/${prod.id}`,
               desc: `${prod.categoryLabel} • ${prod.priceSAR.toLocaleString()} ر.س`,
               imageUrl: prod.imageUrl,
               priority: '0.80',
@@ -343,11 +343,7 @@ export const LegalPageModal: React.FC<LegalPageModalProps> = ({
             ];
 
             const rawXmlContent = `<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <!-- 1. الصفحات والأقسام الرئيسية (${corePages.length} روابط) -->
 ${corePages.map(p => `  <url>

@@ -1,67 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <!-- الصفحة الرئيسية -->
   <url>
     <loc>https://hanan.pro/</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- فهرس خريطة الموقع المباشر (HTML Sitemap) -->
+  <!-- الصفحات الرسمية والامتثال AdSense وبيانات الكتّاب E-E-A-T -->
   <url>
-    <loc>https://hanan.pro/sitemap.html</loc>
-    <lastmod>2026-10-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.95</priority>
-  </url>
-
-  <!-- خريطة الموقع التفاعلية بالتطبيق -->
-  <url>
-    <loc>https://hanan.pro/sitemap</loc>
-    <lastmod>2026-10-28</lastmod>
-    <changefreq>daily</changefreq>
+    <loc>https://hanan.pro/author</loc>
+    <lastmod>2026-11-13</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
-
-  <!-- الصفحات الرسمية والامتثال AdSense -->
   <url>
     <loc>https://hanan.pro/about</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://hanan.pro/privacy</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://hanan.pro/terms</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://hanan.pro/contact</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://hanan.pro/domain_verify</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
 
-  <!-- مقالات المدونة العقارية الـ 30 (EEAT Direct Permalinks 2026) -->
+  <!-- مقالات المدونة العقارية المعتمدة E-E-A-T 2026 (33 مقالاً) -->
   <url>
     <loc>https://hanan.pro/post/post-1</loc>
     <lastmod>2026-10-01</lastmod>
@@ -240,7 +226,7 @@
     <loc>https://hanan.pro/post/post-30</loc>
     <lastmod>2026-10-29</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.90</priority>
   </url>
   <url>
     <loc>https://hanan.pro/post/post-31</loc>
@@ -248,11 +234,15 @@
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
-
-  <!-- الروابط المختصرة المباشرة (Short URLs) -->
   <url>
-    <loc>https://hanan.pro/usa</loc>
-    <lastmod>2026-10-29</lastmod>
+    <loc>https://hanan.pro/post/post-32</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://hanan.pro/post/post-33</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
