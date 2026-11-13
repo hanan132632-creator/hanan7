@@ -64,94 +64,110 @@ export const Header: React.FC<HeaderProps> = ({
           
           {/* Welcome Tagline */}
           <div className="hidden sm:flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#FAD961] animate-ping" />
-            <span className="text-[#FAD961] font-extrabold tracking-wide">
-              مرحباً بكم في منصة عقارات النخبة الملكية
+            <span className="text-[#FAD961] font-extrabold tracking-wide whitespace-nowrap">
+              منصة عقارات النخبة الملكية · الرياض ودبي
             </span>
           </div>
 
-          {/* User Requested Navigation Links */}
-          <nav className="flex items-center gap-3 sm:gap-5 mx-auto sm:mx-0 overflow-x-auto no-scrollbar py-0.5">
-            <button
-              onClick={() => onOpenLegalTab('contact')}
-              className="hover:text-[#FAD961] transition-colors whitespace-nowrap flex items-center gap-1 font-extrabold"
+          {/* Crawlable Internal Navigation Links */}
+          <nav aria-label="التنقل الرئيسي" className="flex items-center gap-3 sm:gap-5 mx-auto sm:mx-0 overflow-x-auto no-scrollbar py-0.5">
+            <a
+              href="/contact"
+              onClick={(e) => { e.preventDefault(); onOpenLegalTab('contact'); }}
+              className="hover:text-[#FAD961] transition-colors whitespace-nowrap shrink-0 flex items-center gap-1 font-extrabold"
             >
               <span>اتصل بنا</span>
-            </button>
+            </a>
 
-            <span className="text-white/40">|</span>
+            <span className="text-white/40" aria-hidden="true">|</span>
 
-            <button
-              onClick={() => onOpenLegalTab('about')}
-              className="hover:text-[#FAD961] transition-colors whitespace-nowrap font-extrabold"
+            <a
+              href="/about"
+              onClick={(e) => { e.preventDefault(); onOpenLegalTab('about'); }}
+              className="hover:text-[#FAD961] transition-colors whitespace-nowrap shrink-0 font-extrabold"
             >
               <span>من نحن</span>
-            </button>
+            </a>
 
-            <span className="text-white/40">|</span>
+            <span className="text-white/40" aria-hidden="true">|</span>
 
-            <button
-              onClick={() => onOpenLegalTab('terms')}
-              className="hover:text-[#FAD961] transition-colors whitespace-nowrap font-extrabold"
+            <a
+              href="/author"
+              onClick={(e) => {
+                e.preventDefault();
+                window.dispatchEvent(new CustomEvent('open-author-profile', { detail: 'hanan-al-ali' }));
+              }}
+              className="hover:text-[#FAD961] transition-colors whitespace-nowrap shrink-0 font-extrabold"
+            >
+              <span>الكتّاب المعتمدون</span>
+            </a>
+
+            <span className="text-white/40" aria-hidden="true">|</span>
+
+            <a
+              href="/terms"
+              onClick={(e) => { e.preventDefault(); onOpenLegalTab('terms'); }}
+              className="hover:text-[#FAD961] transition-colors whitespace-nowrap shrink-0 font-extrabold"
             >
               <span>شروط الاستخدام</span>
-            </button>
+            </a>
 
-            <span className="text-white/40">|</span>
+            <span className="text-white/40" aria-hidden="true">|</span>
 
-            <button
-              onClick={() => onOpenLegalTab('privacy')}
-              className="hover:text-[#FAD961] transition-colors whitespace-nowrap font-extrabold"
+            <a
+              href="/privacy"
+              onClick={(e) => { e.preventDefault(); onOpenLegalTab('privacy'); }}
+              className="hover:text-[#FAD961] transition-colors whitespace-nowrap shrink-0 font-extrabold"
             >
-              <span>سياسة الخصوصية</span>
-            </button>
+              <span>الخصوصية</span>
+            </a>
 
-            <span className="text-white/40">|</span>
+            <span className="text-white/40" aria-hidden="true">|</span>
 
-            <button
-              onClick={() => {
+            <a
+              href="/blog"
+              onClick={(e) => {
+                e.preventDefault();
                 if (onScrollToBlog) onScrollToBlog();
                 else onOpenLegalTab('domain_verify');
               }}
-              className="hover:text-[#FAD961] transition-colors whitespace-nowrap font-extrabold flex items-center gap-1.5"
+              className="hover:text-[#FAD961] transition-colors whitespace-nowrap shrink-0 font-extrabold flex items-center gap-1.5"
             >
               <BookOpen className="w-3.5 h-3.5 text-[#FAD961]" />
-              <span>المدونة</span>
-              <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 text-[10px] font-black rounded-full bg-[#18181B] text-[#FAD961] border border-[#FAD961]/50 shadow-sm">
-                {MOCK_BLOG_POSTS.length}
-              </span>
-            </button>
+              <span>المدونة ({MOCK_BLOG_POSTS.length})</span>
+            </a>
 
-            <span className="text-white/40">|</span>
+            <span className="text-white/40" aria-hidden="true">|</span>
 
-            <button
-              onClick={() => {
+            <a
+              href="/sitemap"
+              onClick={(e) => {
+                e.preventDefault();
                 if (onScrollToSitemap) onScrollToSitemap();
                 else onOpenLegalTab('sitemap');
               }}
-              className="hover:text-[#FAD961] transition-colors whitespace-nowrap font-extrabold flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 hover:border-[#D4AF37]/50 shadow-sm"
-              title="عرض خريطة الموقع وفهرس الروابط الـ 37 مباشرة"
+              className="hover:text-[#FAD961] transition-colors whitespace-nowrap shrink-0 font-extrabold flex items-center gap-1.5"
+              title="عرض خريطة الموقع وفهرس الروابط"
             >
               <Compass className="w-3.5 h-3.5 text-[#FAD961]" />
               <span>خريطة الموقع</span>
-              <span className="w-4 h-4 rounded-full bg-[#D4AF37] text-slate-900 text-[10px] font-black flex items-center justify-center">
-                37
-              </span>
-            </button>
+            </a>
 
-            <span className="text-white/40">|</span>
+            <span className="text-white/40" aria-hidden="true">|</span>
 
-            <button
-              onClick={() => {
+            <a
+              href="/catalog"
+              onClick={(e) => {
+                e.preventDefault();
                 if (onScrollToCatalog) onScrollToCatalog();
               }}
-              className="hover:text-[#FAD961] transition-colors whitespace-nowrap font-black text-[#FAD961] flex items-center gap-1 px-2 py-0.5 rounded-lg bg-black/20 border border-[#FAD961]/30"
+              className="hover:text-[#FAD961] transition-colors whitespace-nowrap shrink-0 font-black text-[#FAD961] flex items-center gap-1"
             >
               <ShoppingCart className="w-3.5 h-3.5 text-[#FAD961]" />
               <span>المتجر</span>
-            </button>
+            </a>
 
-            <span className="text-white/40">|</span>
+            <span className="text-white/40" aria-hidden="true">|</span>
 
             {/* Top Bar AI Video Studio Button */}
             <button
@@ -159,12 +175,11 @@ export const Header: React.FC<HeaderProps> = ({
                 if (onOpenVideoStudio) onOpenVideoStudio();
                 else window.dispatchEvent(new CustomEvent('open-video-studio', { detail: '' }));
               }}
-              className="hover:text-[#FAD961] transition-colors whitespace-nowrap font-black text-[#FAD961] flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-gradient-to-r from-emerald-950/70 to-black border border-emerald-500/40 shadow-sm"
+              className="hover:text-[#FAD961] transition-colors whitespace-nowrap shrink-0 font-black text-[#FAD961] flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-gradient-to-r from-emerald-950/70 to-black border border-emerald-500/40 shadow-sm cursor-pointer"
               title="استوديو تحويل النص إلى فيديو سينمائي بالذكاء الاصطناعي (مدة 15 دقيقة)"
             >
-              <Video className="w-3.5 h-3.5 text-[#FAD961] animate-pulse" />
+              <Video className="w-3.5 h-3.5 text-[#FAD961]" />
               <span>استوديو الفيديو 15 دقيقة</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
             </button>
           </nav>
 
@@ -178,7 +193,7 @@ export const Header: React.FC<HeaderProps> = ({
             
             {/* Brand Logo Zone - Larger Font & Metallic Gold Styling */}
             <div className="flex items-center gap-3 shrink-0">
-              <a href="#" className="flex items-center gap-3 group">
+              <a href="/" className="flex items-center gap-3 group">
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#FAD961] via-[#D4AF37] to-[#059669] p-[2.5px] shadow-xl group-hover:scale-105 transition-transform">
                   <div className="w-full h-full bg-[#18181B] rounded-[13px] flex items-center justify-center">
                     <Crown className="w-7 h-7 text-[#FAD961]" />
@@ -200,7 +215,7 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="relative w-full">
               <input
                 type="text"
-                placeholder="ابحث عن قصر، فيلا، قالب كانفا، أو لعبة جمعات..."
+                placeholder="ابحث عن قصر، فيلا، مخطط 2026، أو قالب تسويق عقاري..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full bg-[#27272A]/90 text-slate-100 placeholder-slate-400 text-xs sm:text-sm rounded-xl py-2.5 pr-10 pl-4 border border-[#D4AF37]/30 focus:border-[#059669] focus:ring-1 focus:ring-[#059669] outline-none transition-all shadow-inner"
@@ -319,7 +334,7 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="relative w-full">
             <input
               type="text"
-              placeholder="ابحث عن عقارات، ألعاب، أو قوالب..."
+              placeholder="ابحث عن عقارات، مخططات 2026، أو قوالب..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-[#27272A] text-slate-100 placeholder-slate-400 text-xs rounded-xl py-2 pr-9 pl-3 border border-[#D4AF37]/30 focus:outline-none"

@@ -41,10 +41,10 @@ app.post("/api/gemini/advisor", async (req, res) => {
 لغة الحوار: العربية الفصحى الراقية بأسلوب دافئ، فاخر، ومحترف للغاية.
 الأقسام المتوفرة في المنصة:
 1. عقارات النخبة: فلل فاخرة، بنتهاوس، قصور، أراضي استثمارية في الرياض، دبي، جدة، والخبر.
-2. ألعاب الجمعات: ألعاب ورق وألغاز عائلية وتفاعلية رقمية مخصصة للجمعات والجمعات الملكية.
-3. مخططات 2026 المعمارية: تصاميم ومخططات معمارية هندسية ثلاثية الأبعاد بملفات جاهزة للتنفيذ.
-4. قوالب كانفا (Canva Templates): حزم تصاميم وسوشيال ميديا وقوالب هويات بصرية ملكية جاهزة للتعديل المباشر.
-5. التشكيلة الملكية: باقات ومجموعات حصريّة تجمع بين الأصول الرقمية والاستشارات.
+2. التقييم العقاري والفحص الفني: تحليلات التثمين المعتمدة ومعايير تأمين العيوب الخفية IDI.
+3. مخططات 2026 المعمارية: تصاميم ومخططات معمارية هندسية ثلاثية الأبعاد مطابقة لكود البناء السعودي.
+4. قوالب كانفا للتسويق العقاري: حزم تصاميم وهويات بصرية عقارية جاهزة للتعديل المباشر.
+5. التشكيلة الملكية: باقات استشارية وهندسية متكاملة لكبار المستثمرين والمكاتب العائلية.
 
 مهمتك: الإجابة بدقة، اقتراح الخيار الأنسب، إعطاء نصائح تمويل استثمارية، أو إرشاد الزائر.
 الفئة الحالية المستهدفة: ${category || "عام"}
@@ -95,7 +95,7 @@ app.post("/api/gemini/text-to-video", async (req, res) => {
       "royal_courtyard_fountain",
       "luxury_estate_valuation",
       "architectural_blueprints",
-      "gathering_games_asset",
+      "villa_snagging_inspection",
       "canva_templates_bundle"
     ];
 
@@ -515,16 +515,14 @@ function getProductsMeta() {
       }
     }
     if (!content) return [];
-    const products: Array<{ id: string; title: string; subtitle: string; shortUrl?: string }> = [];
-    const regex = /id:\s*['"](prop-\d+|game-\d+|blueprint-\d+|canva-\d+|royal-\d+)['"][\s\S]*?title:\s*['"]([^'"]*)['"][\s\S]*?subtitle:\s*['"]([^'"]*)['"]/g;
+    const products: Array<{ id: string; title: string; subtitle: string }> = [];
+    const regex = /id:\s*['"](prop-\d+|blueprint-\d+|canva-\d+|royal-\d+)['"][\s\S]*?title:\s*['"]([^'"]*)['"][\s\S]*?subtitle:\s*['"]([^'"]*)['"]/g;
     let match;
     while ((match = regex.exec(content)) !== null) {
-      const prId = match[1];
       products.push({
-        id: prId,
+        id: match[1],
         title: match[2],
         subtitle: match[3],
-        shortUrl: prId === 'game-02' ? 'https://hanan.pro/game' : undefined
       });
     }
     return products;
@@ -574,33 +572,48 @@ function renderSeoHtml(req: express.Request, res: express.Response, next: expres
         const pageTitle = `${post.title} | عقارات النخبة`;
         const pageDesc = post.excerpt;
 
-        const jsonLd = {
-          "@context": "https://schema.org",
-          "@type": "BlogPosting",
-          "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": canonicalUrl
-          },
-          "headline": post.title,
-          "description": post.excerpt,
-          "articleSection": post.category,
-          "author": {
-            "@type": "Person",
-            "name": post.author,
-            "jobTitle": "مستشار عقاري وهندسي معتمد E-E-A-T 2026",
-            "worksFor": {
+        const jsonLd = [
+          {
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": canonicalUrl
+            },
+            "headline": post.title,
+            "description": post.excerpt,
+            "articleSection": post.category,
+            "inLanguage": "ar-SA",
+            "isAccessibleForFree": true,
+            "author": {
+              "@type": "Person",
+              "name": post.author,
+              "url": "https://hanan.pro/author",
+              "jobTitle": "مستشار عقاري وهندسي معتمد E-E-A-T 2026",
+              "worksFor": {
+                "@type": "Organization",
+                "name": "عقارات النخبة",
+                "url": "https://hanan.pro"
+              }
+            },
+            "publisher": {
               "@type": "Organization",
               "name": "عقارات النخبة",
               "url": "https://hanan.pro"
-            }
+            },
+            "datePublished": post.date,
+            "dateModified": "2026-03-01"
           },
-          "publisher": {
-            "@type": "Organization",
-            "name": "عقارات النخبة",
-            "url": "https://hanan.pro"
-          },
-          "datePublished": post.date
-        };
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "الرئيسية", "item": "https://hanan.pro/" },
+              { "@type": "ListItem", "position": 2, "name": "المدونة العقارية", "item": "https://hanan.pro/blog" },
+              { "@type": "ListItem", "position": 3, "name": post.title, "item": canonicalUrl }
+            ]
+          }
+        ];
 
         html = html
           .replace(/<title>.*?<\/title>/gi, `<title>${pageTitle}</title>`)
@@ -634,7 +647,7 @@ function renderSeoHtml(req: express.Request, res: express.Response, next: expres
       const products = getProductsMeta();
       const product = products.find(p => p.id === productId);
       if (product) {
-        const canonicalUrl = product.shortUrl || `https://hanan.pro/product/${product.id}`;
+        const canonicalUrl = `https://hanan.pro/product/${product.id}`;
         const pageTitle = `${product.title} | عقارات النخبة`;
         const pageDesc = `${product.subtitle} - تفاصيل المعاينة الفورية والبيع المباشر والتمويل الملكي.`;
 

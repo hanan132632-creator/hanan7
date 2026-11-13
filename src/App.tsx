@@ -11,6 +11,7 @@ import { FavoritesDrawer } from './components/FavoritesDrawer';
 import { CheckoutModal } from './components/CheckoutModal';
 import { PropertySubmitModal } from './components/PropertySubmitModal';
 import { BlogSection } from './components/BlogSection';
+import { SeoFaqSection } from './components/SeoFaqSection';
 import { SitemapSection } from './components/SitemapSection';
 import { LegalPageModal } from './components/LegalPageModal';
 import { AiTextToVideoModal } from './components/AiTextToVideoModal';
@@ -504,7 +505,7 @@ export default function App() {
               لم نجد نتائج مطابقة لمفردات البحث
             </h3>
             <p className="text-xs text-slate-500">
-              جرّب التصفية بفئة أخرى أو ابحث باسم قصر، أو لعبة جمعات، أو قالب كانفا.
+              جرّب التصفية بفئة أخرى أو ابحث باسم قصر، فيلا، مخطط هندسي، أو قالب تسويق عقاري.
             </p>
             <button
               onClick={() => {
@@ -552,7 +553,7 @@ export default function App() {
               </div>
               <h4 className="text-sm font-bold text-slate-900">تسليم رقمي فوري 100%</h4>
               <p className="text-xs text-slate-500 leading-relaxed">
-                تنزيل مباشر بمجرد الطلب للمخططات الهندسية DWG وقوالب كانفا وألعاب الجمعات بصيغ PDF عالية الدقة.
+                تنزيل مباشر بمجرد الطلب للمخططات الهندسية DWG وقوالب كانفا العقارية بصيغ PDF عالية الدقة.
               </p>
             </div>
 
@@ -592,6 +593,17 @@ export default function App() {
 
       {/* Blog & AdSense Compliance Section */}
       <BlogSection onOpenVideoStudio={(text) => handleOpenVideoStudio(text)} />
+
+      {/* SEO FAQ Section with Rich Snippet Support */}
+      <SeoFaqSection
+        onSelectPost={(postId) => {
+          window.dispatchEvent(new CustomEvent('open-blog-post', { detail: postId }));
+          setTimeout(() => {
+            const el = document.getElementById('blog-section');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }, 150);
+        }}
+      />
 
       {/* Direct Interactive Sitemap Section (37 Links directly under each other) */}
       <SitemapSection

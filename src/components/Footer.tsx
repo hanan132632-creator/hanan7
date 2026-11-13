@@ -35,7 +35,7 @@ export const Footer: React.FC<FooterProps> = ({
             </div>
 
             <p className="text-xs text-slate-400 leading-relaxed font-medium">
-              التركيبة الملكية الشهيرة التي تجمع بين فخامة العقارات والمنتجات الرقمية (ألعاب الجمعات، مخططات 2026، وقوالب كانفا) بأسلوب استثنائي ودفع آمن.
+              المنصة العقارية والهندسية الموثقة التي تجمع بين أرقى الفلل والقصور بالرياض ودبي، المخططات المعمارية المعتمدة لعام 2026، وقوالب الهوية الاحترافية بأسلوب استثنائي ودفع آمن.
             </p>
 
             <div className="pt-1 flex items-center gap-2 text-xs font-bold text-emerald-400">
@@ -50,12 +50,13 @@ export const Footer: React.FC<FooterProps> = ({
               الأقسام الرئيسية
             </h4>
             <ul className="space-y-2 text-xs text-slate-400">
-              <li><a href="#catalog" className="hover:text-[#D4AF37] transition-colors">عقارات النخبة (الفلل والقصور)</a></li>
-              <li><a href="#catalog" className="hover:text-[#D4AF37] transition-colors">ألعاب الجمعات الرقمية</a></li>
-              <li><a href="#catalog" className="hover:text-[#D4AF37] transition-colors">مخططات 2026 الهندسية</a></li>
-              <li><a href="#catalog" className="hover:text-[#D4AF37] transition-colors">قوالب كانفا الهوية الملكية</a></li>
+              <li><a href="/catalog" className="hover:text-[#D4AF37] transition-colors">عقارات النخبة (الفلل والقصور)</a></li>
+              <li><a href="/blog" className="hover:text-[#D4AF37] transition-colors">مدونة التحليلات العقارية E-E-A-T</a></li>
+              <li><a href="/author" className="hover:text-[#D4AF37] transition-colors">ملف الكتّاب والتراخيص الرسمية</a></li>
+              <li><a href="/calculator" className="hover:text-[#D4AF37] transition-colors">حاسبة التمويل العقاري الذكية</a></li>
+              <li><a href="/post/post-33" className="hover:text-[#D4AF37] transition-colors">دليل فحص الفلل وتأمين IDI</a></li>
               <li>
-                <button onClick={onOpenPropertySubmit} className="text-[#059669] hover:underline font-bold">
+                <button onClick={onOpenPropertySubmit} className="text-[#059669] hover:underline font-bold cursor-pointer">
                   + عرض عقارك المباشر معنا
                 </button>
               </li>
@@ -69,50 +70,72 @@ export const Footer: React.FC<FooterProps> = ({
             </h4>
             <ul className="space-y-2 text-xs text-slate-400">
               <li>
-                <button onClick={() => onOpenLegalTab('about')} className="hover:text-[#D4AF37] transition-colors">
+                <a
+                  href="/about"
+                  onClick={(e) => { e.preventDefault(); onOpenLegalTab('about'); }}
+                  className="hover:text-[#D4AF37] transition-colors"
+                >
                   من نحن (نبذة عنا)
-                </button>
+                </a>
               </li>
               <li>
-                <button onClick={() => onOpenLegalTab('privacy')} className="hover:text-[#D4AF37] transition-colors">
+                <a
+                  href="/privacy"
+                  onClick={(e) => { e.preventDefault(); onOpenLegalTab('privacy'); }}
+                  className="hover:text-[#D4AF37] transition-colors"
+                >
                   سياسة الخصوصية (Privacy Policy)
-                </button>
+                </a>
               </li>
               <li>
-                <button onClick={() => onOpenLegalTab('terms')} className="hover:text-[#D4AF37] transition-colors">
+                <a
+                  href="/terms"
+                  onClick={(e) => { e.preventDefault(); onOpenLegalTab('terms'); }}
+                  className="hover:text-[#D4AF37] transition-colors"
+                >
                   الشروط والأحكام (Terms of Service)
-                </button>
+                </a>
               </li>
               <li>
-                <button onClick={() => onOpenLegalTab('contact')} className="hover:text-[#D4AF37] transition-colors">
+                <a
+                  href="/contact"
+                  onClick={(e) => { e.preventDefault(); onOpenLegalTab('contact'); }}
+                  className="hover:text-[#D4AF37] transition-colors"
+                >
                   اتصل بنا ورعاية العملاء
-                </button>
+                </a>
               </li>
               <li>
-                <button onClick={() => onOpenLegalTab('domain_verify')} className="hover:text-[#059669] font-bold transition-colors">
+                <a
+                  href="/domain_verify"
+                  onClick={(e) => { e.preventDefault(); onOpenLegalTab('domain_verify'); }}
+                  className="hover:text-[#059669] font-bold transition-colors"
+                >
                   الشروط وإثبات ملكية الدومين (Google AdSense)
-                </button>
+                </a>
               </li>
               <li className="pt-2">
-                <button 
-                  onClick={() => {
+                <a
+                  href="/sitemap"
+                  onClick={(e) => {
+                    e.preventDefault();
                     if (onScrollToSitemap) {
                       onScrollToSitemap();
                     } else {
                       onOpenLegalTab('sitemap');
                     }
-                  }} 
+                  }}
                   className="w-full sm:w-auto px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#D4AF37]/20 to-[#059669]/20 border border-[#D4AF37]/50 text-[#FAD961] hover:text-[#D4AF37] font-bold text-xs transition-colors flex items-center justify-between sm:justify-start gap-2 shadow-sm"
                   title="عرض خريطة الموقع وفهرس الروابط المباشرة"
                 >
-                  <div className="flex items-center gap-1.5">
+                  <span className="flex items-center gap-1.5">
                     <Compass className="w-4 h-4 text-[#D4AF37]" />
                     <span>خريطة الموقع وفهرس الروابط</span>
-                  </div>
+                  </span>
                   <span className="px-1.5 min-w-[20px] h-5 rounded-full bg-[#D4AF37] text-slate-900 text-[10px] font-black flex items-center justify-center">
                     {MOCK_BLOG_POSTS.length + 6}
                   </span>
-                </button>
+                </a>
               </li>
             </ul>
           </div>
@@ -143,13 +166,21 @@ export const Footer: React.FC<FooterProps> = ({
         {/* Bottom Bar: AdSense Tag & Copyright */}
         <div className="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-medium">
           <p>
-            جميع الحقوق محفوظة © 2026 «عقارات النخبة والمتجر الرقمي». تصميم مخصص باللون الذهبي الملكي والأخضر الزمردي الماسي.
+            جميع الحقوق محفوظة © 2026 «عقارات النخبة». جميع التحليلات العقارية والهندسية موثقة بمعايير E-E-A-T.
           </p>
 
           <div className="flex items-center gap-4">
-            <button onClick={() => onOpenLegalTab('domain_verify')} className="text-[#059669] font-bold hover:underline">
+            <a
+              href="/domain_verify"
+              onClick={(e) => { e.preventDefault(); onOpenLegalTab('domain_verify'); }}
+              className="text-[#059669] font-bold hover:underline"
+            >
               إثبات ملكية الدومين للربح من أدسنس
-            </button>
+            </a>
+            <span className="text-slate-700" aria-hidden="true">|</span>
+            <a href="/sitemap.xml" className="text-slate-400 hover:text-[#D4AF37] font-mono">
+              sitemap.xml
+            </a>
           </div>
         </div>
 

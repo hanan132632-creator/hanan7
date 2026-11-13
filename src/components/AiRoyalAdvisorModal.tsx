@@ -14,7 +14,7 @@ export const AiRoyalAdvisorModal: React.FC<AiRoyalAdvisorModalProps> = ({ onClos
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       sender: 'ai',
-      text: 'أهلاً بك في منصة عقارات النخبة والمتجر الرقمي! أنا مستشارك الملكي الذكي، كيف أستطيع خدمتك اليوم؟ يمكنك سؤالي عن التمويل العقاري، ترشيحات الفلل والقصور، ألعاب الجمعات، أو قوالب كانفا والمخططات.'
+      text: 'أهلاً بك في منصة عقارات النخبة! أنا مستشارك العقاري الذكي، كيف أستطيع خدمتك اليوم؟ يمكنك سؤالي عن التمويل العقاري، ترشيحات الفلل والقصور، التقييم المعتمد، أو مخططات 2026 الهندسية.'
     }
   ]);
   const [inputPrompt, setInputPrompt] = useState('');
@@ -134,10 +134,10 @@ export const AiRoyalAdvisorModal: React.FC<AiRoyalAdvisorModalProps> = ({ onClos
             حساب القسط الشهري
           </button>
           <button
-            onClick={() => handleSendMessage('ما هي أفضل حزمة ألعاب للجمعات العائلية؟')}
+            onClick={() => handleSendMessage('ما هي أفضل أحياء الاستثمار العقاري بالرياض 2026؟')}
             className="px-2.5 py-1 rounded-lg bg-white border border-[#D4AF37]/40 text-[#064E3B] font-medium shrink-0 hover:bg-[#D4AF37]/10"
           >
-            أفضل ألعاب الجمعات
+            أفضل أحياء الرياض 2026
           </button>
           <button
             onClick={() => handleSendMessage('كيف أحصل على قوالب كانفا باللون الزمردي؟')}

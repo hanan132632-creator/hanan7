@@ -198,9 +198,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             </button>
 
             <button
-              onClick={() => handleCopyShortLink(product.shortUrl || `${window.location.origin}/game`)}
+              onClick={() => handleCopyShortLink(product.shortUrl || `${window.location.origin}/product/${product.id}`)}
               className="flex items-center justify-center gap-1 py-2 rounded-xl bg-[#D4AF37]/20 hover:bg-[#D4AF37]/30 text-[#064E3B] border border-[#D4AF37]/40 text-xs font-bold transition-colors cursor-pointer"
-              title="نسخ الرابط المختصر للعبة"
+              title="نسخ الرابط المختصر للمنتج"
             >
               {copiedLink ? (
                 <>
@@ -210,7 +210,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               ) : (
                 <>
                   <Share2 className="w-3.5 h-3.5 text-[#B8860B]" />
-                  <span>رابط اللعبة</span>
+                  <span>رابط مباشر</span>
                 </>
               )}
             </button>
@@ -218,9 +218,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             <button
               onClick={handleFreeDownload}
               className="flex items-center justify-center gap-1 py-2 rounded-xl bg-gradient-to-r from-[#059669] to-[#047857] hover:brightness-110 text-white text-xs font-black shadow-md transition-all cursor-pointer"
-              title="تنزيل اللعبة مجاناً فوراً"
+              title="تنزيل الحزمة مجاناً فوراً"
             >
-              <Download className="w-3.5 h-3.5 text-[#FAD961] animate-pulse" />
+              <Download className="w-3.5 h-3.5 text-[#FAD961]" />
               <span>تنزيل مجاني</span>
             </button>
           </div>

@@ -164,13 +164,13 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
                   {/* Short Link Share Box */}
                   <div className="p-3 bg-slate-100 border border-slate-200 rounded-xl flex items-center justify-between gap-2 text-xs">
                     <div className="truncate">
-                      <span className="text-[10px] text-slate-400 block font-bold">رابط اللعبة المختصر للنشر السريع:</span>
+                      <span className="text-[10px] text-slate-400 block font-bold">الرابط المباشر للنشر السريع:</span>
                       <span className="font-mono text-emerald-800 font-bold text-xs select-all">
-                        {product.shortUrl || `${window.location.origin}/game`}
+                        {product.shortUrl || `${window.location.origin}/product/${product.id}`}
                       </span>
                     </div>
                     <button
-                      onClick={() => handleCopyShortLink(product.shortUrl || `${window.location.origin}/game`)}
+                      onClick={() => handleCopyShortLink(product.shortUrl || `${window.location.origin}/product/${product.id}`)}
                       className="shrink-0 px-3 py-1.5 rounded-lg bg-[#D4AF37]/20 border border-[#D4AF37]/50 text-[#064E3B] font-bold text-xs hover:bg-[#D4AF37]/30 transition-all flex items-center gap-1 cursor-pointer"
                     >
                       {copiedShortLink ? (

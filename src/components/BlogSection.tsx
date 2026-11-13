@@ -51,12 +51,12 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
         if (canonicalEl) canonicalEl.setAttribute('href', canonicalUrl);
         if (descEl) descEl.setAttribute('content', post.excerpt);
       } else {
-        document.title = 'عقارات النخبة | عقارات فاخرة وفلل وقصور للبيع بالرياض ودبي 2026';
+        document.title = 'عقارات النخبة | فلل وقصور للبيع في الرياض ودبي 2026 ومخططات هندسية معتمدة';
         if (canonicalEl) canonicalEl.setAttribute('href', 'https://hanan.pro/');
         if (descEl) {
           descEl.setAttribute(
             'content',
-            'منصة عقارات النخبة الأولى للعقارات الفاخرة بالرياض ودبي، فلل وقصور بحي حطين والملقا، استشارات استثمارية EEAT، مخططات 2026، وقوالب كانفا بحاسبة تمويل ذكية.'
+            'منصة عقارات النخبة الأولى للفلل والقصور الفاخرة بالرياض ودبي (حطين والملقا)، تحليلات استثمارية موثقة E-E-A-T برخص فال وتقييم، مخططات 2026 الهندسية، وحاسبة التمويل العقاري.'
           );
         }
       }
@@ -285,6 +285,8 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
                   <img
                     src={post.imageUrl}
                     alt={post.title}
+                    loading="lazy"
+                    decoding="async"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                   />
@@ -292,10 +294,12 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
                     {post.category}
                   </span>
 
-                  {/* Verified Human Author Floating Badge (Pure E-E-A-T without artificial vanity metrics) */}
+                  {/* Verified Human Author Floating Link */}
                   <div className="absolute bottom-3 right-3 left-3 flex items-center justify-between text-white text-[11px] font-medium bg-[#18181B]/85 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10">
-                    <button
+                    <a
+                      href={`/author/${authorData.id}`}
                       onClick={(e) => {
+                        e.preventDefault();
                         e.stopPropagation();
                         setActiveAuthorModal(authorData);
                       }}
@@ -306,13 +310,14 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
                         <img
                           src={authorData.avatarUrl}
                           alt={authorData.name}
+                          loading="lazy"
                           className="w-5 h-5 rounded-full object-cover border border-[#D4AF37] shrink-0 shadow-xs"
                         />
                       ) : (
                         <ShieldCheck className="w-3.5 h-3.5 text-[#34D399] shrink-0" />
                       )}
                       <span className="font-bold truncate max-w-[160px]">{post.author}</span>
-                    </button>
+                    </a>
 
                     <span className="flex items-center gap-1 text-slate-300 text-[10px]">
                       <Clock className="w-3 h-3 text-[#FAD961]" />
@@ -324,8 +329,10 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
                 <div className="p-6 space-y-3 flex-1 flex flex-col justify-between">
                   <div>
                     <div className="flex items-center justify-between gap-2 text-xs text-slate-500 font-medium mb-2">
-                      <button
+                      <a
+                        href={`/author/${authorData.id}`}
                         onClick={(e) => {
+                          e.preventDefault();
                           e.stopPropagation();
                           setActiveAuthorModal(authorData);
                         }}
@@ -335,13 +342,14 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
                           <img
                             src={authorData.avatarUrl}
                             alt={authorData.name}
+                            loading="lazy"
                             className="w-4 h-4 rounded-full object-cover border border-[#D4AF37] shrink-0"
                           />
                         ) : (
                           <User className="w-3.5 h-3.5" />
                         )}
                         <span>{post.author}</span>
-                      </button>
+                      </a>
                       
                       <span className="text-[10px] text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 font-bold flex items-center gap-1">
                         <CheckCircle2 className="w-3 h-3 text-emerald-600" />
@@ -350,7 +358,16 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
                     </div>
 
                     <h3 className="text-lg font-bold text-slate-900 font-serif-arabic leading-snug">
-                      {post.title}
+                      <a
+                        href={`/post/${post.id}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleOpenArticle(post);
+                        }}
+                        className="hover:text-[#064E3B] transition-colors"
+                      >
+                        {post.title}
+                      </a>
                     </h3>
 
                     <p className="text-xs text-slate-600 mt-2 line-clamp-3 leading-relaxed">
@@ -401,13 +418,17 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
                         <span className="hidden sm:inline">فيديو 15 دقيقة</span>
                       </button>
 
-                      <button
-                        onClick={() => handleOpenArticle(post)}
+                      <a
+                        href={`/post/${post.id}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleOpenArticle(post);
+                        }}
                         className="flex items-center gap-1 px-3.5 py-2 rounded-xl bg-[#064E3B] hover:bg-[#059669] text-white text-xs font-bold transition-all shadow-md cursor-pointer"
                       >
                         <span>قراءة المقال</span>
                         <ArrowLeft className="w-4 h-4 text-[#FAD961]" />
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -746,6 +767,31 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
                   <p className="text-[11px] text-emerald-900 leading-relaxed font-medium">
                     هذا المقال محرر ومراجع حصرياً بيد بشرية متخصصة ومصنف كتحليل مهني موثق. تم فحص المحتوى للتأكد من انعدام النسخ أو التكرار اللفظي والالتزام التام بإرشادات جودة المحتوى لبرنامج Google AdSense والمعايير العقارية السعودية.
                   </p>
+                </div>
+
+                {/* 4. Internal Linking: Related Articles for Topic Clustering & SEO */}
+                <div className="p-4 rounded-2xl bg-white border border-slate-200 space-y-3">
+                  <h4 className="text-xs sm:text-sm font-black text-slate-900 font-serif-arabic">
+                    مقالات مرجعية ذات صلة بالاستثمار والتقييم العقاري
+                  </h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    {MOCK_BLOG_POSTS.filter((p) => p.id !== selectedPost.id)
+                      .slice(0, 3)
+                      .map((rel) => (
+                        <a
+                          key={rel.id}
+                          href={`/post/${rel.id}`}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleOpenArticle(rel);
+                          }}
+                          className="p-3 rounded-xl bg-[#FAF8F5] border border-[#D4AF37]/30 hover:border-[#059669] transition-colors flex flex-col justify-between gap-2"
+                        >
+                          <span className="text-[10px] font-bold text-[#059669]">{rel.category}</span>
+                          <span className="text-xs font-bold text-slate-900 line-clamp-2 leading-snug">{rel.title}</span>
+                        </a>
+                      ))}
+                  </div>
                 </div>
 
                 {/* Clean Bottom Footer Bar */}
