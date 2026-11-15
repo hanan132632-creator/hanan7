@@ -143,30 +143,44 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Col 4: Contact Info */}
           <div className="space-y-3">
             <h4 className="text-sm font-bold text-[#FAD961] font-serif-arabic border-b border-slate-800 pb-2">
-              خدمة العملاء والتواصل
+              خدمة العملاء والتواصل الرسمي
             </h4>
             <div className="space-y-2.5 text-xs text-slate-400">
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-[#D4AF37] shrink-0" />
-                <span>الرياض - حي حطين VIP / دبي - داون تاون</span>
+                <span>الرياض - حي حطين / دبي - داون تاون</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-[#059669] shrink-0" />
-                <span>العناية بالعملاء: 920000000 / 0500000000</span>
+                <a
+                  href="/contact"
+                  onClick={(e) => { e.preventDefault(); onOpenLegalTab('contact'); }}
+                  className="hover:text-[#FAD961] transition-colors font-semibold"
+                >
+                  بوابة التواصل وطلب المعاينات المباشرة
+                </a>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-[#D4AF37] shrink-0" />
-                <span>vip@hanan-elite.com</span>
+                <a href="mailto:contact@hanan.pro" className="hover:text-[#FAD961] transition-colors font-mono">
+                  contact@hanan.pro
+                </a>
               </div>
             </div>
           </div>
 
         </div>
 
+        {/* Educational & Regulatory Risk Disclaimer for Ad & Platform Compliance */}
+        <div className="p-4 rounded-2xl bg-black/30 border border-slate-800 text-[11px] text-slate-400 leading-relaxed">
+          <strong className="text-slate-200">تنويه مهم وإخلاء مسؤولية:</strong>{' '}
+          كافة المقالات والدراسات العقارية والمالية المنشورة عبر منصة «عقارات النخبة» (hanan.pro) مُعدّة لأغراض معرفية وتحليلية عامة، ولا تُشكّل توصية استثمارية ملزمة أو وعداً بأي عائد مالي مضمون. الأرقام والنسب التقديرية تخضع لمتغيرات السوق والأنظمة العقارية والضريبية المعمول بها في كل دولة.
+        </div>
+
         {/* Bottom Bar: AdSense Tag & Copyright */}
         <div className="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-medium">
           <p>
-            جميع الحقوق محفوظة © 2026 «عقارات النخبة». جميع التحليلات العقارية والهندسية موثقة بمعايير E-E-A-T.
+            جميع الحقوق محفوظة © 2026 «عقارات النخبة» (hanan.pro). جميع التحليلات العقارية والهندسية موثقة بمعايير E-E-A-T.
           </p>
 
           <div className="flex items-center gap-4">

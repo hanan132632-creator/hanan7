@@ -286,6 +286,9 @@ function prerenderSeoRoutesPlugin(): Plugin {
     </p>
     <p style="font-size:1.05rem;line-height:1.8;background:#FAF8F5;padding:1rem;border-radius:12px;color:#0f172a;">${escapeHtml(post.excerpt)}</p>
     ${renderedBody}
+    <aside style="margin-top:1.75rem;padding:1rem;background:#f8fafc;border:1px solid #cbd5e1;border-radius:12px;font-size:0.85rem;color:#475569;line-height:1.75;">
+      <strong>إخلاء مسؤولية تثقيفي:</strong> المعلومات الواردة في هذا المقال لأغراض التوعية والتحليل العام فقط ولا تُعد توصية استثمارية أو مالية أو ضريبية ملزمة أو ضماناً لأي عائد مالي. للتواصل: <a href="mailto:contact@hanan.pro" style="color:#064E3B;">contact@hanan.pro</a> · <a href="/about" style="color:#064E3B;">من نحن</a> · <a href="/privacy" style="color:#064E3B;">سياسة الخصوصية</a> · <a href="/terms" style="color:#064E3B;">الشروط والأحكام</a> · <a href="/contact" style="color:#064E3B;">اتصل بنا</a>
+    </aside>
     <section style="margin-top:2rem;padding-top:1.25rem;border-top:1px solid #e2e8f0;">
       <h2 style="font-size:1.15rem;color:#064E3B;margin-bottom:0.75rem;">مقالات مرجعية ذات صلة</h2>
       <ul style="padding-right:1.25rem;">${relatedLinksHtml}</ul>

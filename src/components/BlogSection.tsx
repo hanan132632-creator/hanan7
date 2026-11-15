@@ -756,16 +756,16 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onOpenVideoStudio }) =
                   </div>
                 </div>
 
-                {/* 3. Human Authorship & Editorial Quality Declaration (AdSense Compliance) */}
+                {/* 3. Human Authorship & Compliance Disclaimer */}
                 <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50 border border-emerald-300 shadow-xs space-y-2">
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                     <span className="text-xs font-black text-emerald-950 font-serif-arabic">
-                      إقرار الأصالة والتحرير البشري المعتمد 100% (E-E-A-T AdSense Quality Pledge)
+                      إقرار الأصالة التثقيفية وإخلاء المسؤولية الاستثمارية (E-E-A-T Compliance)
                     </span>
                   </div>
                   <p className="text-[11px] text-emerald-900 leading-relaxed font-medium">
-                    هذا المقال محرر ومراجع حصرياً بيد بشرية متخصصة ومصنف كتحليل مهني موثق. تم فحص المحتوى للتأكد من انعدام النسخ أو التكرار اللفظي والالتزام التام بإرشادات جودة المحتوى لبرنامج Google AdSense والمعايير العقارية السعودية.
+                    هذا المقال محرر ومراجع حصرياً بيد بشرية متخصصة للأغراض التثقيفية والمعرفية العامة فقط، ولا يُعد توصية مالية أو استثمارية أو ضريبية ملزمة ولا يمثل وعداً بأي عائد مضمون. تخضع كافة التقديرات العقارية والمالية لتقلبات السوق والأنظمة الرسمية المعمول بها.
                   </p>
                 </div>
 
